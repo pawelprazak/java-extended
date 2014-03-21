@@ -1,4 +1,4 @@
 guava-extended
 ==============
 
-Google's Guava e
+Guava Extended is an experimental extension aimed at Java 8
