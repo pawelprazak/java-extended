@@ -1,6 +1,0 @@
-subprojects { project ->
-    apply plugin: 'java' // Plugin as major conventions
-
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
