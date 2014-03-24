@@ -176,7 +176,7 @@ public final class Preconditions {
      * @see #checkNotEmpty(Object, String, Object...)
      */
     public static <T> T checkNotEmpty(T reference, @Nullable Object errorMessage) {
-        checkNotNull(reference, "Expected not null object, got %s", reference);
+        checkNotNull(reference, "Expected not null object, got '%s'", reference);
         checkNotEmpty(reference, String.valueOf(errorMessage), EMPTY_ERROR_MESSAGE_ARGS);
         return reference;
     }
@@ -191,8 +191,8 @@ public final class Preconditions {
      * @see #checkNotEmpty(Object, String, Object...)
      */
     public static <T> T checkNotEmpty(T reference) {
-        checkNotNull(reference, "Expected not null object, got %s", reference);
-        checkNotEmpty(reference, "Expected not empty object, got %s", reference);
+        checkNotNull(reference, "Expected not null object, got '%s'", reference);
+        checkNotEmpty(reference, "Expected not empty object, got '%s'", reference);
         return reference;
     }
 
