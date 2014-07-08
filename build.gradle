@@ -1,5 +1,5 @@
 group = 'com.bluecatcode.common'
-version = '15.0.0-SNAPSHOT'
+version = '17.0.0-SNAPSHOT'
 
 buildscript {
     repositories {
@@ -19,14 +19,14 @@ subprojects { project ->
 
     apply plugin: 'java'
 
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_1_7
+    targetCompatibility = JavaVersion.VERSION_1_7
 
     apply plugin: "groovy"
 
     dependencies {
         // mandatory dependencies for using Spock
-        testCompile "org.codehaus.groovy:groovy-all:2.1.5"
+        testCompile "org.codehaus.groovy:groovy-all:2.3.3"
         testCompile "org.spockframework:spock-core:0.7-groovy-2.0"
 
         // optional dependencies for using Spock
@@ -36,7 +36,7 @@ subprojects { project ->
         // allows mocking of classes (in addition to interfaces)
         testRuntime group: 'cglib',                name: 'cglib-nodep',      version: '2.2.2'
         // allows mocking of classes without default constructor (together with CGLIB)
-        testRuntime group: 'org.objenesis',        name: 'objenesis',        version: '1.2'
+        testRuntime group: 'org.objenesis',        name: 'objenesis',        version: '1.4'
     }
 
     jar {
@@ -47,8 +47,8 @@ subprojects { project ->
 project(':core') {
 
     dependencies {
-        compile group: 'com.google.guava',         name: 'guava',            version: '16.0.1'
-        compile group: 'com.google.code.findbugs', name: 'jsr305',           version: '2.0.2'
-        compile group: 'javax.mail',               name: 'mail',             version: '1.4.3'
+        compile group: 'com.google.guava',         name: 'guava',            version: '17.0'
+        compile group: 'com.google.code.findbugs', name: 'jsr305',           version: '2.0.3'
+        compile group: 'javax.mail',               name: 'mail',             version: '1.4.7'
     }
 }
