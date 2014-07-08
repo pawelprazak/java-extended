@@ -1,4 +1,4 @@
 guava-extended
 ==============
 
-Guava Extended is an experimental extension aimed at Java 8
+Guava Extended is an experimental extension.
