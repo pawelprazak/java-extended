@@ -1,11 +1,15 @@
 package com.bluecatcode.common.base
 
+import com.google.common.base.Optional
+import com.google.common.collect.FluentIterable
+import com.google.common.collect.ImmutableMap
 import spock.lang.FailsWith
 import spock.lang.Specification
 import spock.lang.Unroll
 
 import static com.bluecatcode.common.base.Preconditions.*
 import static com.google.common.collect.Lists.newArrayList
+import static com.google.common.collect.Maps.newHashMap
 
 class PreconditionsCheckNotEmptySpec extends Specification {
 
@@ -14,7 +18,10 @@ class PreconditionsCheckNotEmptySpec extends Specification {
         reference.is(checkNotEmpty(reference))
 
         where:
-        reference << [" ", "some text", [""], ["":""], Optional.of(1), newArrayList(1, 2, 3)]
+        reference << [
+                " ", "some text", Optional.of(1),
+                [""], ["":""], newArrayList(1, 2, 3), ImmutableMap.of("1", "1"), FluentIterable.from([""])
+        ]
     }
 
     @FailsWith(NullPointerException)
@@ -36,7 +43,9 @@ class PreconditionsCheckNotEmptySpec extends Specification {
         checkNotEmpty(reference)
 
         where:
-        reference << ["", [], [:], Optional.empty(), newArrayList()]
+        reference << [
+                "", [], [:], Optional.absent(), newArrayList(), newHashMap(), FluentIterable.from([])
+        ]
     }
 }
 

@@ -10,7 +10,7 @@
  *
  * <ul>
  * <li>{@link com.bluecatcode.common.base.Preconditions}
- * <li>{@link com.bluecatcode.common.base.Predicates}
+ * <li>{@link com.bluecatcode.common.base.Predicates2}
  * <li>{@link com.bluecatcode.common.base.RichEnum}
  * </ul>
  *

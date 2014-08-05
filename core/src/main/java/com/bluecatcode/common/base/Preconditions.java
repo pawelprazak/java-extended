@@ -2,18 +2,18 @@ package com.bluecatcode.common.base;
 
 import com.google.common.annotations.Beta;
 import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
 
 import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Map;
-import java.util.Optional;
-import java.util.function.Predicate;
 import java.util.regex.Pattern;
-import java.util.stream.Stream;
 
-import static com.bluecatcode.common.base.Predicates.*;
+import static com.bluecatcode.common.base.Predicates2.*;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Predicates.not;
 import static com.google.common.base.Splitter.on;
 import static java.lang.String.format;
 import static java.util.regex.Pattern.compile;
@@ -58,7 +58,7 @@ public final class Preconditions {
                                      @Nullable Object... errorMessageArgs) {
         checkNotNull(predicate, errorMessageTemplate, errorMessageArgs);
         checkNotNull(reference, errorMessageTemplate, errorMessageArgs);
-        checkArgument(predicate.test(reference), errorMessageTemplate, errorMessageArgs);
+        checkArgument(predicate.apply(reference), errorMessageTemplate, errorMessageArgs);
         return reference;
     }
 
@@ -129,8 +129,6 @@ public final class Preconditions {
             isEmpty = isEmptyCollection;
         } else if (reference instanceof Iterable) {
             isEmpty = isEmptyIterable;
-        } else if (reference instanceof Stream) {
-            isEmpty = isEmptyStream;
         } else if (reference instanceof Map) {
             isEmpty = isEmptyMap;
         } else if (reference instanceof CharSequence) {
@@ -160,7 +158,7 @@ public final class Preconditions {
                     "String, Optional, Stream, Iterable, Collection, Map, Object[], primitive[]"));
         }
         //noinspection unchecked
-        check(reference, (Predicate<Object>) isEmpty.negate(), errorMessageTemplate, errorMessageArgs);
+        check(reference, (Predicate<Object>) not(isEmpty), errorMessageTemplate, errorMessageArgs);
         return reference;
     }
 

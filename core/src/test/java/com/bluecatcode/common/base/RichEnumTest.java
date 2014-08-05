@@ -2,18 +2,42 @@ package com.bluecatcode.common.base;
 
 import org.junit.Test;
 
-import static com.bluecatcode.common.base.RichEnum.Constants.enumConstants;
+import javax.annotation.Nullable;
+
+import static com.bluecatcode.common.base.AbstractRichEnum.Constants;
+import static com.bluecatcode.common.base.AbstractRichEnum.Constants.enumConstants;
 
 public class RichEnumTest {
 
     public static enum TestEnum implements RichEnum<TestEnum> {
         TEST_ENUM;
 
+        private final AbstractRichEnum<TestEnum> rich;
+
+        TestEnum() {
+            this.rich = new AbstractRichEnum<TestEnum>() {
+                @Override
+                public TestEnum self() {
+                    return TestEnum.this;
+                }
+            };
+        }
+
         public static final Constants<TestEnum> constants = enumConstants(TestEnum.class);
 
         @Override
-        public TestEnum self() {
-            return this;
+        public boolean nameEquals(@Nullable String that) {
+            return rich.nameEquals(that);
+        }
+
+        @Override
+        public boolean nameEqualsIgnoreCase(@Nullable String that) {
+            return rich.nameEqualsIgnoreCase(that);
+        }
+
+        @Override
+        public boolean nameEqualsIgnoreCaseAndUnderscore(@Nullable String that) {
+            return rich.nameEqualsIgnoreCaseAndUnderscore(that);
         }
     }
 
