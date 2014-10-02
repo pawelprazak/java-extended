@@ -10,7 +10,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-import static com.bluecatcode.common.base.Predicates2.*;
+import static com.bluecatcode.common.base.Predicates.*;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Predicates.not;
@@ -21,7 +21,7 @@ import static java.util.regex.Pattern.compile;
 /**
  * Additional Preconditions as an extension to {@link com.google.common.base.Preconditions}
  * <p/>
- * In performance critical contexts it is probably better to use hand-written checks, but <b>measuer first!</b>.
+ * In performance critical contexts it is probably better to use hand-written checks, but <b>measure first!</b>.
  * <ul>
  *     <li>check - Performs check with a predicate</li>
  *     <li>checkNotEmpty - Performs emptiness and nullness check for:
@@ -122,35 +122,35 @@ public final class Preconditions {
         checkNotNull(reference, errorMessageTemplate, errorMessageArgs);
         Predicate<?> isEmpty;
         if (reference instanceof String) {
-            isEmpty = isEmptyString;
+            isEmpty = isEmptyString();
         } else if (reference instanceof Optional) {
-            isEmpty = isEmptyOptional;
+            isEmpty = isEmptyOptional();
         } else if (reference instanceof Collection) {
-            isEmpty = isEmptyCollection;
+            isEmpty = isEmptyCollection();
         } else if (reference instanceof Iterable) {
-            isEmpty = isEmptyIterable;
+            isEmpty = isEmptyIterable();
         } else if (reference instanceof Map) {
-            isEmpty = isEmptyMap;
+            isEmpty = isEmptyMap();
         } else if (reference instanceof CharSequence) {
-            isEmpty = isEmptyCharSequence;
+            isEmpty = isEmptyCharSequence();
         } else if (reference instanceof Object[]) {
-            isEmpty = isEmptyObjectArray;
+            isEmpty = isEmptyObjectArray();
         } else if (reference instanceof boolean[]) {
-            isEmpty = isEmptyBooleanArray;
+            isEmpty = isEmptyBooleanArray();
         } else if (reference instanceof byte[]) {
-            isEmpty = isEmptyByteArray;
+            isEmpty = isEmptyByteArray();
         } else if (reference instanceof short[]) {
-            isEmpty = isEmptyShortArray;
+            isEmpty = isEmptyShortArray();
         } else if (reference instanceof char[]) {
-            isEmpty = isEmptyCharArray;
+            isEmpty = isEmptyCharArray();
         } else if (reference instanceof int[]) {
-            isEmpty = isEmptyIntArray;
+            isEmpty = isEmptyIntArray();
         } else if (reference instanceof long[]) {
-            isEmpty = isEmptyLongArray;
+            isEmpty = isEmptyLongArray();
         } else if (reference instanceof float[]) {
-            isEmpty = isEmptyFloatArray;
+            isEmpty = isEmptyFloatArray();
         } else if (reference instanceof double[]) {
-            isEmpty = isEmptyDoubleArray;
+            isEmpty = isEmptyDoubleArray();
         } else {
             throw new IllegalArgumentException(format(
                     "Expected a supported type instead of %s, supported types: %s",
@@ -251,7 +251,7 @@ public final class Preconditions {
     }
 
     /**
-     * Performs a runtime check if the reference is an instance of the class
+     * Performs a runtime check if the reference is an instance of the provided class
      *
      * @throws IllegalArgumentException if the {@code reference} is not an instance of provided class {@code class_}
      * @throws NullPointerException if the {@code reference} is null; also when the check fails and either
@@ -300,7 +300,7 @@ public final class Preconditions {
                                   @Nullable String errorMessageTemplate,
                                   @Nullable Object... errorMessageArgs) {
         checkNotEmpty(uri, "Expected non-null and non-empty uri, got %s", uri);
-        return check(uri, isValidURI, errorMessageTemplate, errorMessageArgs);
+        return check(uri, isValidURI(), errorMessageTemplate, errorMessageArgs);
     }
 
     /**
@@ -313,7 +313,7 @@ public final class Preconditions {
      * @see Preconditions#checkUri(String, String, Object...)
      */
     public static String checkUri(String uri, @Nullable Object errorMessage) {
-        return check(uri, isValidURI, String.valueOf(errorMessage), EMPTY_ERROR_MESSAGE_ARGS);
+        return check(uri, isValidURI(), String.valueOf(errorMessage), EMPTY_ERROR_MESSAGE_ARGS);
     }
 
     /**
@@ -326,7 +326,7 @@ public final class Preconditions {
      * @see Preconditions#checkUri(String, String, Object...)
      */
     public static String checkUri(String uri) {
-        return check(uri, isValidURI, "Expected a valid URI, got %s", uri);
+        return check(uri, isValidURI(), "Expected a valid URI, got %s", uri);
     }
 
     /**
@@ -337,7 +337,7 @@ public final class Preconditions {
      * @throws IllegalArgumentException if the {@code email} is invalid
      */
     public static String checkEmail(String email) {
-        return check(email, isValidEmail, email);
+        return check(email, isValidEmail(), email);
     }
 
     private static final String REGEXP_HOSTNAME = "^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])\\.?$";
