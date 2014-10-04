@@ -31,7 +31,7 @@ subprojects { project ->
 
     dependencies {
         // mandatory dependencies for using Spock
-        testCompile "org.codehaus.groovy:groovy-all:2.3.3"
+        testCompile "org.codehaus.groovy:groovy-all:2.3.7"
         testCompile "org.spockframework:spock-core:0.7-groovy-2.0"
 
         // optional dependencies for using Spock
