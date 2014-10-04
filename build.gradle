@@ -55,5 +55,6 @@ project(':core') {
         compile group: 'com.google.guava',         name: 'guava',            version: '17.0'
         compile group: 'com.google.code.findbugs', name: 'jsr305',           version: '2.0.3'
         compile group: 'javax.mail',               name: 'mail',             version: '1.4.7'
+        compile group: 'joda-time',                name: 'joda-time',        version: '2.4'
     }
 }
