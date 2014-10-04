@@ -3,19 +3,33 @@
  *
  * <p>This package is a part of the open-source
  * <a href="https://github.com/pawelprazak/guava-extended">Guava Extended libraries</a>.
+
+ * <h3>Main goals:</h3>
+ * <ul>
+ *     <li>Extensions for basic Java types, e.g. RichEnum
+ *     <li>Extensions for base Guava types, e.g. ExceptionSupplier
+ * </ul>
  *
  * <h2>Contents</h2>
  *
- * <h3>Other</h3>
+ * <h3>Basic types</h3>
+ * <ul>
+ * <li>{@link com.bluecatcode.common.base.RichEnum}
+ * <li>{@link com.bluecatcode.common.base.ExceptionSupplier}
+ * </ul>
  *
+ * <h3>Functional</h3>
+ *
+ * <ul>
+ * <li>{@link com.bluecatcode.common.base.Predicates}
+ * </ul>
+ *
+ * <h3>Conditional Failures</h3>
  * <ul>
  * <li>{@link com.bluecatcode.common.base.Postconditions}
  * <li>{@link com.bluecatcode.common.base.Preconditions}
- * <li>{@link com.bluecatcode.common.base.Predicates}
- * <li>{@link com.bluecatcode.common.base.RichEnum}
  * </ul>
- *
- * <h2>Conditional Failures</h2>
+ * <p/>
  * Summary of the major kinds of runtime checks.
  * <p/>
  * <table>
