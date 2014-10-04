@@ -1,8 +1,10 @@
 package com.bluecatcode.common.base;
 
+import com.bluecatcode.common.interfaces.IsEmpty;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
@@ -13,6 +15,7 @@ import java.util.Map;
 
 import static com.google.common.base.Predicates.not;
 import static com.google.common.base.Predicates.or;
+import static java.lang.String.format;
 
 /**
  * Additional Predicates as an extension to {@link com.google.common.base.Predicates}
@@ -38,6 +41,15 @@ public final class Predicates {
     @SafeVarargs
     public static <T> Predicate<T> nor(Predicate<? super T>... components) {
         return not(or(components));
+    }
+
+    private static Predicate<IsEmpty> isEmpty() {
+        return new NullablePredicate<IsEmpty>() {
+            @Override
+            public boolean applyNotNull(@Nonnull IsEmpty o) {
+                return o.isEmpty();
+            }
+        };
     }
 
     public static Predicate<String> isEmptyString() {
@@ -174,6 +186,60 @@ public final class Predicates {
             }
         };
     }
+
+    public static Predicate<Object> isEmptyObject() {
+        return new Predicate<Object>() {
+            @Override
+            public boolean apply(@Nullable Object reference) {
+                if (reference == null) {
+                    return true;
+                }
+
+                Predicate<?> isEmpty;
+                if (reference instanceof IsEmpty) {
+                    isEmpty = isEmpty();
+                } else if (reference instanceof String) {
+                    isEmpty = isEmptyString();
+                } else if (reference instanceof Optional) {
+                    isEmpty = isEmptyOptional();
+                } else if (reference instanceof Collection) {
+                    isEmpty = isEmptyCollection();
+                } else if (reference instanceof Iterable) {
+                    isEmpty = isEmptyIterable();
+                } else if (reference instanceof Map) {
+                    isEmpty = isEmptyMap();
+                } else if (reference instanceof CharSequence) {
+                    isEmpty = isEmptyCharSequence();
+                } else if (reference instanceof Object[]) {
+                    isEmpty = isEmptyObjectArray();
+                } else if (reference instanceof boolean[]) {
+                    isEmpty = isEmptyBooleanArray();
+                } else if (reference instanceof byte[]) {
+                    isEmpty = isEmptyByteArray();
+                } else if (reference instanceof short[]) {
+                    isEmpty = isEmptyShortArray();
+                } else if (reference instanceof char[]) {
+                    isEmpty = isEmptyCharArray();
+                } else if (reference instanceof int[]) {
+                    isEmpty = isEmptyIntArray();
+                } else if (reference instanceof long[]) {
+                    isEmpty = isEmptyLongArray();
+                } else if (reference instanceof float[]) {
+                    isEmpty = isEmptyFloatArray();
+                } else if (reference instanceof double[]) {
+                    isEmpty = isEmptyDoubleArray();
+                } else {
+                    throw new IllegalArgumentException(format(
+                            "Expected a supported type instead of %s, supported types: %s",
+                            reference.getClass().getCanonicalName(),
+                            "String, CharSequence, Optional, Iterable, Collection, Map, Object[], primitive[]"));
+                }
+                //noinspection unchecked
+                return ((Predicate<Object>) isEmpty).apply(reference);
+            }
+        };
+    }
+
 
     public static Predicate<String> isValidURI() {
         return new Predicate<String>() {

@@ -2,12 +2,9 @@ package com.bluecatcode.common.base;
 
 import com.google.common.annotations.Beta;
 import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 
 import javax.annotation.Nullable;
-import java.util.Collection;
-import java.util.Map;
 import java.util.regex.Pattern;
 
 import static com.bluecatcode.common.base.Predicates.*;
@@ -120,45 +117,7 @@ public final class Preconditions {
                                       @Nullable String errorMessageTemplate,
                                       @Nullable Object... errorMessageArgs) {
         checkNotNull(reference, errorMessageTemplate, errorMessageArgs);
-        Predicate<?> isEmpty;
-        if (reference instanceof String) {
-            isEmpty = isEmptyString();
-        } else if (reference instanceof Optional) {
-            isEmpty = isEmptyOptional();
-        } else if (reference instanceof Collection) {
-            isEmpty = isEmptyCollection();
-        } else if (reference instanceof Iterable) {
-            isEmpty = isEmptyIterable();
-        } else if (reference instanceof Map) {
-            isEmpty = isEmptyMap();
-        } else if (reference instanceof CharSequence) {
-            isEmpty = isEmptyCharSequence();
-        } else if (reference instanceof Object[]) {
-            isEmpty = isEmptyObjectArray();
-        } else if (reference instanceof boolean[]) {
-            isEmpty = isEmptyBooleanArray();
-        } else if (reference instanceof byte[]) {
-            isEmpty = isEmptyByteArray();
-        } else if (reference instanceof short[]) {
-            isEmpty = isEmptyShortArray();
-        } else if (reference instanceof char[]) {
-            isEmpty = isEmptyCharArray();
-        } else if (reference instanceof int[]) {
-            isEmpty = isEmptyIntArray();
-        } else if (reference instanceof long[]) {
-            isEmpty = isEmptyLongArray();
-        } else if (reference instanceof float[]) {
-            isEmpty = isEmptyFloatArray();
-        } else if (reference instanceof double[]) {
-            isEmpty = isEmptyDoubleArray();
-        } else {
-            throw new IllegalArgumentException(format(
-                    "Expected a supported type instead of %s, supported types: %s",
-                    reference.getClass().getCanonicalName(),
-                    "String, Optional, Stream, Iterable, Collection, Map, Object[], primitive[]"));
-        }
-        //noinspection unchecked
-        check(reference, (Predicate<Object>) not(isEmpty), errorMessageTemplate, errorMessageArgs);
+        check(reference, not(isEmptyObject()), errorMessageTemplate, errorMessageArgs);
         return reference;
     }
 
