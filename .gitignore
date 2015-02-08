@@ -37,6 +37,7 @@ pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.next
 release.properties
+.surefire-*
 
 # Gradle
 .gradle
@@ -54,6 +55,7 @@ build
 .settings
 .metadata
 .factorypath
+.studio
 
 # IDEA IntelliJ
 *.ipr
@@ -63,6 +65,9 @@ build
 .idea_modules
 out
 atlassian-ide-plugin.xml
+
+# Android Studio
+local.properties
 
 # Windows
 Thumbs.db
