@@ -1,9 +1,12 @@
 package com.bluecatcode.common.time;
 
+import com.google.common.annotations.Beta;
+
 import java.math.BigDecimal;
 
 import static java.util.concurrent.TimeUnit.*;
 
+@Beta
 public class Milliseconds {
 
     public static long days(long days) {

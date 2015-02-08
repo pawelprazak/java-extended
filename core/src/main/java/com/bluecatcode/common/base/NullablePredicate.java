@@ -1,10 +1,12 @@
 package com.bluecatcode.common.base;
 
+import com.google.common.annotations.Beta;
 import com.google.common.base.Predicate;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+@Beta
 public abstract class NullablePredicate<T> implements Predicate<T> {
     @Override
     public boolean apply(@Nullable T input) {

@@ -1,5 +1,7 @@
 package com.bluecatcode.common.io;
 
+import com.google.common.annotations.Beta;
+
 import javax.annotation.Nullable;
 import java.io.Closeable;
 import java.io.IOException;
@@ -18,6 +20,7 @@ import java.sql.Statement;
  * All decorators have non-throwing null-checks, <b>null values are silently ignored</b>.
  * All checked exceptions are translated to IOException and rethrown.
  */
+@Beta
 public class Closeables {
 
     /**

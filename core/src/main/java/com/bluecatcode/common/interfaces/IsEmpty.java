@@ -1,11 +1,14 @@
 package com.bluecatcode.common.interfaces;
 
+import com.google.common.annotations.Beta;
+
 /**
  * Single Method Interface for objects with capability of being empty
  *
  * @see com.bluecatcode.common.base.Predicates#isEmptyObject()
  * @see com.bluecatcode.common.base.Preconditions#checkNotEmpty(Object)
  */
+@Beta
 public interface IsEmpty {
 
     /**
