@@ -122,7 +122,7 @@ public class Postconditions {
         if (reference != null) {
             fail(message);
         }
-        return reference;
+        throw new IllegalStateException("An AssertionError should have been thrown.");
     }
 
     /**
