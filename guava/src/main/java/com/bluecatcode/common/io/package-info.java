@@ -10,6 +10,7 @@
  *
  * <ul>
  * <li>{@link com.bluecatcode.common.io.Closeables}
+ * <li>{@link com.bluecatcode.common.io.Resources}
  * </ul>
  *
  * @see com.google.common.io

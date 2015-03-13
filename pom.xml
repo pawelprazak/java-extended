@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
-        <version>8</version>
+        <version>9</version>
     </parent>
 
     <groupId>com.bluecatcode.common</groupId>
@@ -15,14 +15,19 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Project POM</name>
+    <name>Project</name>
     <description>Common libraries for Java</description>
     <inceptionYear>2013</inceptionYear>
 
     <issueManagement>
         <system>GitHub Issues</system>
-        <url>https://github.com/pawelprazak/guava-extended/issues</url>
+        <url>https://github.com/pawelprazak/java-extended/issues</url>
     </issueManagement>
+
+    <scm>
+        <url>scm:git:https://github.com/pawelprazak/java-extended.git</url>
+        <developerConnection>scm:git:git@github.com:pawelprazak/java-extended.git</developerConnection>
+    </scm>
 
     <licenses>
         <license>
@@ -54,6 +59,9 @@
 
     <modules>
         <module>core</module>
+        <module>time</module>
+        <module>guava</module>
+        <module>hamcrest</module>
     </modules>
 
     <profiles>

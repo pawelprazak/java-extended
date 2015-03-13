@@ -1,6 +1,6 @@
 package com.bluecatcode.common.io;
 
-import com.google.common.annotations.Beta;
+import com.bluecatcode.common.annotations.Beta;
 
 import javax.annotation.Nullable;
 import java.io.Closeable;

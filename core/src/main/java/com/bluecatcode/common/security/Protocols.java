@@ -1,6 +1,6 @@
 package com.bluecatcode.common.security;
 
-import com.google.common.annotations.Beta;
+import com.bluecatcode.common.annotations.Beta;
 
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
