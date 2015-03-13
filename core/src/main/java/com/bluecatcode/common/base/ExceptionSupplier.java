@@ -39,7 +39,7 @@ public class ExceptionSupplier<T, E extends RuntimeException> implements Supplie
      * @throws E
      */
     public static <T, E extends RuntimeException> ExceptionSupplier<T, E> throwA(E exception) {
-        return new ExceptionSupplier<T, E>(exception);
+        return new ExceptionSupplier<>(exception);
     }
 
     /**
@@ -52,7 +52,7 @@ public class ExceptionSupplier<T, E extends RuntimeException> implements Supplie
      * @throws E
      */
     public static <T, E extends RuntimeException> ExceptionSupplier<T, E> throwA(@SuppressWarnings("UnusedParameters") Class<T> class_, E exception) {
-        return new ExceptionSupplier<T, E>(exception);
+        return new ExceptionSupplier<>(exception);
     }
 
     /**
