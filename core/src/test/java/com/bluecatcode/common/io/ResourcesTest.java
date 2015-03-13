@@ -3,6 +3,7 @@ package com.bluecatcode.common.io;
 import org.hamcrest.Matcher;
 import org.junit.Test;
 
+import static com.bluecatcode.common.io.Resources.getContextClassLoader;
 import static com.bluecatcode.common.io.Resources.getResourceAsString;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.core.Is.is;
@@ -31,9 +32,9 @@ public class ResourcesTest {
         String externalClassResource = "javax/mail/Address.class";
 
         // when
-        String propertiesString = getResourceAsString(propertiesResource);
-        String classString = getResourceAsString(classResource);
-        String externalClassString = getResourceAsString(externalClassResource);
+        String propertiesString = getResourceAsString(getContextClassLoader(), propertiesResource);
+        String classString = getResourceAsString(getContextClassLoader(), classResource);
+        String externalClassString = getResourceAsString(getContextClassLoader(), externalClassResource);
 
         // then
         assertThat(propertiesString, isNotEmptyString());
