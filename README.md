@@ -1,5 +1,5 @@
-guava-extended
+java-extended
 ==============
-[![Build Status](https://travis-ci.org/pawelprazak/guava-extended.svg?branch=master)](https://travis-ci.org/pawelprazak/guava-extended)
+[![Build Status](https://travis-ci.org/pawelprazak/java-extended.svg?branch=master)](https://travis-ci.org/pawelprazak/java-extended)
 
-Guava Extended is an experimental set of libraries.
+Java Extended is an experimental set of libraries.
