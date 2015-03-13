@@ -44,7 +44,9 @@ public class Postconditions {
      * @throws AssertionError
      */
     public static void assertTrue(boolean condition) {
-        if (!condition) fail("Condition expected to be true but was false.");
+        if (!condition) {
+            fail("Condition expected to be true but was false.");
+        }
     }
 
     /**
@@ -54,7 +56,9 @@ public class Postconditions {
      * @throws AssertionError
      */
     public static void assertTrue(boolean condition, String message) {
-        if (!condition) fail(message);
+        if (!condition) {
+            fail(message);
+        }
     }
 
     /**
@@ -64,7 +68,9 @@ public class Postconditions {
      * @throws AssertionError
      */
     public static void assertTrue(boolean condition, String message, Object... args) {
-        if (!condition) fail(message, args);
+        if (!condition) {
+            fail(message, args);
+        }
     }
 
     /**
@@ -150,6 +156,10 @@ public class Postconditions {
             fail(message);
         }
         return reference;
+    }
+
+    private Postconditions() {
+        throw new UnsupportedOperationException();
     }
 
 }
