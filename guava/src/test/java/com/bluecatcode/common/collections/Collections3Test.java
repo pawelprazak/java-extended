@@ -20,6 +20,7 @@ import java.util.*;
 import static com.bluecatcode.common.collections.Collections3Test.DictionaryData.dictionaryData;
 import static com.bluecatcode.common.collections.Collections3Test.MapData.mapData;
 import static com.bluecatcode.common.collections.Collections3Test.ZipData.zipData;
+import static com.bluecatcode.common.hamcrest.Matchers.isAnEmptyMap;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
@@ -104,10 +105,6 @@ public class Collections3Test {
                             hasEntry("2", "2"), hasEntry("3", "3"))
             ),
     };
-
-    private static Matcher<Map<?, ?>> isAnEmptyMap() {
-        return allOf(notNullValue(), not(hasEntry(notNullValue(), notNullValue())));
-    }
 
     @Theory
     public void shouldMergeMaps(MapData data) {
