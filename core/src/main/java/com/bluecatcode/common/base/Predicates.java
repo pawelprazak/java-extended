@@ -1,6 +1,7 @@
 package com.bluecatcode.common.base;
 
 import com.bluecatcode.common.interfaces.IsEmpty;
+import com.google.common.annotations.Beta;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 
@@ -13,8 +14,7 @@ import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Map;
 
-import static com.google.common.base.Predicates.not;
-import static com.google.common.base.Predicates.or;
+import static com.google.common.base.Predicates.*;
 import static java.lang.String.format;
 
 /**
@@ -34,154 +34,145 @@ import static java.lang.String.format;
  */
 public final class Predicates {
 
-    public static <T> Predicate<T> nor(Predicate<? super T> first, Predicate<? super T> second) {
-        return not(or(first, second));
-    }
-
-    @SafeVarargs
-    public static <T> Predicate<T> nor(Predicate<? super T>... components) {
-        return not(or(components));
-    }
-
     private static Predicate<IsEmpty> isEmpty() {
-        return new NullablePredicate<IsEmpty>() {
+        return new Predicate<IsEmpty>() {
             @Override
-            public boolean applyNotNull(@Nonnull IsEmpty o) {
+            public boolean apply(@Nonnull IsEmpty o) {
                 return o.isEmpty();
             }
         };
     }
 
     public static Predicate<String> isEmptyString() {
-        return new NullablePredicate<String>() {
+        return new Predicate<String>() {
             @Override
-            public boolean applyNotNull(String t) {
+            public boolean apply(@Nonnull String t) {
                 return t.isEmpty();
             }
         };
     }
 
     public static Predicate<CharSequence> isEmptyCharSequence() {
-        return new NullablePredicate<CharSequence>() {
+        return new Predicate<CharSequence>() {
             @Override
-            public boolean applyNotNull(CharSequence chs) {
+            public boolean apply(CharSequence chs) {
                 return chs.length() == 0;
             }
         };
     }
 
     public static Predicate<Optional> isEmptyOptional() {
-        return new NullablePredicate<Optional>() {
+        return new Predicate<Optional>() {
             @Override
-            public boolean applyNotNull(Optional o) {
+            public boolean apply(Optional o) {
                 return !o.isPresent();
             }
         };
     }
 
     public static Predicate<Iterable> isEmptyIterable() {
-        return new NullablePredicate<Iterable>() {
+        return new Predicate<Iterable>() {
             @Override
-            public boolean applyNotNull(Iterable i) {
+            public boolean apply(Iterable i) {
                 return !i.iterator().hasNext();
             }
         };
     }
 
     public static Predicate<Collection> isEmptyCollection() {
-        return new NullablePredicate<Collection>() {
+        return new Predicate<Collection>() {
             @Override
-            public boolean applyNotNull(Collection c) {
+            public boolean apply(Collection c) {
                 return c.isEmpty();
             }
         };
     }
 
     public static Predicate<Map> isEmptyMap() {
-        return new NullablePredicate<Map>() {
+        return new Predicate<Map>() {
             @Override
-            public boolean applyNotNull(Map m) {
+            public boolean apply(Map m) {
                 return m.isEmpty();
             }
         };
     }
 
     public static Predicate<Object[]> isEmptyObjectArray() {
-        return new NullablePredicate<Object[]>() {
+        return new Predicate<Object[]>() {
             @Override
-            public boolean applyNotNull(Object[] a) {
+            public boolean apply(Object[] a) {
                 return a.length == 0;
             }
         };
     }
 
     public static  Predicate<boolean[]> isEmptyBooleanArray() {
-        return new NullablePredicate<boolean[]>() {
+        return new Predicate<boolean[]>() {
             @Override
-            public boolean applyNotNull(boolean[] a) {
+            public boolean apply(boolean[] a) {
                 return a.length == 0;
             }
         };
     }
 
     public static Predicate<byte[]> isEmptyByteArray() {
-        return new NullablePredicate<byte[]>() {
+        return new Predicate<byte[]>() {
             @Override
-            public boolean applyNotNull(byte[] a) {
+            public boolean apply(byte[] a) {
                 return a.length == 0;
             }
         };
     }
 
     public static Predicate<char[]> isEmptyCharArray() {
-        return new NullablePredicate<char[]>() {
+        return new Predicate<char[]>() {
             @Override
-            public boolean applyNotNull(char[] a) {
+            public boolean apply(char[] a) {
                 return a.length == 0;
             }
         };
     }
 
     public static Predicate<short[]> isEmptyShortArray() {
-        return new NullablePredicate<short[]>() {
+        return new Predicate<short[]>() {
             @Override
-            public boolean applyNotNull(short[] a) {
+            public boolean apply(short[] a) {
                 return a.length == 0;
             }
         };
     }
 
     public static Predicate<int[]> isEmptyIntArray() {
-        return new NullablePredicate<int[]>() {
+        return new Predicate<int[]>() {
             @Override
-            public boolean applyNotNull(int[] a) {
+            public boolean apply(int[] a) {
                 return a.length == 0;
             }
         };
     }
 
     public static Predicate<long[]> isEmptyLongArray() {
-        return new NullablePredicate<long[]>() {
+        return new Predicate<long[]>() {
             @Override
-            public boolean applyNotNull(long[] a) {
+            public boolean apply(long[] a) {
                 return a.length == 0;
             }
         };
     }
 
     public static Predicate<float[]> isEmptyFloatArray() {
-        return new NullablePredicate<float[]>() {
+        return new Predicate<float[]>() {
             @Override
-            public boolean applyNotNull(float[] a) {
+            public boolean apply(float[] a) {
                 return a.length == 0;
             }
         };
     }
 
     public static Predicate<double[]> isEmptyDoubleArray() {
-        return new NullablePredicate<double[]>() {
+        return new Predicate<double[]>() {
             @Override
-            public boolean applyNotNull(double[] a) {
+            public boolean apply(double[] a) {
                 return a.length == 0;
             }
         };
@@ -240,7 +231,54 @@ public final class Predicates {
         };
     }
 
+    /**
+     * Truth table:
+     * <pre>
+     * B  A  Q
+     * -------
+     * 0  0  1
+     * 0  1  0
+     * 1  0  0
+     * 1  1  0
+     * </pre>
+     */
+    @Beta
+    public static <T> Predicate<T> nor(Predicate<? super T> first, Predicate<? super T> second) {
+        return not(or(first, second));
+    }
 
+    @Beta
+    @SafeVarargs
+    public static <T> Predicate<T> nor(Predicate<? super T>... components) {
+        return not(or(components));
+    }
+
+    /**
+     * Truth table:
+     * <pre>
+     * B  A  Q
+     * -------
+     * 0  0  1
+     * 0  1  1
+     * 1  0  1
+     * 1  1  0
+     * </pre>
+     */
+    @Beta
+    public static <T> Predicate<T> nand(Predicate<? super T> predicate1, Predicate<? super T> predicate2) {
+        return not(and(predicate1, predicate2));
+    }
+
+    /**
+     * @see #nand(com.google.common.base.Predicate, com.google.common.base.Predicate)
+     */
+    @Beta
+    @SafeVarargs
+    public static <T> Predicate<T> nand(Predicate<? super T>... components) {
+        return not(and(components));
+    }
+
+    @Beta
     public static Predicate<String> isValidURI() {
         return new Predicate<String>() {
             @Override
@@ -257,6 +295,7 @@ public final class Predicates {
         };
     }
 
+    @Beta
     public static Predicate<String> isValidEmail() {
         return new Predicate<String>() {
             @Override
@@ -273,11 +312,13 @@ public final class Predicates {
         };
     }
 
+    @Beta
     public static <T> Predicate<T> isInstance(Class... types) {
-        return new IsInstancePredicate<T>(types);
+        return new IsInstancePredicate<>(types);
     }
 
     private Predicates() {
-        throw new UnsupportedOperationException("Private constructor");
+        throw new UnsupportedOperationException();
     }
+
 }
