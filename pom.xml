@@ -64,12 +64,14 @@
     </properties>
 
     <modules>
+        <!-- test -->
+        <module>junit</module>
+        <module>hamcrest</module>
         <module>check</module>
+        <!-- main -->
         <module>core</module>
         <module>time</module>
         <module>guava</module>
-        <module>junit</module>
-        <module>hamcrest</module>
     </modules>
 
     <profiles>
