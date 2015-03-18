@@ -1,4 +1,4 @@
-package com.bluecatcode.common.time;
+package com.bluecatcode.time;
 
 import com.bluecatcode.common.annotations.Beta;
 

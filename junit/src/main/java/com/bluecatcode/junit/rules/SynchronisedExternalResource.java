@@ -1,4 +1,4 @@
-package com.bluecatcode.common.junit.rules;
+package com.bluecatcode.junit.rules;
 
 import org.junit.rules.ExternalResource;
 

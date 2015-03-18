@@ -1,4 +1,4 @@
-package com.bluecatcode.common.junit.rules;
+package com.bluecatcode.junit.rules;
 
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
@@ -6,7 +6,7 @@ import org.junit.runners.model.Statement;
 
 import javax.annotation.Nullable;
 
-import static com.bluecatcode.common.junit.rules.RepeatRule.RepeatStatement.createFromAnnotationWith;
+import static com.bluecatcode.junit.rules.RepeatRule.RepeatStatement.createFromAnnotationWith;
 
 public class RepeatRule implements TestRule {
 

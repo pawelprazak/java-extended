@@ -10,23 +10,28 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <groupId>com.bluecatcode.junit</groupId>
-    <artifactId>junit-extended</artifactId>
+    <groupId>com.bluecatcode.fj</groupId>
+    <artifactId>java-check</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>JUnit</name>
+    <name>Java Check</name>
+    <description>Functional Java Check extension</description>
 
     <dependencies>
-        <!-- Build time only -->
+
+        <!-- Functional Java -->
         <dependency>
-            <groupId>com.google.code.findbugs</groupId>
-            <artifactId>jsr305</artifactId>
+            <groupId>org.functionaljava</groupId>
+            <artifactId>functionaljava</artifactId>
+            <version>${functionaljava.version}</version>
         </dependency>
 
         <!-- JUnit -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
         </dependency>
+
     </dependencies>
-    
+
 </project>

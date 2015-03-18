@@ -16,13 +16,6 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 @Beta
 public class Strings {
 
-    private static final String ANSI_CODES_EXPRESSION = "\u001B\\[[;\\d]*[ -/]*[@-~]";
-
-    @Beta
-    public static String stripAnsiCodes(String line) {
-        return line.replaceAll(ANSI_CODES_EXPRESSION, "");
-    }
-
     /**
      * Returns the number of times the token appears in the target.
      * @param token Token value to be counted.
@@ -48,8 +41,24 @@ public class Strings {
     }
 
     @Beta
+    public static String limitCharacters(String string, int max) {
+        checkArgument(string != null, "Expected non-null string");
+        checkArgument(max >= 0, "Expected non-negative max");
+        String ellipsis = "...";
+        int ellipsisLength = ellipsis.length();
+        int length = string.length();
+        if (length <= max) {
+            return string;
+        } else if (max <= ellipsisLength) {
+            return string.substring(0, max);
+        } else {
+            return string.substring(0, max - ellipsisLength) + ellipsis;
+        }
+    }
+
+    @Beta
     public static String asString(Map<?, ?> map) {
-        return asString(map, ",");
+        return asString(map, ", ");
     }
 
     @Beta
@@ -59,6 +68,7 @@ public class Strings {
 
     @Beta
     public static List<String> asStringList(String string) {
+        checkArgument(string != null, "Expected non-null string");
         try {
             //noinspection ConstantConditions
             return CharStreams.readLines(new StringReader(string));

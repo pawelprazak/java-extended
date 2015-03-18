@@ -10,6 +10,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
+    <groupId>com.bluecatcode.hamcrest</groupId>
     <artifactId>hamcrest-extended</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>Hamcrest</name>

@@ -137,7 +137,7 @@ public final class Resources {
     }
 
     /**
-     * Returns current thread context class loader or {@link com.bluecatcode.common.io.Resources} class loader
+     * Returns current thread context class loader or {@link Resources} class loader
      */
     public static ClassLoader getContextClassLoader() {
         return getContextClassLoader(Resources.class);

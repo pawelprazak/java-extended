@@ -1,4 +1,4 @@
-package com.bluecatcode.common.time;
+package com.bluecatcode.time;
 
 import org.joda.time.DateTime;
 import org.junit.Test;

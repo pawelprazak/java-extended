@@ -10,6 +10,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
+    <groupId>com.bluecatcode.guava</groupId>
     <artifactId>guava-extended</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>Guava</name>
@@ -44,7 +45,13 @@
 
         <!-- Test -->
         <dependency>
-            <groupId>com.bluecatcode.common</groupId>
+            <groupId>com.bluecatcode.fj</groupId>
+            <artifactId>java-check</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.bluecatcode.hamcrest</groupId>
             <artifactId>hamcrest-extended</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>

@@ -188,7 +188,7 @@ public final class Preconditions {
      * @param errorMessage the exception message to use if the check fails; will
      *     be converted to a string using {@link String#valueOf(Object)}
      * @throws IllegalArgumentException if the {@code reference} doesn't match provided regular expression
-     * @see com.bluecatcode.common.base.Preconditions#checkMatches(String, java.util.regex.Pattern, String, Object...)
+     * @see Preconditions#checkMatches(String, java.util.regex.Pattern, String, Object...)
      */
     @Beta
     public static void checkMatches(String reference, Pattern pattern,
@@ -202,7 +202,7 @@ public final class Preconditions {
      * @param reference reference to check
      * @param pattern the regular expression pattern
      * @throws IllegalArgumentException if the {@code reference} doesn't match provided regular expression
-     * @see com.bluecatcode.common.base.Preconditions#checkMatches(String, java.util.regex.Pattern, String, Object...)
+     * @see Preconditions#checkMatches(String, java.util.regex.Pattern, String, Object...)
      */
     @Beta
     public static void checkMatches(String reference, Pattern pattern) {
@@ -229,7 +229,7 @@ public final class Preconditions {
     }
 
     /**
-     * @see com.bluecatcode.common.base.Preconditions#checkIsInstance(Class, Object, String, Object...)
+     * @see Preconditions#checkIsInstance(Class, Object, String, Object...)
      */
     @Beta
     public static <T> T checkIsInstance(Class<T> class_, Object reference,
@@ -238,7 +238,7 @@ public final class Preconditions {
     }
 
     /**
-     * @see com.bluecatcode.common.base.Preconditions#checkIsInstance(Class, Object, String, Object...)
+     * @see Preconditions#checkIsInstance(Class, Object, String, Object...)
      */
     @Beta
     public static <T> T checkIsInstance(Class<T> class_, Object reference) {
@@ -269,7 +269,7 @@ public final class Preconditions {
      * @return the checked uri
      * @throws IllegalArgumentException if the {@code uri} is invalid
      * @throws NullPointerException if the {@code uri} is null
-     * @see com.bluecatcode.common.base.Preconditions#checkUri(String, String, Object...)
+     * @see Preconditions#checkUri(String, String, Object...)
      */
     public static String checkUri(String uri, @Nullable Object errorMessage) {
         return check(uri, isValidURI(), String.valueOf(errorMessage), EMPTY_ERROR_MESSAGE_ARGS);
@@ -282,7 +282,7 @@ public final class Preconditions {
      * @return the checked uri
      * @throws IllegalArgumentException if the {@code uri} is invalid
      * @throws NullPointerException if the {@code uri} is null
-     * @see com.bluecatcode.common.base.Preconditions#checkUri(String, String, Object...)
+     * @see Preconditions#checkUri(String, String, Object...)
      */
     public static String checkUri(String uri) {
         return check(uri, isValidURI(), "Expected a valid URI, got %s", uri);
@@ -331,7 +331,7 @@ public final class Preconditions {
     }
 
     /**
-     * @see com.bluecatcode.common.base.Preconditions#checkHostname(String, String, Object...)
+     * @see Preconditions#checkHostname(String, String, Object...)
      */
     @Beta
     public static String checkHostname(String hostname) {
@@ -339,7 +339,7 @@ public final class Preconditions {
     }
 
     /**
-     * @see com.bluecatcode.common.base.Preconditions#checkHostname(String, String, Object...)
+     * @see Preconditions#checkHostname(String, String, Object...)
      */
     @Beta
     public static String checkHostname(String hostname, @Nullable String errorMessageTemplate) {

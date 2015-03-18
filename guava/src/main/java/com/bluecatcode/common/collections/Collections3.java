@@ -59,7 +59,7 @@ public class Collections3 {
 
     /**
      * @return the single entry contained in the map
-     * @throws java.util.NoSuchElementException if the map is empty
+     * @throws NoSuchElementException if the map is empty
      * @throws IllegalArgumentException if the map contains multiple entries
      * @see com.google.common.collect.Iterables#getOnlyElement
      */

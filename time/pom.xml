@@ -10,6 +10,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
+    <groupId>com.bluecatcode.time</groupId>
     <artifactId>time-extended</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>Time</name>

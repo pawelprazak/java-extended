@@ -20,7 +20,7 @@ import java.util.*;
 import static com.bluecatcode.common.collections.Collections3Test.DictionaryData.dictionaryData;
 import static com.bluecatcode.common.collections.Collections3Test.MapData.mapData;
 import static com.bluecatcode.common.collections.Collections3Test.ZipData.zipData;
-import static com.bluecatcode.common.hamcrest.Matchers.isAnEmptyMap;
+import static com.bluecatcode.hamcrest.Matchers.isAnEmptyMap;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 

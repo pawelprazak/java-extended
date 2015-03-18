@@ -1,4 +1,4 @@
-package com.bluecatcode.common.junit.rules;
+package com.bluecatcode.junit.rules;
 
 import org.hamcrest.Matcher;
 import org.junit.rules.ExpectedException;
@@ -6,7 +6,7 @@ import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
-import static com.bluecatcode.common.junit.rules.RepeatRule.RepeatStatement.createFromAnnotationWith;
+import static com.bluecatcode.junit.rules.RepeatRule.RepeatStatement.createFromAnnotationWith;
 
 public class RepeatUntilExpectedExceptionRule implements TestRule {
 

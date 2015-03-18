@@ -1,4 +1,4 @@
-package com.bluecatcode.common.hamcrest.matchers;
+package com.bluecatcode.hamcrest.matchers;
 
 import org.hamcrest.Matcher;
 

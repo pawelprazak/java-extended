@@ -1,7 +1,7 @@
-package com.bluecatcode.common.hamcrest;
+package com.bluecatcode.hamcrest;
 
-import com.bluecatcode.common.hamcrest.matchers.LongCloseTo;
-import com.bluecatcode.common.hamcrest.matchers.PatternMatcher;
+import com.bluecatcode.hamcrest.matchers.LongCloseTo;
+import com.bluecatcode.hamcrest.matchers.PatternMatcher;
 import org.hamcrest.Matcher;
 
 import java.util.*;
@@ -40,7 +40,7 @@ public class Matchers {
     /**
      * Equivalent of {@code allOf(pattern(...), ...)} matcher combination
      * @see org.hamcrest.Matchers#allOf(Iterable)
-     * @see com.bluecatcode.common.hamcrest.Matchers#pattern(String)
+     * @see Matchers#pattern(String)
      */
     public static Matcher<String> containsPatterns(String... patterns) {
         List<Matcher<? super String>> matchers = new ArrayList<>();
