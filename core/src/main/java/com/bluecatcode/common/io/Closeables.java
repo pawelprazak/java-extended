@@ -14,7 +14,7 @@ import java.sql.Statement;
  * Provides {@link Closeable} and {@link AutoCloseable} interfaces for incompatible resources
  * <p/>
  * Enables usage of resources incompatible with Closable interface in contexts
- * where they are required, e.g. Java 7 try-with-resources or {@link com.google.common.io.Closer#register}.
+ * where they are required, e.g. Java 7 try-with-resources.
  * <p/>
  * Methods are wrapped with decorators and parameters can safely be null.
  * All decorators have non-throwing null-checks, <b>null values are silently ignored</b>.
