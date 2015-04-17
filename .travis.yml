@@ -1,5 +1,5 @@
 language: java
-
+script: mvn -q install -Penable-unit-tests,enable-integration-tests
 sudo: false
 
 cache:
@@ -13,10 +13,6 @@ jdk:
 
 os:
   - linux
-
-env:
-  global:
-    - PHASE='-Penable-unit-tests,enable-integration-tests'
 
 branches:
   only:
