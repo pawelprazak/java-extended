@@ -1,9 +1,22 @@
 language: java
 
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.m2
+    
 jdk:
   - oraclejdk7
   - oraclejdk8
   - openjdk7
+
+os:
+  - linux
+
+env:
+  global:
+    - PHASE='-Penable-unit-tests,enable-integration-tests'
 
 branches:
   only:
