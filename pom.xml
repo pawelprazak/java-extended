@@ -38,29 +38,8 @@
     </licenses>
 
     <prerequisites>
-        <maven>3.0.3</maven>
+        <maven>3.0.5</maven>
     </prerequisites>
-
-    <properties>
-        <encoding>UTF-8</encoding>
-        <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
-
-        <jdk.version>1.7</jdk.version>
-
-        <skipUnitTests>true</skipUnitTests>
-        <skipIntegrationTests>true</skipIntegrationTests>
-        <skipSourceGeneration>true</skipSourceGeneration>
-        <skipJavadocGeneration>true</skipJavadocGeneration>
-
-        <guava.version>15.0</guava.version>
-        <functionaljava.version>4.1</functionaljava.version><!-- 4.2 has bugs in reductio -->
-
-        <junit.version>4.12</junit.version>
-        <mockito.version>1.10.19</mockito.version>
-        <hamcrest.version>1.3</hamcrest.version>
-
-    </properties>
 
     <modules>
         <!-- test -->
@@ -73,47 +52,28 @@
         <module>guava</module>
     </modules>
 
-    <profiles>
+    <properties>
+        <encoding>UTF-8</encoding>
+        <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
 
-        <profile>
-            <id>release</id>
-            <properties>
-                <skipUnitTests>false</skipUnitTests>
-                <skipIntegrationTests>false</skipIntegrationTests>
-                <skipSourceGeneration>false</skipSourceGeneration>
-                <skipJavadocGeneration>false</skipJavadocGeneration>
-            </properties>
-        </profile>
+        <jdk.version>1.7</jdk.version>
 
-        <profile>
-            <id>enable-unit-tests</id>
-            <properties>
-                <skipUnitTests>false</skipUnitTests>
-            </properties>
-        </profile>
+        <guava.version>15.0</guava.version>
+        <functionaljava.version>4.1</functionaljava.version><!-- 4.2 has bugs in reductio -->
 
-        <profile>
-            <id>enable-integration-tests</id>
-            <properties>
-                <skipIntegrationTests>false</skipIntegrationTests>
-            </properties>
-        </profile>
+        <junit.version>4.12</junit.version>
+        <mockito.version>1.10.19</mockito.version>
+        <hamcrest.version>1.3</hamcrest.version>
 
-        <profile>
-            <id>generate-source</id>
-            <properties>
-                <skipSourceGeneration>false</skipSourceGeneration>
-            </properties>
-        </profile>
+        <!-- Maven profiles properties -->
+        <skipUnitTests>true</skipUnitTests>
+        <skipIntegrationTests>true</skipIntegrationTests>
+        <skipMutationTests>true</skipMutationTests>
+        <skipSourceGeneration>true</skipSourceGeneration>
+        <skipJavadocGeneration>true</skipJavadocGeneration>
 
-        <profile>
-            <id>generate-docs</id>
-            <properties>
-                <skipJavadocGeneration>false</skipJavadocGeneration>
-            </properties>
-        </profile>
-
-    </profiles>
+    </properties>
 
     <dependencyManagement>
         <dependencies>
@@ -231,6 +191,12 @@
                 <version>0.7-groovy-2.0</version>
                 <scope>test</scope>
             </dependency>
+            <dependency> <!-- Updates Groovy compiler version -->
+                <groupId>org.codehaus.groovy</groupId>
+                <artifactId>groovy-all</artifactId>
+                <version>2.3.11</version>
+                <scope>test</scope>
+            </dependency>
             <!-- Optional dependencies for using Spock -->
             <dependency> <!-- enables mocking of classes (in addition to interfaces) -->
                 <groupId>cglib</groupId>
@@ -285,6 +251,8 @@
                         <nonFilteredFileExtensions>
                             <nonFilteredFileExtension>pem</nonFilteredFileExtension>
                             <nonFilteredFileExtension>jks</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>key</nonFilteredFileExtension>
+                            <nonFilteredFileExtension>pub</nonFilteredFileExtension>
                         </nonFilteredFileExtensions>
                     </configuration>
                 </plugin>
@@ -292,10 +260,15 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>2.16</version>
+                    <version>2.17</version>
                     <configuration>
-                        <useFile>false</useFile>
                         <skipTests>${skipUnitTests}</skipTests>
+                        <excludes>
+                            <exclude>**/manual/**</exclude>
+                            <exclude>**/broken/**</exclude>
+                            <exclude>**/*IT.java</exclude>
+                        </excludes>
+                        <useFile>false</useFile>
                         <parallel>classesAndMethods</parallel>
                         <threadCount>4</threadCount>
                         <runOrder>failedfirst</runOrder>
@@ -304,18 +277,54 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>2.16</version>
+                    <version>2.17</version>
                     <configuration>
-                        <skipITs>${skipIntegrationTests}</skipITs>
+                        <skipTests>${skipIntegrationTests}</skipTests>
                         <includes>
                             <include>**/*IT.java</include>
                         </includes>
+                        <excludes>
+                            <exclude>**/manual/**</exclude>
+                            <exclude>**/broken/**</exclude>
+                        </excludes>
                     </configuration>
                     <executions>
                         <execution>
                             <goals>
                                 <goal>integration-test</goal>
                                 <goal>verify</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.pitest</groupId>
+                    <artifactId>pitest-maven</artifactId>
+                    <version>1.1.5</version>
+                    <configuration>
+                        <skip>${skipMutationTests}</skip>
+                        <verbose>false</verbose>
+                        <threads>4</threads>
+                        <mutateStaticInitializers>true</mutateStaticInitializers>
+                        <failWhenNoMutations>false</failWhenNoMutations>
+                        <targetClasses>
+                            <param>com.bluecatcode*</param>
+                        </targetClasses>
+                        <targetTests>
+                            <param>com.bluecatcode*</param>
+                        </targetTests>
+                        <outputFormats>
+                            <outputFormat>HTML</outputFormat>
+                            <outputFormat>XML</outputFormat>
+                        </outputFormats>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>pit-execute-mutation-coverage</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>mutationCoverage</goal>
                             </goals>
                         </execution>
                     </executions>
@@ -365,9 +374,14 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-jar-plugin</artifactId>
-                    <version>2.4</version>
+                    <version>2.5</version>
                     <configuration>
                         <archive>
+                            <manifest>
+                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                            </manifest>
+                            <index>true</index>
                             <manifestEntries>
                                 <Specification-Title>${project.description}</Specification-Title>
                                 <Specification-Version>${project.version}</Specification-Version>
@@ -392,7 +406,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>2.2.1</version>
+                    <version>2.3</version>
                     <executions>
                         <execution>
                             <id>attach-sources</id>
@@ -441,7 +455,7 @@
                     </executions>
                     <configuration>
                         <skip>${skipJavadocGeneration}</skip>
-                        <detectLinks />
+                        <detectLinks/>
                         <links>
                             <link>http://docs.oracle.com/javase/7/docs/api/</link>
                             <link>http://docs.guava-libraries.googlecode.com/git-history/v15.0/javadoc/</link>
@@ -478,7 +492,7 @@
                             </goals>
                             <phase>initialize</phase>
                             <configuration>
-                                <property>project.highest-basedir</property>
+                                <property>project.highest-basedir</property><!-- will be filled at runtime by the plugin -->
                             </configuration>
                         </execution>
                     </executions>
@@ -489,11 +503,16 @@
                     <version>1.2.7</version>
                     <executions>
                         <execution>
+                            <phase>initialize</phase>
                             <id>git-buildnumber</id>
                             <goals>
                                 <goal>extract-buildnumber</goal>
                             </goals>
-                            <phase>prepare-package</phase>
+                            <configuration>
+                                <javaScriptBuildnumberCallback>
+                                            (tag.length > 0) ? tag : branch + "-" + shortRevision + "-" + commitsCount
+                                </javaScriptBuildnumberCallback>
+                            </configuration>
                         </execution>
                     </executions>
                 </plugin>
@@ -587,11 +606,64 @@
                 <artifactId>maven-enforcer-plugin</artifactId>
             </plugin>
             <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+            </plugin>
+            <plugin>
                 <groupId>org.codehaus.gmaven</groupId>
                 <artifactId>gmaven-plugin</artifactId>
-                <version>1.5</version>
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+
+        <profile>
+            <id>release</id>
+            <properties>
+                <skipUnitTests>false</skipUnitTests>
+                <skipIntegrationTests>false</skipIntegrationTests>
+                <skipMutationTests>false</skipMutationTests>
+                <skipSourceGeneration>false</skipSourceGeneration>
+                <skipJavadocGeneration>false</skipJavadocGeneration>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>enable-unit-tests</id>
+            <properties>
+                <skipUnitTests>false</skipUnitTests>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>enable-integration-tests</id>
+            <properties>
+                <skipIntegrationTests>false</skipIntegrationTests>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>enable-mutation-tests</id>
+            <properties>
+                <skipMutationTests>false</skipMutationTests>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>generate-source</id>
+            <properties>
+                <skipSourceGeneration>false</skipSourceGeneration>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>generate-docs</id>
+            <properties>
+                <skipJavadocGeneration>false</skipJavadocGeneration>
+            </properties>
+        </profile>
+
+    </profiles>
 
 </project>
