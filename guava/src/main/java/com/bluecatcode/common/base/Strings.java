@@ -57,6 +57,15 @@ public class Strings {
     }
 
     @Beta
+    public static String capitalize(String string) {
+        checkArgument(string != null, "Expected non-null string");
+        if (string.isEmpty()) {
+            return string;
+        }
+        return Character.toUpperCase(string.charAt(0)) + string.substring(1);
+    }
+
+    @Beta
     public static String asString(Map<?, ?> map) {
         return asString(map, ", ");
     }
