@@ -60,6 +60,7 @@
         <jdk.version>1.7</jdk.version>
 
         <guava.version>15.0</guava.version>
+        <joda-time.version>2.7</joda-time.version>
         <functionaljava.version>4.1</functionaljava.version><!-- 4.2 has bugs in reductio -->
 
         <junit.version>4.12</junit.version>
@@ -108,7 +109,7 @@
             <dependency>
                 <groupId>joda-time</groupId>
                 <artifactId>joda-time</artifactId>
-                <version>2.5</version>
+                <version>${joda-time.version}</version>
             </dependency>
 
             <!-- Functional Java -->
@@ -148,14 +149,14 @@
             <dependency>
                 <groupId>nl.jqno.equalsverifier</groupId>
                 <artifactId>equalsverifier</artifactId>
-                <version>1.6</version>
+                <version>1.7.2</version>
             </dependency>
 
             <!-- Used in some tests -->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
-                <version>3.3.2</version>
+                <version>3.4</version>
             </dependency>
 
             <!-- Google's test utilities -->
