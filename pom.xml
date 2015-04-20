@@ -194,6 +194,12 @@
 
             <!-- Google's test utilities -->
             <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava-testlib</artifactId>
+                <version>${guava.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>com.google.truth</groupId>
                 <artifactId>truth</artifactId>
                 <version>0.25</version>
