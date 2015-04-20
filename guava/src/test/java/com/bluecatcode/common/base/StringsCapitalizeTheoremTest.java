@@ -5,7 +5,6 @@ import fj.F;
 import fj.test.Property;
 import fj.test.reflect.CheckParams;
 import fj.test.reflect.Name;
-import org.junit.Test;
 
 import static com.bluecatcode.common.base.Strings.capitalize;
 import static fj.test.Arbitrary.arbAlphaNumString;
@@ -30,8 +29,8 @@ public class StringsCapitalizeTheoremTest extends FunctionalJavaCheck {
     });
 
     @CheckParams(maxDiscarded = 1000, minSuccessful = 10, maxSize = 100)
-    @Name("Should leave any non-letter starting string")
-    Property capitalizeEmpty = property(arbitrary(elements("", " ", "\n", "\t", "\r", "0", "中国")), new F<String, Property>() {
+    @Name("Should leave any non-letter and already capitalized starting string")
+    Property capitalizeEmpty = property(arbitrary(elements("", " ", "\n", "\t", "\r", "0", "中国", "TLA")), new F<String, Property>() {
         @Override
         public Property f(String s) {
             return prop(capitalize(s).equals(s));
@@ -44,16 +43,6 @@ public class StringsCapitalizeTheoremTest extends FunctionalJavaCheck {
 
     private boolean startsWithUpperCase(String s) {
         return !s.isEmpty() && isUpperCase(s.charAt(0));
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void shouldHandleNull() throws Exception {
-        // given
-        String s = null;
-
-        // when
-        //noinspection ConstantConditions
-        capitalize(s);
     }
 
 }
