@@ -12,7 +12,7 @@ import static fj.test.Arbitrary.arbString;
 import static fj.test.Bool.bool;
 import static fj.test.Property.property;
 
-public class StringsLimitTheoremTest extends FunctionalJavaCheck<StringsLimitTheoremTest> {
+public class StringsLimitTheoremTest extends FunctionalJavaCheck {
 
     @Name("Must add ellipsis when string length is > max value and max value is > 4")
     Property addsEllipsis = property(arbString, arbIntegerFrom(4), new F2<String, Integer, Property>() {

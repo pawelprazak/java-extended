@@ -61,7 +61,7 @@
 
         <guava.version>15.0</guava.version>
         <joda-time.version>2.7</joda-time.version>
-        <functionaljava.version>4.1</functionaljava.version><!-- 4.2 has bugs in reductio -->
+        <functionaljava.version>4.3</functionaljava.version>
 
         <junit.version>4.12</junit.version>
         <mockito.version>1.10.19</mockito.version>
