@@ -61,7 +61,7 @@
 
         <guava.version>15.0</guava.version>
         <joda-time.version>2.7</joda-time.version>
-        <functionaljava.version>4.1</functionaljava.version><!-- 4.2 has bugs in reductio -->
+        <functionaljava.version>4.1</functionaljava.version><!-- Issuer #4; 4.2 has bugs in reductio -->
 
         <junit.version>4.12</junit.version>
         <mockito.version>1.10.19</mockito.version>
@@ -237,7 +237,17 @@
                         <showDeprecation>true</showDeprecation>
                         <showWarnings>true</showWarnings>
                         <fork>true</fork>
+                        <!-- error prone -->
+                        <compilerId>javac-with-errorprone</compilerId>
+                        <forceJavacCompilerUse>true</forceJavacCompilerUse>
                     </configuration>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.codehaus.plexus</groupId>
+                            <artifactId>plexus-compiler-javac-errorprone</artifactId>
+                            <version>2.5</version>
+                        </dependency>
+                    </dependencies>
                 </plugin>
 
                 <plugin>
