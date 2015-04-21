@@ -59,7 +59,7 @@
 
         <jdk.version>1.7</jdk.version>
 
-        <guava.version>15.0</guava.version>
+        <guava.version>18.0</guava.version>
         <joda-time.version>2.7</joda-time.version>
         <functionaljava.version>4.1</functionaljava.version><!-- Issuer #4; 4.2 has bugs in reductio -->
 
@@ -68,7 +68,7 @@
         <hamcrest.version>1.3</hamcrest.version>
 
         <spock-core.version>1.0-groovy-2.4</spock-core.version>
-        <groovy-all.version>2.4.1</groovy-all.version>
+        <groovy-all.version>2.4.3</groovy-all.version>
         <cglib-nodep.version>3.1</cglib-nodep.version>
         <objenesis.version>2.1</objenesis.version>
 
@@ -227,7 +227,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>3.2</version>
+                    <version>3.3</version>
                     <configuration>
                         <encoding>${encoding}</encoding>
                         <compilerVersion>${jdk.version}</compilerVersion>
