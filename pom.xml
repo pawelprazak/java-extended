@@ -58,6 +58,7 @@
         <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
 
         <jdk.version>1.7</jdk.version>
+        <scala.version>2.11.6</scala.version>
 
         <guava.version>18.0</guava.version>
         <joda-time.version>2.7</joda-time.version>
@@ -73,7 +74,7 @@
         <objenesis.version>2.1</objenesis.version>
 
         <!-- Maven profiles properties -->
-        <skipUnitTests>true</skipUnitTests>
+        <skipUnitTests>false</skipUnitTests>
         <skipIntegrationTests>true</skipIntegrationTests>
         <skipMutationTests>true</skipMutationTests>
         <skipSourceGeneration>true</skipSourceGeneration>
@@ -204,6 +205,12 @@
                 <version>1.12.2</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>org.scala-lang</groupId>
+                <artifactId>scala-library</artifactId>
+                <version>${scala.version}</version>
+                <scope>test</scope>
+            </dependency>
 
             <!-- Mandatory dependencies for using Spock -->
             <dependency>
@@ -262,6 +269,15 @@
                             <version>2.5</version>
                         </dependency>
                     </dependencies>
+                    <!-- for scala-maven-plugin -->
+                    <executions>
+                        <execution>
+                            <phase>compile</phase>
+                            <goals>
+                                <goal>compile</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
 
                 <plugin>
@@ -280,11 +296,46 @@
                 </plugin>
 
                 <plugin>
+                    <groupId>net.alchim31.maven</groupId>
+                    <artifactId>scala-maven-plugin</artifactId>
+                    <version>3.2.0</version>
+                    <executions>
+                        <execution>
+                            <id>scala-compile-first</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>add-source</goal>
+                                <goal>compile</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>scala-test-compile</id>
+                            <phase>process-test-resources</phase>
+                            <goals>
+                                <goal>testCompile</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <scalaVersion>${scala.version}</scalaVersion>
+                        <encoding>${encoding}</encoding>
+                        <sendJavaToScalac>true</sendJavaToScalac>
+                        <useZincServer>true</useZincServer>
+                        <useFsc>false</useFsc>
+                        <verbose>false</verbose>
+                    </configuration>
+                </plugin>
+
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.18.1</version>
                     <configuration>
                         <skipTests>${skipUnitTests}</skipTests>
+                        <includes>
+                            <include>**/*Spec.class</include>
+                            <include>**/*Suite.class</include>
+                        </includes>
                         <excludes>
                             <exclude>**/manual/**</exclude>
                             <exclude>**/broken/**</exclude>
@@ -632,6 +683,10 @@
                 <artifactId>pitest-maven</artifactId>
             </plugin>
             <plugin>
+                <groupId>net.alchim31.maven</groupId>
+                <artifactId>scala-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
                 <groupId>org.codehaus.gmaven</groupId>
                 <artifactId>gmaven-plugin</artifactId>
             </plugin>
@@ -652,9 +707,9 @@
         </profile>
 
         <profile>
-            <id>enable-unit-tests</id>
+            <id>skip-unit-tests</id>
             <properties>
-                <skipUnitTests>false</skipUnitTests>
+                <skipUnitTests>true</skipUnitTests>
             </properties>
         </profile>
 
