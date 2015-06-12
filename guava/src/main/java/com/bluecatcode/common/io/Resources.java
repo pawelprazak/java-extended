@@ -126,6 +126,9 @@ public final class Resources {
         }
     }
 
+    /**
+     * @see com.google.common.io.Resources#getResource(Class, String) 
+     */
     public static URL getResource(Class<?> contextClass, String resourceName) {
         return com.google.common.io.Resources.getResource(contextClass, resourceName);
     }
