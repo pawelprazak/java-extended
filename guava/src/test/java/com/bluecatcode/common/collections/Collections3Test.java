@@ -65,12 +65,12 @@ public class Collections3Test {
 
     @DataPoints
     public static final DictionaryData[] dictionarySamples = new DictionaryData[]{
-            dictionaryData(new Hashtable<>(ImmutableMap.<String, String>of()), ImmutableMap.<String, String>of()),
-            dictionaryData(new Hashtable<>(ImmutableMap.of("lol", "cat")), ImmutableMap.of("lol", "cat")),
+            dictionaryData(new Hashtable<String, String>(ImmutableMap.<String, String>of()), ImmutableMap.<String, String>of()),
+            dictionaryData(new Hashtable<String, String>(ImmutableMap.of("lol", "cat")), ImmutableMap.of("lol", "cat")),
             dictionaryData(new Supplier<Dictionary<String, String>>() {
                 @Override
                 public Dictionary<String, String> get() {
-                    Hashtable<String, String> dict = new Hashtable<>();
+                    Hashtable<String, String> dict = new Hashtable<String, String>();
                     dict.put("lol", "cat");
                     dict.put("lol", "cat");
                     return dict;

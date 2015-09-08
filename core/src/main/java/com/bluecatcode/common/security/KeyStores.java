@@ -1,7 +1,5 @@
 package com.bluecatcode.common.security;
 
-import com.bluecatcode.common.annotations.Beta;
-
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.KeyManagerFactory;
 import javax.net.ssl.TrustManager;
@@ -17,7 +15,6 @@ import java.security.cert.CertificateException;
 
 import static java.lang.String.format;
 
-@Beta
 public class KeyStores {
 
     public static KeyStore loadKeyStore(String keyStorePath, String keyStorePassword) {
@@ -25,12 +22,22 @@ public class KeyStores {
     }
 
     public static KeyStore loadKeyStore(String type, String path, String password) {
-        try (InputStream resourceAsStream = new FileInputStream(path)) {
+        InputStream resourceAsStream = null;
+        try {
+            resourceAsStream = new FileInputStream(path);
             KeyStore keyStore = KeyStore.getInstance(type);
             keyStore.load(resourceAsStream, password.toCharArray());
             return keyStore;
-        } catch (KeyStoreException | CertificateException | NoSuchAlgorithmException | IOException e) {
+        } catch (Exception e) {
             throw new IllegalStateException(format("Cannot load the key store: '%s'", path), e);
+        } finally {
+            if (resourceAsStream != null) {
+                try {
+                    resourceAsStream.close();
+                } catch (IOException e) {
+                    // safe to ignore
+                }
+            }
         }
     }
 
@@ -43,7 +50,9 @@ public class KeyStores {
             keyFactory.init(keyStore, keyStorePassword.toCharArray());
         } catch (UnrecoverableKeyException ex) {
             throw new RuntimeException(ex);
-        } catch (NoSuchAlgorithmException | KeyStoreException ex) {
+        } catch (NoSuchAlgorithmException ex) {
+            throw new IllegalStateException(ex);
+        } catch (KeyStoreException ex) {
             throw new IllegalStateException(ex);
         }
         return keyFactory.getKeyManagers();
@@ -56,7 +65,9 @@ public class KeyStores {
         try {
             trustFactory = TrustManagerFactory.getInstance(trustAlgorithm);
             trustFactory.init(trustStore);
-        } catch (NoSuchAlgorithmException | KeyStoreException ex) {
+        } catch (NoSuchAlgorithmException ex) {
+            throw new IllegalStateException(ex);
+        } catch (KeyStoreException ex) {
             throw new IllegalStateException(ex);
         }
         return trustFactory.getTrustManagers();

@@ -3,6 +3,7 @@ package com.bluecatcode.common.io;
 import com.bluecatcode.common.base.Consumer;
 import com.google.common.annotations.Beta;
 import com.google.common.base.Charsets;
+import com.google.common.io.CharSource;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -25,10 +26,20 @@ public class Files {
     public static Properties getFileAsProperties(String path) {
         checkFileExists(path);
         Properties properties = new Properties();
-        try (InputStream stream = new FileInputStream(path)) {
+        InputStream stream = null;
+        try {
+            stream = new FileInputStream(path);
             properties.load(stream);
         } catch (IOException e) {
             throw new IllegalArgumentException(e);
+        } finally {
+            if (stream != null) {
+                try {
+                    stream.close();
+                } catch (IOException e) {
+                    // safe to ignore
+                }
+            }
         }
         return properties;
     }
@@ -69,9 +80,20 @@ public class Files {
 
     public static void consumeLines(File file, Charset charset, Consumer<String> consumer) {
         try {
-            try (BufferedReader br = com.google.common.io.Files.asCharSource(file, charset).openBufferedStream()) {
-                for (String line; (line = br.readLine()) != null; ) {
+            CharSource charSource = com.google.common.io.Files.asCharSource(file, charset);
+            BufferedReader bufferedReader = null;
+            try {
+                bufferedReader = charSource.openBufferedStream();
+                for (String line; (line = bufferedReader.readLine()) != null; ) {
                     consumer.accept(line);
+                }
+            } finally {
+                if (bufferedReader != null) {
+                    try {
+                        bufferedReader.close();
+                    } catch (IOException e) {
+                        // safe to ignore
+                    }
                 }
             }
         } catch (IOException e) {

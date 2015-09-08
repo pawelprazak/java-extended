@@ -1,6 +1,5 @@
 package com.bluecatcode.time;
 
-import com.bluecatcode.common.annotations.Beta;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.ISODateTimeFormat;
@@ -10,7 +9,6 @@ import java.util.Date;
 /**
  * Ensures ISO 8601 date time format with UTC timezone
  */
-@Beta
 public class ISO8601 {
 
     public static Date isoToDate(String date) {

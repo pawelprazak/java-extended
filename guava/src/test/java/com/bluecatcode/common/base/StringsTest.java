@@ -4,19 +4,14 @@ import com.google.common.collect.ImmutableMap;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
-import org.junit.rules.Timeout;
 
 import java.util.List;
 
 import static com.google.common.collect.ImmutableMap.of;
-import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
 public class StringsTest {
-
-    @Rule
-    public Timeout timeout = new Timeout(5, SECONDS);
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
@@ -58,6 +53,7 @@ public class StringsTest {
         exception.expect(IllegalArgumentException.class);
 
         // when
+        //noinspection ConstantConditions
         Strings.asStringList(input);
     }
 

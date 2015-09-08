@@ -105,12 +105,22 @@ public final class Resources {
     }
 
     public static Properties getResourceAsProperties(Class<?> class_, String filename) {
-        try (InputStream stream = getResourceAsStream(class_, filename)) {
+        InputStream stream = null;
+        try {
+            stream = getResourceAsStream(class_, filename);
             Properties properties = new Properties();
             properties.load(stream);
             return assertNotNull(properties, "Can't find %s on classpath for %s", filename, class_);
         } catch (IOException e) {
             throw new IllegalStateException(e);
+        } finally {
+            if (stream != null) {
+                try {
+                    stream.close();
+                } catch (IOException e) {
+                    // safe to ignore
+                }
+            }
         }
     }
 

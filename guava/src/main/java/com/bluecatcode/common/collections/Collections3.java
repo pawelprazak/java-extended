@@ -82,7 +82,7 @@ public class Collections3 {
         checkArgument(second != null, "Expected non-null second map");
         checkArgument(defaultValue != null, "Expected non-null default value");
 
-        Map<K, V> map = new HashMap<>();
+        Map<K, V> map = new HashMap<K, V>();
         //noinspection ConstantConditions
         for (Map.Entry<K, V> entry : first.entrySet()) {
             if (entry.getKey() == null) {

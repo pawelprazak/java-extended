@@ -1,11 +1,8 @@
 package com.bluecatcode.common.interfaces;
 
-import com.bluecatcode.common.annotations.Beta;
-
 /**
  * Single Method Interface for objects with capability of being empty
  */
-@Beta
 public interface IsEmpty {
 
     /**

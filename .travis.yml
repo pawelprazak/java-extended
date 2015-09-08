@@ -1,21 +1,23 @@
 language: java
-script: 
-  - mvn -q install -Penable-unit-tests,enable-integration-tests
-  - mvn -q com.code-spotter:codespotter-maven-plugin::check
+os: linux
 sudo: false
 
 cache:
   directories:
     - $HOME/.m2
-    
-jdk:
-  - oraclejdk7
-  - oraclejdk8
-  - openjdk7
-
-os:
-  - linux
 
 branches:
   only:
     - master
+
+jdk:
+  - oraclejdk7
+  - oraclejdk8
+
+install:
+  - mvn clean compile dependency:resolve -U
+  - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
+script:
+  - mvn clean install -Penable-integration-tests ${JDK_PROFILE}
+  - mvn com.code-spotter:codespotter-maven-plugin::check

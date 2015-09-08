@@ -1,7 +1,5 @@
 package com.bluecatcode.common.security;
 
-import com.bluecatcode.common.annotations.Beta;
-
 import javax.net.ssl.KeyManager;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
@@ -9,7 +7,6 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 
-@Beta
 public class Protocols {
 
     public static final String TLS = "TLS";
@@ -28,7 +25,9 @@ public class Protocols {
                     TLS_V1
             };
             sslContext.getDefaultSSLParameters().setProtocols(enabledProtocols);
-        } catch (NoSuchAlgorithmException | KeyManagementException ex) {
+        } catch (NoSuchAlgorithmException ex) {
+            throw new IllegalStateException(ex);
+        } catch (KeyManagementException ex) {
             throw new IllegalStateException(ex);
         }
         return sslContext;

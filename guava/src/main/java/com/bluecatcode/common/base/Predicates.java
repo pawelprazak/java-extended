@@ -15,7 +15,6 @@ import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Map;
 
-import static com.google.common.base.Predicates.*;
 import static java.lang.String.format;
 
 /**
@@ -245,13 +244,13 @@ public final class Predicates {
      */
     @Beta
     public static <T> Predicate<T> nor(Predicate<? super T> first, Predicate<? super T> second) {
-        return not(or(first, second));
+        return com.google.common.base.Predicates.<T>not(com.google.common.base.Predicates.<T>or(first, second));
     }
 
     @Beta
-    @SafeVarargs
+//    @SafeVarargs
     public static <T> Predicate<T> nor(Predicate<? super T>... components) {
-        return not(or(components));
+        return com.google.common.base.Predicates.<T>not(com.google.common.base.Predicates.<T>or(components));
     }
 
     /**
@@ -267,16 +266,16 @@ public final class Predicates {
      */
     @Beta
     public static <T> Predicate<T> nand(Predicate<? super T> predicate1, Predicate<? super T> predicate2) {
-        return not(and(predicate1, predicate2));
+        return com.google.common.base.Predicates.<T>not(com.google.common.base.Predicates.<T>and(predicate1, predicate2));
     }
 
     /**
      * @see #nand(com.google.common.base.Predicate, com.google.common.base.Predicate)
      */
     @Beta
-    @SafeVarargs
+//    @SafeVarargs
     public static <T> Predicate<T> nand(Predicate<? super T>... components) {
-        return not(and(components));
+        return com.google.common.base.Predicates.<T>not(com.google.common.base.Predicates.<T>and(components));
     }
 
     @Beta
@@ -315,7 +314,7 @@ public final class Predicates {
 
     @Beta
     public static <T> Predicate<T> isInstance(Class... types) {
-        return new IsInstancePredicate<>(types);
+        return new IsInstancePredicate<T>(types);
     }
 
     private Predicates() {

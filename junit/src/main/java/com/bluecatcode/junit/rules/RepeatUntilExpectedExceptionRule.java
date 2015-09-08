@@ -24,10 +24,6 @@ public class RepeatUntilExpectedExceptionRule implements TestRule {
         expectedException.expectMessage(matcher);
     }
 
-    public void expectCause(Matcher<? extends Throwable> expectedCause) {
-        expectedException.expectCause(expectedCause);
-    }
-
     public void expect(Class<? extends Throwable> type) {
         expectedException.expect(type);
     }
@@ -38,10 +34,6 @@ public class RepeatUntilExpectedExceptionRule implements TestRule {
 
     public void expectMessage(String substring) {
         expectedException.expectMessage(substring);
-    }
-
-    public ExpectedException reportMissingExceptionWithMessage(String message) {
-        return expectedException.reportMissingExceptionWithMessage(message);
     }
 
 }

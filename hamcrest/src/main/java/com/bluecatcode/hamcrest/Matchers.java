@@ -30,7 +30,7 @@ public class Matchers {
      * @see org.hamcrest.Matchers#containsString(String)
      */
     public static Matcher<String> containsStrings(String... strings) {
-        List<Matcher<? super String>> matchers = new ArrayList<>();
+        List<Matcher<? super String>> matchers = new ArrayList<Matcher<? super String>>();
         for (String string : strings) {
             matchers.add(containsString(string));
         }
@@ -43,7 +43,7 @@ public class Matchers {
      * @see Matchers#pattern(String)
      */
     public static Matcher<String> containsPatterns(String... patterns) {
-        List<Matcher<? super String>> matchers = new ArrayList<>();
+        List<Matcher<? super String>> matchers = new ArrayList<Matcher<? super String>>();
         for (String pattern : patterns) {
             matchers.add(pattern(pattern));
         }
@@ -70,7 +70,7 @@ public class Matchers {
      * Equivalent of {@code allOf(hasItem(T), ...)} matcher combination
      */
     public static <T> Matcher<Iterable<T>> hasItems(Iterable<T> items) {
-        List<Matcher<? super Iterable<T>>> all = new LinkedList<>();
+        List<Matcher<? super Iterable<T>>> all = new LinkedList<Matcher<? super Iterable<T>>>();
         for (T element : items) {
             all.add(hasItem(element));
         }
