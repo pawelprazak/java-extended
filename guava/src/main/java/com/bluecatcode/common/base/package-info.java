@@ -29,23 +29,23 @@
  * <li>{@link com.bluecatcode.common.base.Postconditions}
  * <li>{@link com.bluecatcode.common.base.Preconditions}
  * </ul>
- * <p/>
+ * <p>
  * Summary of the major kinds of runtime checks.
- * <p/>
- * <table>
+ * <p>
+ * <table summary="">
  * <thead>
  * <tr><th>Kind of check</th><th>Description</th></tr>
- * <thead>
+ * </thead>
  * <tbody>
  * <tr><td>Precondition</td><td>"You messed up (caller)."</td></tr>
  * <tr><td>Postcondition assertion</td><td>"I messed up."</td></tr>
  * <tr><td>Verification</td><td>"Someone I depend on messed up."</td></tr>
  * <tr><td>Test assertion</td><td>"The code I'm testing messed up."</td></tr>
- * <tr><td>Impossible condition</td><td>"What the? the world is messed up!"</td></tr>
+ * <tr><td>Impossible condition</td><td>"Wtf? the world is messed up!"</td></tr>
  * <tr><td>Exceptional result</td><td>"No one messed up, exactly (at least in this VM)."</td></tr>
  * </tbody>
  * </table>
- * <p/>
+ * <p>
  * @see <a href="https://code.google.com/p/guava-libraries/wiki/ConditionalFailuresExplained">Conditional Failures Explained</a>
  */
 @ParametersAreNonnullByDefault

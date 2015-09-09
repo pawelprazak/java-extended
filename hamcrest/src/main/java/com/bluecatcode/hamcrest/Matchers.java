@@ -19,6 +19,7 @@ public class Matchers {
     /**
      * Equivalent of {@code not(isEmptyOrNullString())} matcher combination
      * @see org.hamcrest.Matchers#isEmptyOrNullString()
+     * @return the matcher
      */
     public static Matcher<String> isNotEmptyOrNullString() {
         return not(isEmptyOrNullString());
@@ -28,6 +29,8 @@ public class Matchers {
      * Equivalent of {@code allOf(containsString(...), ...)} matcher combination
      * @see org.hamcrest.Matchers#allOf(Iterable)
      * @see org.hamcrest.Matchers#containsString(String)
+     * @param strings all the strings to match against
+     * @return the matcher
      */
     public static Matcher<String> containsStrings(String... strings) {
         List<Matcher<? super String>> matchers = new ArrayList<Matcher<? super String>>();
@@ -41,6 +44,8 @@ public class Matchers {
      * Equivalent of {@code allOf(pattern(...), ...)} matcher combination
      * @see org.hamcrest.Matchers#allOf(Iterable)
      * @see Matchers#pattern(String)
+     * @param patterns all the patterns to match against
+     * @return the matcher
      */
     public static Matcher<String> containsPatterns(String... patterns) {
         List<Matcher<? super String>> matchers = new ArrayList<Matcher<? super String>>();
@@ -53,6 +58,8 @@ public class Matchers {
     /**
      * Equivalent of {@code not(isIn(Collection<T>)} matcher combination
      * @see org.hamcrest.Matchers#isIn(java.util.Collection)
+     * @param collection the collection to match against
+     * @return the matcher
      */
     public static <T> Matcher<T> isNotIn(Collection<T> collection) {
         return not(isIn(collection));
@@ -61,6 +68,8 @@ public class Matchers {
     /**
      * Equivalent of {@code not(isIn(Collection<T>)} matcher combination
      * @see org.hamcrest.Matchers#isIn(Object[])
+     * @param array the array to match against
+     * @return the matcher
      */
     public static <T> Matcher<T> isNotIn(T[] array) {
         return not(isIn(array));
@@ -68,6 +77,8 @@ public class Matchers {
 
     /**
      * Equivalent of {@code allOf(hasItem(T), ...)} matcher combination
+     * @param items the items to match against
+     * @return the matcher
      */
     public static <T> Matcher<Iterable<T>> hasItems(Iterable<T> items) {
         List<Matcher<? super Iterable<T>>> all = new LinkedList<Matcher<? super Iterable<T>>>();
@@ -80,6 +91,8 @@ public class Matchers {
 
     /**
      * @see PatternMatcher#pattern(java.util.regex.Pattern)
+     * @param pattern the pattern to match against
+     * @return the matcher
      */
     public static Matcher<? super CharSequence> pattern(Pattern pattern) {
         return PatternMatcher.pattern(pattern);
@@ -87,22 +100,37 @@ public class Matchers {
 
     /**
      * @see PatternMatcher#pattern(String)
+     * @param pattern the pattern to match against
+     * @return the matcher
      */
     public static Matcher<? super CharSequence> pattern(String pattern) {
         return PatternMatcher.pattern(pattern);
     }
 
     /**
-     * {@inheritDoc}
+     * @see LongCloseTo#closeTo(Long, Long)
+     * @param operand the operand to match against
+     * @param error the error margin
+     * @return the matcher
      */
     public static Matcher<Long> closeTo(Long operand, Long error) {
         return LongCloseTo.closeTo(operand, error);
     }
 
+    /**
+     * Equivalent of {@code allOf(greaterThan(min), lessThan(max))} matcher combination
+     * @param min the minimum value of the range
+     * @param max the maximum value of the range
+     * @return the matcher
+     */
     public static <T extends Comparable<T>> Matcher<T> between(T min, T max) {
         return org.hamcrest.Matchers.allOf(greaterThan(min), lessThan(max));
     }
 
+    /**
+     * Equivalent of {@code allOf(notNullValue(), not(hasEntry(notNullValue(), notNullValue())))} matcher combination
+     * @return the matcher
+     */
     public static Matcher<Map<?, ?>> isAnEmptyMap() {
         return org.hamcrest.Matchers.allOf(notNullValue(), not(hasEntry(notNullValue(), notNullValue())));
     }

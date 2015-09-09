@@ -19,7 +19,7 @@ import static java.lang.String.format;
 
 /**
  * Additional Predicates as an extension to {@link com.google.common.base.Predicates}
- * <p/>
+ * <p>
  * In performance critical contexts it is probably better to use hand-written checks, but <b>measure first!</b>.
  * <ul>
  *     <li>nor - A 'not or' predicate</li>
@@ -177,6 +177,9 @@ public final class Predicates {
             }
         };
     }
+
+    // TODO Dictionary
+    // TODO Hashmap
 
     public static Predicate<Object> isEmptyObject() {
         return new Predicate<Object>() {

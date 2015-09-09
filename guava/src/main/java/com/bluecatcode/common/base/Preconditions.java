@@ -17,7 +17,7 @@ import static java.util.regex.Pattern.compile;
 
 /**
  * Additional Preconditions as an extension to {@link com.google.common.base.Preconditions}
- * <p/>
+ * <p>
  * In performance critical contexts it is probably better to use hand-written checks, but <b>measure first!</b>.
  * <ul>
  *     <li>check - Performs check with a predicate</li>
@@ -46,6 +46,7 @@ public final class Preconditions {
      * @param errorMessageArgs the arguments to be substituted into the message
      *     template. Arguments are converted to strings using
      *     {@link String#valueOf(Object)}.
+     * @return the original reference
      * @throws IllegalArgumentException if the {@code reference} doesn't match provided predicate
      * @throws NullPointerException if the {@code reference} or {@code predicate} is null
      * @see java.util.regex.Pattern
@@ -65,6 +66,7 @@ public final class Preconditions {
      * @param reference reference to check
      * @param errorMessage the exception message to use if the check fails; will
      *     be converted to a string using {@link String#valueOf(Object)}
+     * @return the original reference
      * @throws IllegalArgumentException if the {@code reference} is empty
      * @throws NullPointerException     if the {@code reference} is null
      * @see #checkNotEmpty(Object, String, Object...)
@@ -79,6 +81,7 @@ public final class Preconditions {
      * Performs check with the predicate.
      *
      * @param reference String reference to check
+     * @return the original reference
      * @throws IllegalArgumentException if the {@code reference} is empty
      * @throws NullPointerException     if the {@code reference} is null
      * @see #checkNotEmpty(Object, String, Object...)
@@ -91,7 +94,7 @@ public final class Preconditions {
 
     /**
      * Performs emptiness and nullness check.
-     * <p/>
+     * <p>
      * Supports the following types:
      * String, CharSequence, Optional, Stream, Iterable, Collection, Map, Object[], primitive[]
      *
@@ -142,9 +145,9 @@ public final class Preconditions {
      * Performs emptiness and nullness check.
      *
      * @param reference String reference to check
+     * @return the original reference
      * @throws IllegalArgumentException if the {@code reference} is empty
      * @throws NullPointerException     if the {@code reference} is null
-     * @return the checked reference
      * @see #checkNotEmpty(Object, String, Object...)
      */
     public static <T> T checkNotEmpty(T reference) {
@@ -212,6 +215,7 @@ public final class Preconditions {
     /**
      * Performs a runtime check if the reference is an instance of the provided class
      *
+     * @return the original reference
      * @throws IllegalArgumentException if the {@code reference} is not an instance of provided class {@code class_}
      * @throws NullPointerException if the {@code reference} is null; also when the check fails and either
      *     {@code errorMessageTemplate} or {@code errorMessageArgs} is null (don't let this happen)

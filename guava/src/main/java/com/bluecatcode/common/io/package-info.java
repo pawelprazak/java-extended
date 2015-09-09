@@ -1,6 +1,6 @@
 /**
  * I/O utility libraries and interfaces.
- * <p/>
+ * <p>
  * <h3>Main goals:</h3>
  * <ul>
  * <li>Provide easy to use and less error prone abstraction for I/O operations

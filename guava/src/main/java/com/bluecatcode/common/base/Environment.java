@@ -20,6 +20,7 @@ public class Environment {
 
     /**
      * @see java.net.InetAddress#getHostName()
+     * @return the local host name
      */
     public static Optional<String> getLocalHostName() {
         try {
@@ -35,13 +36,13 @@ public class Environment {
      * When using the {@link java.net.InetAddress#getHostName()} method in an
      * environment where neither a proper DNS lookup nor an <tt>/etc/hosts</tt>
      * entry exists for a given host, the following exception will be thrown:
-     * <p/>
+     * <p>
      * <code>
      * java.net.UnknownHostException: &lt;hostname&gt;: &lt;hostname&gt;
      * at java.net.InetAddress.getLocalHost(InetAddress.java:1425)
      * ...
      * </code>
-     * <p/>
+     * <p>
      * Instead of just throwing an UnknownHostException and giving up, this
      * method grabs a suitable hostname from the exception and prevents the
      * exception from being thrown. If a suitable hostname cannot be acquired
@@ -67,6 +68,8 @@ public class Environment {
 
     /**
      * @see System#getenv(String)
+     * @param name the environment variable name
+     * @return the environment variable value
      */
     public static Optional<String> getEnvironmentVariable(String name) {
         return Optional.fromNullable(
@@ -76,6 +79,8 @@ public class Environment {
 
     /**
      * @see System#getProperty(String)
+     * @param name the system property name
+     * @return the system property value
      */
     public static Optional<String> getSystemProperty(String name) {
         return Optional.fromNullable(

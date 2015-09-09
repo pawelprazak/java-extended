@@ -6,14 +6,27 @@ import com.google.common.collect.ImmutableMap;
 
 import java.util.*;
 
+import static com.bluecatcode.common.base.Preconditions.checkNotEmpty;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Iterables.getOnlyElement;
 
 public class Collections3 {
 
+    /**
+     * Combine two lists into a map. Lists must have the same size.
+     * @param keys the key list
+     * @param values the value list
+     * @param <K> the key type
+     * @param <V> the value type
+     * @return the resulting map
+     * @throws IllegalArgumentException if lists size differ
+     * @throws NullPointerException if any of the lists is null
+     */
     @Beta
     public static <K, V> Map<K, V> zip(List<K> keys, List<V> values) {
+        checkNotNull(keys);
+        checkNotNull(values);
         checkArgument(keys.size() == values.size(), "Expected equal size of lists, got %s and %s", keys.size(), values.size());
 
         ImmutableMap.Builder<K, V> builder = ImmutableMap.builder();
@@ -25,6 +38,13 @@ public class Collections3 {
         return builder.build();
     }
 
+    /**
+     * Convert a {@link Dictionary} to a {@link Map}
+     * @param dictionary the dictionary to convert
+     * @param <K> the key type
+     * @param <V> the value type
+     * @return the resulting map
+     */
     @Beta
     public static <K, V> Map<K, V> fromDictionary(Dictionary<K, V> dictionary) {
         checkNotNull(dictionary);

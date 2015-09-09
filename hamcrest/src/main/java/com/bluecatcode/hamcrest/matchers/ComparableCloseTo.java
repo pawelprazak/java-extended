@@ -20,6 +20,7 @@ public abstract class ComparableCloseTo<T extends Comparable<T>> extends TypeSaf
     protected abstract T zero();
 
     /**
+     * @param item the item to compare
      * @return the actual difference to a 'zero'
      * @see #zero()
      */

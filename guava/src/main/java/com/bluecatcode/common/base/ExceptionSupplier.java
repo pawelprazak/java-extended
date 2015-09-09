@@ -4,11 +4,11 @@ import com.google.common.base.Supplier;
 
 /**
  * Optional supplier for exceptions
- * <p/>
+ * <p>
  * The supplier is designed to be used for more DLS usage of the following pattern:
  * {@code}
  * <pre>
- *  Optional<Something> optionalSomething = ...;
+ *  Optional&lt;Something&gt; optionalSomething = ...;
  *  if (!optional.isPresent()) {
  *      throw new SomeException();
  *  }
@@ -36,7 +36,8 @@ public class ExceptionSupplier<T, E extends RuntimeException> implements Supplie
      * @param exception exception to throw
      * @param <T>       Supplied object type
      * @param <E>       RuntimeException subtype
-     * @throws E
+     * @return the exception supplier
+     * @throws E the provided exception
      */
     public static <T, E extends RuntimeException> ExceptionSupplier<T, E> throwA(E exception) {
         return new ExceptionSupplier<T, E>(exception);
@@ -49,7 +50,8 @@ public class ExceptionSupplier<T, E extends RuntimeException> implements Supplie
      * @param exception exception to throw
      * @param <T>       Supplied object type
      * @param <E>       RuntimeException subtype
-     * @throws E
+     * @return the exception supplier
+     * @throws E the provided exception
      */
     public static <T, E extends RuntimeException> ExceptionSupplier<T, E> throwA(@SuppressWarnings("UnusedParameters") Class<T> class_, E exception) {
         return new ExceptionSupplier<T, E>(exception);

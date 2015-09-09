@@ -9,7 +9,7 @@ import static com.google.common.hash.Hashing.*;
 
 /**
  * Provides factory methods for basic use cases of Guava Hashing
- * <p/>
+ * <p>
  * When hashing a String it is very important to get the encoding right, otherwise
  * the resulting hash value might be invalid or "unexpected".
  *

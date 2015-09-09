@@ -28,6 +28,10 @@ public final class Resources {
     /**
      * @see com.google.common.io.Resources#getResource(Class, String)
      * @see com.google.common.io.Resources#toString(java.net.URL, java.nio.charset.Charset)
+     *
+     * @param loader the class loader to use
+     * @param resourceName the resource name
+     * @return the loaded content
      */
     public static String getResourceAsString(ClassLoader loader, String resourceName) {
         checkNotNull(resourceName);
@@ -42,6 +46,9 @@ public final class Resources {
      * @see com.google.common.io.Resources#toString(java.net.URL, java.nio.charset.Charset)
      * @throws IllegalArgumentException if the resource is not found
      * @throws IllegalStateException if an I/O error occurs
+     * @param contextClass the class the resource is relative to
+     * @param resourceName the resource name
+     * @return the loaded content
      */
     public static String getResourceAsString(Class<?> contextClass, String resourceName) {
         checkNotNull(contextClass);
@@ -55,6 +62,12 @@ public final class Resources {
      * @see com.google.common.io.LineProcessor
      * @see com.google.common.io.Resources#getResource(String)
      * @see com.google.common.io.Resources#readLines(java.net.URL, java.nio.charset.Charset, LineProcessor)
+     *
+     * @param contextClass the class the resource is relative to
+     * @param resourceName the resource name
+     * @param lineProcessor the line processor to use
+     * @param <T> the type of object to load into
+     * @return the loaded object of type <tt>T</tt>
      */
     public static <T> T getResourceWith(Class<?> contextClass, String resourceName, LineProcessor<T> lineProcessor) {
         checkNotEmpty(resourceName);
@@ -70,6 +83,9 @@ public final class Resources {
 
     /**
      * @see com.google.common.io.Resources#toString(java.net.URL, java.nio.charset.Charset)
+     * @param url the URL to read from
+     * @param charset the charset to use
+     * @return the content
      * @throws IllegalStateException if an I/O error occurs
      */
     public static String toString(URL url, Charset charset) {
@@ -83,6 +99,9 @@ public final class Resources {
     /**
      * @see com.google.common.io.Resources#getResource(String)
      * @see java.net.URLDecoder#decode(String, String)
+     * @param loader the class loader to use
+     * @param resourceName the resource name
+     * @return the file path
      */
     public static String getResourceAsFilePath(ClassLoader loader, String resourceName) {
         try {
@@ -95,22 +114,30 @@ public final class Resources {
     /**
      * @see com.google.common.io.Resources#getResource(String)
      * @see java.net.URLDecoder#decode(String, String)
+     * @param contextClass the class the resource is relative to
+     * @param resourceName the resource name
+     * @return the file path
      */
-    public static String getResourceAsFilePath(Class<?> class_, String resourceName) {
+    public static String getResourceAsFilePath(Class<?> contextClass, String resourceName) {
         try {
-            return URLDecoder.decode(getResource(class_, resourceName).getFile(), UTF_8.toString());
+            return URLDecoder.decode(getResource(contextClass, resourceName).getFile(), UTF_8.toString());
         } catch (UnsupportedEncodingException e) {
             throw new IllegalArgumentException(e);
         }
     }
 
-    public static Properties getResourceAsProperties(Class<?> class_, String filename) {
+    /**
+     * @param contextClass the class the resource is relative to
+     * @param resourceName the resource name
+     * @return the loaded properties
+     */
+    public static Properties getResourceAsProperties(Class<?> contextClass, String resourceName) {
         InputStream stream = null;
         try {
-            stream = getResourceAsStream(class_, filename);
+            stream = getResourceAsStream(contextClass, resourceName);
             Properties properties = new Properties();
             properties.load(stream);
-            return assertNotNull(properties, "Can't find %s on classpath for %s", filename, class_);
+            return assertNotNull(properties, "Can't find %s on classpath for %s", resourceName, contextClass);
         } catch (IOException e) {
             throw new IllegalStateException(e);
         } finally {
@@ -124,11 +151,16 @@ public final class Resources {
         }
     }
 
-    public static InputStream getResourceAsStream(Class<?> class_, String resourceName) {
+    /**
+     * @param contextClass the class the resource is relative to
+     * @param resourceName the resource name
+     * @return the input stream
+     */
+    public static InputStream getResourceAsStream(Class<?> contextClass, String resourceName) {
         checkNotNull(resourceName);
         checkArgument(!resourceName.isEmpty());
 
-        URL url = getResource(class_, resourceName);
+        URL url = getResource(contextClass, resourceName);
         try {
             return url.openStream();
         } catch (IOException e) {
@@ -137,12 +169,20 @@ public final class Resources {
     }
 
     /**
-     * @see com.google.common.io.Resources#getResource(Class, String) 
+     * @see com.google.common.io.Resources#getResource(Class, String)
+     * @param contextClass the class the resource is relative to
+     * @param resourceName the resource name
+     * @return the URL
      */
     public static URL getResource(Class<?> contextClass, String resourceName) {
         return com.google.common.io.Resources.getResource(contextClass, resourceName);
     }
 
+    /**
+     * @param loader the class loader to use
+     * @param resourceName the resource name
+     * @return the input stream
+     */
     public static URL getResource(ClassLoader loader, String resourceName) {
         URL url = loader.getResource(resourceName);
         checkArgument(url != null, "resource %s not found.", resourceName);
@@ -151,6 +191,7 @@ public final class Resources {
 
     /**
      * Returns current thread context class loader or {@link Resources} class loader
+     * @return the context class loader
      */
     public static ClassLoader getContextClassLoader() {
         return getContextClassLoader(Resources.class);
@@ -158,6 +199,8 @@ public final class Resources {
 
     /**
      * Returns current thread context class loader or context class's class loader
+     * @param contextClass context class to use
+     * @return the context class loader
      */
     public static ClassLoader getContextClassLoader(Class<?> contextClass) {
         return Objects.firstNonNull(
