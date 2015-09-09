@@ -11,13 +11,14 @@ branches:
     - master
 
 jdk:
-  - oraclejdk7
   - oraclejdk8
 
 install:
+  - jdk_switcher use oraclejdk7 && export JAVA7_HOME=$JAVA_HOME
+  - jdk_switcher use oraclejdk8 && export JAVA8_HOME=$JAVA_HOME
   - mvn clean compile dependency:resolve -U
   - mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 script:
-  - mvn clean install -Penable-integration-tests ${JDK_PROFILE}
-  - mvn com.code-spotter:codespotter-maven-plugin::check
+  - mvn clean install -Penable-integration-tests
+  - mvn com.coverity:ondemand-maven-plugin:1.3.710:check

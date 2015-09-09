@@ -41,30 +41,21 @@
         <maven>3.0.5</maven>
     </prerequisites>
 
-    <modules>
-        <!-- test -->
-        <module>junit</module>
-        <module>hamcrest</module>
-        <module>check</module>
-        <!-- main -->
-        <module>core</module>
-        <module>time</module>
-        <module>guava</module>
-    </modules>
-
     <properties>
         <!-- Build properties -->
         <encoding>UTF-8</encoding>
         <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
 
-        <jdk.version>1.6</jdk.version>
+        <jdk.version>1.8</jdk.version>
+        <jdk-target.version>1.6</jdk-target.version>
         <scala.version>2.11.6</scala.version>
 
         <!-- Build dependencies -->
         <guava.version>16.0</guava.version>
         <joda-time.version>2.1</joda-time.version>
-        <functionaljava.version>4.1</functionaljava.version><!-- Issuer #4; 4.2 has bugs in reductio -->
+        <!-- Issuer #4; 4.2 has bugs in reductio -->
+        <functionaljava.version>4.1</functionaljava.version>
 
         <!-- Build and test dependencies -->
         <junit.version>4.10</junit.version>
@@ -85,6 +76,17 @@
         <skipJavadocGeneration>true</skipJavadocGeneration>
 
     </properties>
+
+    <modules>
+        <!-- test -->
+        <module>junit</module>
+        <module>hamcrest</module>
+        <module>check</module>
+        <!-- main -->
+        <module>core</module>
+        <module>time</module>
+        <module>guava</module>
+    </modules>
 
     <dependencyManagement>
         <dependencies>
@@ -277,6 +279,26 @@
                 </plugin>
 
                 <plugin>
+                    <groupId>net.orfjackal.retrolambda</groupId>
+                    <artifactId>retrolambda-maven-plugin</artifactId>
+                    <version>2.0.6</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>process-main</goal>
+                                <goal>process-test</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <target>${jdk-target.version}</target>
+                        <defaultMethods>true</defaultMethods>
+                        <fork>true</fork>
+                        <java8home>${env.JAVA8_HOME}</java8home>
+                    </configuration>
+                </plugin>
+
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>2.7</version>
@@ -337,7 +359,8 @@
                             <exclude>**/broken/**</exclude>
                             <exclude>**/*IT.java</exclude>
                         </excludes>
-                        <useFile>false</useFile><!-- to get useful output when tests fail -->
+                        <useFile>false</useFile>
+                        <!-- to get useful output when tests fail -->
                         <parallel>classesAndMethods</parallel>
                         <threadCount>4</threadCount>
                         <runOrder>failedfirst</runOrder>
@@ -490,27 +513,27 @@
                         <skipSource>${skipSourceGeneration}</skipSource>
                     </configuration>
                 </plugin>
-                <!--<plugin>
+                <plugin>
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>animal-sniffer-maven-plugin</artifactId>
                     <version>1.14</version>
                     <configuration>
                         <signature>
                             <groupId>org.codehaus.mojo.signature</groupId>
-                            <artifactId>java17</artifactId>
+                            <artifactId>java16</artifactId>
                             <version>1.0</version>
                         </signature>
                     </configuration>
                     <executions>
                         <execution>
-                            <id>check-java17</id>
+                            <id>check-java16</id>
                             <phase>test</phase>
                             <goals>
                                 <goal>check</goal>
                             </goals>
                         </execution>
                     </executions>
-                </plugin>-->
+                </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
@@ -562,7 +585,8 @@
                             </goals>
                             <phase>initialize</phase>
                             <configuration>
-                                <property>project.highest-basedir</property><!-- will be filled at runtime by the plugin -->
+                                <property>project.highest-basedir</property>
+                                <!-- will be filled at runtime by the plugin -->
                             </configuration>
                         </execution>
                     </executions>
@@ -580,7 +604,7 @@
                             </goals>
                             <configuration>
                                 <javaScriptBuildnumberCallback>
-                                            (tag.length > 0) ? tag : branch + "-" + shortRevision + "-" + commitsCount
+                                    (tag.length > 0) ? tag : branch + "-" + shortRevision + "-" + commitsCount
                                 </javaScriptBuildnumberCallback>
                             </configuration>
                         </execution>
@@ -601,7 +625,9 @@
                                 <rules>
                                     <requireMavenVersion>
                                         <version>[3.0.5,4)</version>
-                                        <message>Check for Maven version &gt;=3.0.5 failed. Upgrade your Maven installation.</message>
+                                        <message>Check for Maven version &gt;=3.0.5 failed. Upgrade your Maven
+                                            installation.
+                                        </message>
                                     </requireMavenVersion>
                                 </rules>
                             </configuration>
@@ -659,6 +685,10 @@
                 <artifactId>maven-source-plugin</artifactId>
             </plugin>
             <plugin>
+                <groupId>net.orfjackal.retrolambda</groupId>
+                <artifactId>retrolambda-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
             </plugin>
@@ -677,6 +707,10 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-enforcer-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>animal-sniffer-maven-plugin</artifactId>
             </plugin>
             <plugin>
                 <groupId>org.pitest</groupId>
