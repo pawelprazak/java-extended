@@ -49,6 +49,7 @@ public class StringsLimitTest {
         }
 
         // when
+        //noinspection ConstantConditions
         String result = Strings.limitCharacters(input, maxLength);
 
         // then
@@ -60,11 +61,11 @@ public class StringsLimitTest {
     @AutoValue
     public static abstract class Data {
 
-        public static Data data(String input, int max, String output) {
+        public static Data data(@Nullable String input, int max, @Nullable String output) {
             return new AutoValue_StringsLimitTest_Data(input, max, output, Optional.<Class<? extends Throwable>>absent());
         }
 
-        public static Data data(String input, int max, String output, Class<? extends Throwable> exceptionType) {
+        public static Data data(@Nullable String input, int max, @Nullable String output, Class<? extends Throwable> exceptionType) {
             return new AutoValue_StringsLimitTest_Data(input, max, output, Optional.<Class<? extends Throwable>>of(exceptionType));
         }
 

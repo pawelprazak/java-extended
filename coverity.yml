@@ -1,0 +1,12 @@
+configurationVersion: 1
+
+triage:
+    - action: suppress
+      issueKey: 9c9198ce7213a9397c57c0a162c6c0d1
+      comment: unit test requirement
+    - action: suppress
+      issueKey: e074bbef29d724412d06a349bc6b6707
+      comment: unit test requirement
+    - action: suppress
+      issueKey: ce12445c1c8fa59dbc71fc7a57e5cc49
+      comment: a junit rule

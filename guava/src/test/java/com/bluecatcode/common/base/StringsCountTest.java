@@ -51,6 +51,7 @@ public class StringsCountTest {
         String target = data.target();
 
         // when
+        //noinspection ConstantConditions
         int result = Strings.countToken(target, token);
 
         // then
@@ -69,13 +70,14 @@ public class StringsCountTest {
         exception.expect(IllegalArgumentException.class);
         exception.expectMessage(startsWith("Expected non-empty token"));
 
+        //noinspection ConstantConditions
         Strings.countToken(target, token);
     }
 
     @AutoValue
     public static abstract class Data {
 
-        public static Data data(String target, String token, int count) {
+        public static Data data(@Nullable String target, @Nullable String token, int count) {
             return new AutoValue_StringsCountTest_Data(target, token, count);
         }
 
