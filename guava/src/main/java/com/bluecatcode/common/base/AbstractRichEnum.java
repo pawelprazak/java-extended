@@ -21,7 +21,7 @@ public abstract class AbstractRichEnum<T extends Enum & RichEnum> {
         }
 
         public static <T extends Enum & RichEnum> Constants<T> enumConstants(Class<T> theClass) {
-            return new Constants<T>(theClass);
+            return new Constants<>(theClass);
         }
 
         public FluentIterable<T> fluent() {
@@ -29,14 +29,7 @@ public abstract class AbstractRichEnum<T extends Enum & RichEnum> {
         }
 
         public FluentIterable<String> names() {
-            return fluent().transform(new Function<T, String>() {
-                @Nullable
-                @Override
-                @SuppressWarnings("ConstantConditions")
-                public String apply(@Nullable T v) {
-                    return checkNotNull(v).name();
-                }
-            });
+            return fluent().transform(v -> checkNotNull(v).name());
         }
 
         public String asString() {
@@ -48,78 +41,39 @@ public abstract class AbstractRichEnum<T extends Enum & RichEnum> {
         }
 
         public boolean contains(@Nullable final String that) {
-            return fluent().anyMatch(new Predicate<T>() {
-                @Override
-                @SuppressWarnings("ConstantConditions")
-                public boolean apply(@Nullable T v) {
-                    return checkNotNull(v).nameEquals(that);
-                }
-            });
+            return fluent().anyMatch(v -> checkNotNull(v).nameEquals(that));
         }
 
         public boolean containsIgnoreCase(@Nullable final String that) {
-            return fluent().anyMatch(new Predicate<T>() {
-                @Override
-                @SuppressWarnings("ConstantConditions")
-                public boolean apply(@Nullable T v) {
-                    return checkNotNull(v).nameEqualsIgnoreCase(that);
-                }
-            });
+            return fluent().anyMatch(v -> checkNotNull(v).nameEqualsIgnoreCase(that));
         }
 
         public boolean containsIgnoreCaseAndUnderscore(@Nullable final String that) {
-            return fluent().anyMatch(new Predicate<T>() {
-                @Override
-                @SuppressWarnings("ConstantConditions")
-                public boolean apply(@Nullable T v) {
-                    return checkNotNull(v).nameEqualsIgnoreCaseAndUnderscore(that);
-                }
-            });
+            return fluent().anyMatch(v -> checkNotNull(v).nameEqualsIgnoreCaseAndUnderscore(that));
         }
 
         private T valueThat(Predicate<? super T> predicate, final String message) {
             return fluent()
                     .firstMatch(predicate)
-                    .or(new Supplier<T>() {
-                        @Override
-                        public T get() {
-                            throw new IllegalArgumentException(message);
-                        }
+                    .or(() -> {
+                        throw new IllegalArgumentException(message);
                     });
         }
 
         public T valueOf(@Nullable final String that) {
-            return valueThat(new Predicate<T>() {
-                         @Override
-                         @SuppressWarnings("ConstantConditions")
-                         public boolean apply(@Nullable T v) {
-                             return checkNotNull(v).nameEquals(that);
-                         }
-                     },
+            return valueThat(v -> checkNotNull(v).nameEquals(that),
                     format("Expected one of (exact): %s, got %s", values, that)
             );
         }
 
         public T valueOfIgnoreCase(@Nullable final String that) {
-            return valueThat(new Predicate<T>() {
-                         @Override
-                         @SuppressWarnings("ConstantConditions")
-                         public boolean apply(@Nullable T v) {
-                             return checkNotNull(v).nameEqualsIgnoreCase(that);
-                         }
-                     },
+            return valueThat(v -> checkNotNull(v).nameEqualsIgnoreCase(that),
                     format("Expected one of (ignoring case): %s, got %s", values, that)
             );
         }
 
         public T valueOfIgnoreCaseAndUnderscore(@Nullable final String that) {
-            return valueThat(new Predicate<T>() {
-                         @Override
-                         @SuppressWarnings("ConstantConditions")
-                         public boolean apply(@Nullable T v) {
-                             return checkNotNull(v).nameEqualsIgnoreCaseAndUnderscore(that);
-                         }
-                     },
+            return valueThat(v -> checkNotNull(v).nameEqualsIgnoreCaseAndUnderscore(that),
                     format("Expected one of (ignoring case and underscores): %s, got %s", values, that)
             );
         }
