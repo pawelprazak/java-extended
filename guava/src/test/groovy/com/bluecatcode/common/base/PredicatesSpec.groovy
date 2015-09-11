@@ -34,6 +34,7 @@ class PredicatesIsEmptySpec extends Specification {
         [:]                                    | true
         newArrayList()                         | true
         newHashMap()                           | true
+        new Hashtable()                        | true
         FluentIterable.from([])                | true
         [isEmpty: { return true }] as IsEmpty  | true
         [] as boolean[]                        | true
