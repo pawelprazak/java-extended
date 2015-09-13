@@ -99,6 +99,7 @@
         <!-- test -->
         <module>junit</module>
         <module>hamcrest</module>
+        <module>mockito</module>
         <module>check</module>
         <!-- main -->
         <module>core</module>
