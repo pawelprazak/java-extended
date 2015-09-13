@@ -285,7 +285,9 @@
                         <compilerArgument>-Xlint:all</compilerArgument>
                         <showDeprecation>true</showDeprecation>
                         <showWarnings>true</showWarnings>
+                        <!-- in Maven 3.x, you need to include the fork parameter when specifying the executable -->
                         <fork>true</fork>
+                        <executable>${env.JAVA8_HOME}/bin/javac</executable>
                     </configuration>
                     <!-- for scala-maven-plugin -->
                     <executions>
@@ -384,6 +386,7 @@
                         <parallel>classesAndMethods</parallel>
                         <threadCount>4</threadCount>
                         <runOrder>failedfirst</runOrder>
+                        <jvm>${env.JAVA7_HOME}/bin/java</jvm>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -649,6 +652,12 @@
                                             installation.
                                         </message>
                                     </requireMavenVersion>
+                                    <requireEnvironmentVariable>
+                                        <variableName>JAVA8_HOME</variableName>
+                                    </requireEnvironmentVariable>
+                                    <requireEnvironmentVariable>
+                                        <variableName>JAVA7_HOME</variableName>
+                                    </requireEnvironmentVariable>
                                     <DependencyConvergence/>
                                 </rules>
                             </configuration>
