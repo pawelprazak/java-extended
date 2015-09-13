@@ -1,32 +1,28 @@
 package com.bluecatcode.common.base;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import javax.annotation.Nullable;
 
-import static com.bluecatcode.common.base.AbstractRichEnum.Constants;
-import static com.bluecatcode.common.base.AbstractRichEnum.Constants.enumConstants;
+import static com.bluecatcode.common.base.RichEnumConstants.richConstants;
+import static com.bluecatcode.common.base.RichEnumInstance.richEnum;
 import static com.bluecatcode.hamcrest.Matchers.isNotEmptyOrNullString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 public class RichEnumTest {
 
+    @Rule
+    public ExpectedException exception = ExpectedException.none();
+
     public enum TestEnum implements RichEnum<TestEnum> {
         TEST_ENUM;
 
-        private final AbstractRichEnum<TestEnum> rich;
+        public static final RichEnumConstants<TestEnum> constants = richConstants(TestEnum.class);
 
-        TestEnum() {
-            this.rich = new AbstractRichEnum<TestEnum>() {
-                @Override
-                public TestEnum self() {
-                    return TestEnum.this;
-                }
-            };
-        }
-
-        public static final Constants<TestEnum> constants = enumConstants(TestEnum.class);
+        private final RichEnumInstance<TestEnum> rich = richEnum(this);
 
         @Override
         public boolean nameEquals(@Nullable String that) {
@@ -74,5 +70,27 @@ public class RichEnumTest {
         assertThat(TestEnum.constants.asString(), containsString(TestEnum.TEST_ENUM.toString()));
         assertThat(TestEnum.constants.asString(), isNotEmptyOrNullString());
         assertThat(TestEnum.constants.toString(), isNotEmptyOrNullString());
+    }
+
+    @Test
+    public void testEnumConstantsThrowOnNull() throws Exception {
+        // expect
+        exception.expect(NullPointerException.class);
+
+        // when
+        //noinspection ConstantConditions
+        RichEnumConstants.richConstants(null);
+    }
+
+    @Test
+    public void testEnumConstantsCreatesObject() throws Exception {
+        // given
+        Class<TestEnum> theClass = TestEnum.class;
+
+        // when
+        RichEnumConstants<TestEnum> constants = RichEnumConstants.richConstants(theClass);
+
+        // then
+        assertThat(constants, is(notNullValue()));
     }
 }
