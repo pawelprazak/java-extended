@@ -429,6 +429,9 @@
                         <targetTests>
                             <param>com.bluecatcode*</param>
                         </targetTests>
+                        <excludedClasses>
+                            <pattern>*$$Lambda$*</pattern>
+                        </excludedClasses>
                         <outputFormats>
                             <outputFormat>HTML</outputFormat>
                             <outputFormat>XML</outputFormat>
@@ -774,7 +777,7 @@
             <properties>
                 <skipUnitTests>false</skipUnitTests>
                 <skipIntegrationTests>false</skipIntegrationTests>
-                <skipMutationTests>true</skipMutationTests>
+                <skipMutationTests>false</skipMutationTests>
                 <skipSourceGeneration>true</skipSourceGeneration>
                 <skipJavadocGeneration>true</skipJavadocGeneration>
             </properties>
