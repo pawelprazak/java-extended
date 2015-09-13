@@ -1,5 +1,6 @@
 package com.bluecatcode.hamcrest;
 
+import com.bluecatcode.hamcrest.matchers.IsThrowable;
 import com.bluecatcode.hamcrest.matchers.LongCloseTo;
 import com.bluecatcode.hamcrest.matchers.PatternMatcher;
 import org.hamcrest.Matcher;
@@ -133,6 +134,63 @@ public class Matchers {
      */
     public static Matcher<Map<?, ?>> isAnEmptyMap() {
         return org.hamcrest.Matchers.allOf(notNullValue(), not(hasEntry(notNullValue(), notNullValue())));
+    }
+
+    /**
+     * Throwable matcher with only a type argument
+     * @param type the throwable type to match
+     * @param <T> type of the matched throwable
+     * @return the matcher
+     */
+    public static <T extends Throwable> Matcher<T> isThrowable(Class<?> type) {
+        return IsThrowable.isThrowable(type);
+    }
+
+    /**
+     * Throwable matcher with a type argument and additional matcher, e.g. the cause
+     * @see #withCause(Matcher)
+     * @see #withMessage(Matcher)
+     * @param type the throwable type to match
+     * @param matcher the additional matcher
+     * @param <T> type of the matched throwable
+     * @return the matcher
+     */
+    public static <T extends Throwable> Matcher<T> isThrowable(Class<?> type, Matcher<? super T> matcher) {
+        return IsThrowable.isThrowable(type, matcher);
+    }
+
+    /**
+     * Throwable matcher to be used with {@link #isThrowable(Class, Matcher)}
+     * @see #isThrowable(Class, Matcher)}
+     * @param matcher the cause matcher
+     * @param <T> the throwable type
+     * @param <C> the cause type
+     * @return the matcher
+     */
+    public static <T extends Throwable, C extends Throwable> Matcher<T> withCause(Matcher<C> matcher) {
+        return IsThrowable.withCause(matcher);
+    }
+
+    /**
+     * Throwable matcher to be used with {@link #isThrowable(Class, Matcher)}
+     * @see #isThrowable(Class, Matcher)}
+     * @param matcher the message matcher
+     * @param <T> the throwable type
+     * @return the matcher
+     */
+    public static <T extends Throwable> Matcher<T> withMessage(Matcher<String> matcher) {
+        return IsThrowable.withMessage(matcher);
+    }
+
+    /**
+     * Throwable matcher to be used with {@link #isThrowable(Class, Matcher)}
+     * @see #isThrowable(Class, Matcher)}
+     * @param message the message
+     * @param <T> the throwable type
+     * @return the matcher
+     */
+    public static <T extends Throwable> Matcher<T> withMessage(String message) {
+        return IsThrowable.withMessage(message);
     }
 
     private Matchers() {
