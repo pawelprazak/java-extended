@@ -1,5 +1,6 @@
 package com.bluecatcode.hamcrest;
 
+import com.bluecatcode.hamcrest.matchers.IsCharSequenceWithSize;
 import com.bluecatcode.hamcrest.matchers.IsThrowable;
 import com.bluecatcode.hamcrest.matchers.LongCloseTo;
 import com.bluecatcode.hamcrest.matchers.PatternMatcher;
@@ -191,6 +192,26 @@ public class Matchers {
      */
     public static <T extends Throwable> Matcher<T> withMessage(String message) {
         return IsThrowable.withMessage(message);
+    }
+
+    /**
+     * @see IsCharSequenceWithSize#hasSize(Matcher)
+     * @param matcher the size matcher
+     * @param <E> the char sequence type
+     * @return the matcher
+     */
+    public static <E extends CharSequence> Matcher<E> hasSize(Matcher<? super Integer> matcher) {
+        return IsCharSequenceWithSize.hasSize(matcher);
+    }
+
+    /**
+     * @see IsCharSequenceWithSize#hasSize(int)
+     * @param size the size to match against
+     * @param <E> the char sequence type
+     * @return the matcher
+     */
+    public static <E extends CharSequence> Matcher<E> hasSize(int size) {
+        return IsCharSequenceWithSize.hasSize(size);
     }
 
     private Matchers() {
