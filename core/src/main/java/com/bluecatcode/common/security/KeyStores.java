@@ -7,14 +7,13 @@ import javax.net.ssl.TrustManagerFactory;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
+import java.security.*;
 
 import static java.lang.String.format;
 
+/**
+ * Key store related utility methods
+ */
 public class KeyStores {
 
     public static KeyStore loadKeyStore(String keyStorePath, String keyStorePassword) {
@@ -28,7 +27,7 @@ public class KeyStores {
             KeyStore keyStore = KeyStore.getInstance(type);
             keyStore.load(resourceAsStream, password.toCharArray());
             return keyStore;
-        } catch (Exception e) {
+        } catch (GeneralSecurityException | IOException e) {
             throw new IllegalStateException(format("Cannot load the key store: '%s'", path), e);
         } finally {
             if (resourceAsStream != null) {
@@ -50,9 +49,7 @@ public class KeyStores {
             keyFactory.init(keyStore, keyStorePassword.toCharArray());
         } catch (UnrecoverableKeyException ex) {
             throw new RuntimeException(ex);
-        } catch (NoSuchAlgorithmException ex) {
-            throw new IllegalStateException(ex);
-        } catch (KeyStoreException ex) {
+        } catch (NoSuchAlgorithmException | KeyStoreException ex) {
             throw new IllegalStateException(ex);
         }
         return keyFactory.getKeyManagers();
@@ -65,9 +62,7 @@ public class KeyStores {
         try {
             trustFactory = TrustManagerFactory.getInstance(trustAlgorithm);
             trustFactory.init(trustStore);
-        } catch (NoSuchAlgorithmException ex) {
-            throw new IllegalStateException(ex);
-        } catch (KeyStoreException ex) {
+        } catch (NoSuchAlgorithmException | KeyStoreException ex) {
             throw new IllegalStateException(ex);
         }
         return trustFactory.getTrustManagers();
