@@ -7,12 +7,12 @@
     <parent>
         <groupId>com.bluecatcode.common</groupId>
         <artifactId>project</artifactId>
-        <version>1.0.2</version>
+        <version>1.0.3-SNAPSHOT</version>
     </parent>
 
     <groupId>com.bluecatcode.mockito</groupId>
     <artifactId>mockito-${mockito.version}-extended</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
     <name>${project.groupId}:${project.artifactId}</name>
 
     <dependencies>

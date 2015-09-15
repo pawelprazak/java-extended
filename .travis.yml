@@ -29,8 +29,7 @@ script:
 
 after_success:
   - echo "Is pull request ${TRAVIS_PULL_REQUEST}"
-  - echo "Git tag ${TRAVIS_TAG}"
-  - test "${TRAVIS_PULL_REQUEST}" == "false" && test "${TRAVIS_TAG}" == "" && test "${TRAVIS_JOB_NUMBER}" == "${TRAVIS_BUILD_NUMBER}.1" && test $(mvn com.coverity:ondemand-maven-plugin:1.3.710:check) != 0
+  - test "${TRAVIS_PULL_REQUEST}" == "false" && test "${TRAVIS_JOB_NUMBER}" == "${TRAVIS_BUILD_NUMBER}.1" && test $(mvn com.coverity:ondemand-maven-plugin:1.3.710:check) != 0
 
 matrix:
   fast_finish: true
