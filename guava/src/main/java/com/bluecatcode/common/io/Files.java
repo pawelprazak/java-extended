@@ -85,7 +85,11 @@ public class Files {
             try {
                 bufferedReader = charSource.openBufferedStream();
                 for (String line; (line = bufferedReader.readLine()) != null; ) {
-                    consumer.accept(line);
+                    try {
+                        consumer.accept(line);
+                    } catch (Exception e) {
+                        throw new IllegalStateException(e);
+                    }
                 }
             } finally {
                 if (bufferedReader != null) {
