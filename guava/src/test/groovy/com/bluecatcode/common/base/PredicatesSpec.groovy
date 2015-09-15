@@ -1,6 +1,5 @@
 package com.bluecatcode.common.base
 
-import com.bluecatcode.common.interfaces.IsEmpty
 import com.google.common.base.Optional
 import com.google.common.collect.FluentIterable
 import com.google.common.collect.ImmutableMap

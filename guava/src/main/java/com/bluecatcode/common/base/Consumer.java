@@ -5,12 +5,20 @@ package com.bluecatcode.common.base;
  * Unlike most other functional interfaces, Consumer is expected to operate via side-effects.
  *
  * @see <a href="http://docs.oracle.com/javase/8/docs/api/java/util/function/Consumer.html">Interface Consumer</a>
+ *
+ * @see java.util.concurrent.Callable
+ * @see com.bluecatcode.common.base.Effect
+ * @see com.google.common.base.Function
+ * @see com.google.common.base.Predicate
+ * @see com.google.common.base.Supplier
+ * @param <T> the input type of method {@code accept}
  */
 public interface Consumer<T> {
 
     /**
      * Performs this operation on the given argument.
      * @param input the input to consume
+     * @throws Exception if unable to compute
      */
-    void accept(T input);
+    void accept(T input) throws Exception;
 }
