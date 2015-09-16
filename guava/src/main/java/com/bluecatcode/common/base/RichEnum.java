@@ -2,6 +2,12 @@ package com.bluecatcode.common.base;
 
 import javax.annotation.Nullable;
 
+/**
+ * An interface for corresponding {@link RichEnumInstance} and {@link RichEnumConstants}
+ * @see RichEnumInstance
+ * @see RichEnumConstants
+ * @param <T> the enum type
+ */
 public interface RichEnum<T> {
 
     boolean nameEquals(@Nullable String that);

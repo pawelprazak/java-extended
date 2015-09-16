@@ -4,6 +4,12 @@ import javax.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+/**
+ * An implementation for {@link RichEnum}
+ * @see RichEnum
+ * @see RichEnumConstants
+ * @param <T> the enum type
+ */
 public class RichEnumInstance<T extends Enum & RichEnum> {
 
     private final T theEnum;
