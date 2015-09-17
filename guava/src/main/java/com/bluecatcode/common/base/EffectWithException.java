@@ -8,12 +8,12 @@ package com.bluecatcode.common.base;
  * @see com.google.common.base.Supplier
  * @see java.util.concurrent.Callable
  */
-public interface Effect {
+public interface EffectWithException {
 
     /**
      * Performs this operation for side effect.
      *
-     * @throws RuntimeException if unable to compute
+     * @throws Exception if unable to compute
      */
-    void cause();
+    void cause() throws Exception;
 }
