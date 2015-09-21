@@ -20,7 +20,7 @@ import com.google.common.base.Supplier;
  *  Something something = optionalSomething.or(throwA(Something.class, new SomeException()));
  * </pre>
  *
- * @see com.google.common.base.Optional
+ * @see com.google.common.base.Optional#or(Supplier)
  */
 public class ExceptionSupplier<T, E extends RuntimeException> implements Supplier<T> {
 
@@ -31,7 +31,7 @@ public class ExceptionSupplier<T, E extends RuntimeException> implements Supplie
     }
 
     /**
-     * Factory method to initialise a variable or field
+     * Factory method for usage during variable or field initialisation.
      *
      * @param exception exception to throw
      * @param <T>       Supplied object type
@@ -40,21 +40,31 @@ public class ExceptionSupplier<T, E extends RuntimeException> implements Supplie
      * @throws E the provided exception
      */
     public static <T, E extends RuntimeException> ExceptionSupplier<T, E> throwA(E exception) {
-        return new ExceptionSupplier<T, E>(exception);
+        return new ExceptionSupplier<>(exception);
     }
 
     /**
      * Factory method for usage inside a method call
      *
-     * @param class_    class used for type inference
+     * @param type      class type used only for type inference
      * @param exception exception to throw
      * @param <T>       Supplied object type
      * @param <E>       RuntimeException subtype
      * @return the exception supplier
      * @throws E the provided exception
      */
-    public static <T, E extends RuntimeException> ExceptionSupplier<T, E> throwA(@SuppressWarnings("UnusedParameters") Class<T> class_, E exception) {
-        return new ExceptionSupplier<T, E>(exception);
+    public static <T, E extends RuntimeException> ExceptionSupplier<T, E> throwA(
+            @SuppressWarnings("UnusedParameters") Class<T> type, E exception) {
+        return new ExceptionSupplier<>(exception);
+    }
+
+    /**
+     * @see #throwA(RuntimeException)
+     * @param message the exception message
+     * @return the exception supplier
+     */
+    public static ExceptionSupplier<String, IllegalArgumentException> throwIllegalArgumentException(String message) {
+        return throwA(new IllegalArgumentException(message));
     }
 
     /**
