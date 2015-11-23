@@ -20,7 +20,6 @@ import java.util.*;
 import static com.bluecatcode.common.collections.Collections3Test.DictionaryData.dictionaryData;
 import static com.bluecatcode.common.collections.Collections3Test.MapData.mapData;
 import static com.bluecatcode.common.collections.Collections3Test.ZipData.zipData;
-import static com.bluecatcode.hamcrest.Matchers.isAnEmptyMap;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
@@ -65,17 +64,14 @@ public class Collections3Test {
 
     @DataPoints
     public static final DictionaryData[] dictionarySamples = new DictionaryData[]{
-            dictionaryData(new Hashtable<String, String>(ImmutableMap.<String, String>of()), ImmutableMap.<String, String>of()),
-            dictionaryData(new Hashtable<String, String>(ImmutableMap.of("lol", "cat")), ImmutableMap.of("lol", "cat")),
-            dictionaryData(new Supplier<Dictionary<String, String>>() {
-                @Override
-                public Dictionary<String, String> get() {
-                    Hashtable<String, String> dict = new Hashtable<String, String>();
-                    dict.put("lol", "cat");
-                    dict.put("lol", "cat");
-                    return dict;
-                }
-            }.get(), ImmutableMap.of("lol", "cat"))
+            dictionaryData(new Hashtable<>(ImmutableMap.<String, String>of()), ImmutableMap.<String, String>of()),
+            dictionaryData(new Hashtable<>(ImmutableMap.of("lol", "cat")), ImmutableMap.of("lol", "cat")),
+            dictionaryData(((Supplier<Dictionary<String, String>>) () -> {
+                Hashtable<String, String> dict = new Hashtable<>();
+                dict.put("lol", "cat");
+                dict.put("lol", "cat");
+                return dict;
+            }).get(), ImmutableMap.of("lol", "cat"))
     };
 
     @Theory
@@ -90,13 +86,15 @@ public class Collections3Test {
         assertThat(map, is(data.map()));
     }
 
+    private static Matcher<? super Map<String, String>> isAnEmptyMap = allOf(notNullValue(), not(hasEntry(notNullValue(), notNullValue())));
+
     @DataPoints
     public static final MapData[] samples = new MapData[]{
             mapData(null, null, IllegalArgumentException.class),
             mapData(null, emptyHashMap(), IllegalArgumentException.class),
             mapData(emptyHashMap(), null, IllegalArgumentException.class),
-            mapData(emptyHashMap(), emptyHashMap(), isAnEmptyMap()),
-            mapData(emptyHashMap(), hashMapWith(null, null), isAnEmptyMap()),
+            mapData(emptyHashMap(), emptyHashMap(), isAnEmptyMap),
+            mapData(emptyHashMap(), hashMapWith(null, null), isAnEmptyMap),
             mapData(hashMapWith("1", null), emptyHashMap(), hasEntry("1", "")),
             mapData(hashMapWith("1", null), ImmutableMap.of("2", "2"), allOf(
                     hasEntry("1", ""), hasEntry("2", "2"))

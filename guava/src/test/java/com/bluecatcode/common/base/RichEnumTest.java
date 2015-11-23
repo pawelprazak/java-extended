@@ -1,5 +1,6 @@
 package com.bluecatcode.common.base;
 
+import org.hamcrest.Matcher;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -8,7 +9,6 @@ import javax.annotation.Nullable;
 
 import static com.bluecatcode.common.base.RichEnumConstants.richConstants;
 import static com.bluecatcode.common.base.RichEnumInstance.richEnum;
-import static com.bluecatcode.hamcrest.Matchers.isNotEmptyOrNullString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
@@ -16,6 +16,8 @@ public class RichEnumTest {
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
+
+    private static Matcher<String> isNotEmptyOrNullString = not(isEmptyOrNullString());
 
     public enum TestEnum implements RichEnum<TestEnum> {
         TEST_ENUM;
@@ -68,8 +70,8 @@ public class RichEnumTest {
         assertThat(TestEnum.constants.names().toList(), hasSize(TestEnum.values().length));
         assertThat(TestEnum.constants.names().toList(), hasItem(TestEnum.TEST_ENUM.name()));
         assertThat(TestEnum.constants.asString(), containsString(TestEnum.TEST_ENUM.toString()));
-        assertThat(TestEnum.constants.asString(), isNotEmptyOrNullString());
-        assertThat(TestEnum.constants.toString(), isNotEmptyOrNullString());
+        assertThat(TestEnum.constants.asString(), isNotEmptyOrNullString);
+        assertThat(TestEnum.constants.toString(), isNotEmptyOrNullString);
     }
 
     @Test

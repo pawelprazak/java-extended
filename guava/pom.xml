@@ -41,12 +41,6 @@
 
         <!-- Test -->
         <dependency>
-            <groupId>com.bluecatcode.hamcrest</groupId>
-            <artifactId>hamcrest-extended</artifactId>
-            <version>1.3</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <scope>test</scope>
