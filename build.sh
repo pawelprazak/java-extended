@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e -u
+#set -e -u
 
 if [ "${TRAVIS_BRANCH}" == "master" ]; then
     MVN_CMD="mvn clean install --quiet --settings travis-settings.xml -Pbuild-release -B"
