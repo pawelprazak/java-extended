@@ -12,9 +12,9 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static java.lang.String.format;
 
 /**
- * A companion class for {@link RichEnum}
- * @see RichEnum
- * @see RichEnumInstance
+ * A companion class for {@link com.bluecatcode.common.base.RichEnum}
+ * @see com.bluecatcode.common.base.RichEnum
+ * @see com.bluecatcode.common.base.RichEnumInstance
  * @param <T>
  */
 public class RichEnumConstants<T extends Enum & RichEnum> {
@@ -40,7 +40,7 @@ public class RichEnumConstants<T extends Enum & RichEnum> {
     }
 
     /**
-     * @return a fluent iterable from the {@link Class#getEnumConstants()}
+     * @return a fluent iterable from the {@link java.lang.Class#getEnumConstants()}
      */
     public FluentIterable<T> fluent() {
         return FluentIterable.from(values);
@@ -96,7 +96,7 @@ public class RichEnumConstants<T extends Enum & RichEnum> {
     /**
      * @param that the enum name
      * @return the enum instance corresponding with the name
-     * @throws IllegalArgumentException if the enum cannot be found
+     * @throws java.lang.IllegalArgumentException if the enum cannot be found
      */
     public T valueOf(@Nullable final String that) {
         return valueThat(v -> checkNotNull(v).nameEquals(that),
@@ -107,7 +107,7 @@ public class RichEnumConstants<T extends Enum & RichEnum> {
     /**
      * @param that the enum name
      * @return the enum instance corresponding with the name ignoring case
-     * @throws IllegalArgumentException if the enum cannot be found
+     * @throws java.lang.IllegalArgumentException if the enum cannot be found
      */
     public T valueOfIgnoreCase(@Nullable final String that) {
         return valueThat(v -> checkNotNull(v).nameEqualsIgnoreCase(that),
@@ -118,7 +118,7 @@ public class RichEnumConstants<T extends Enum & RichEnum> {
     /**
      * @param that the enum name
      * @return the enum instance corresponding with the name ignoring case and underscores
-     * @throws IllegalArgumentException if the enum cannot be found
+     * @throws java.lang.IllegalArgumentException if the enum cannot be found
      */
     public T valueOfIgnoreCaseAndUnderscore(@Nullable final String that) {
         return valueThat(v -> checkNotNull(v).nameEqualsIgnoreCaseAndUnderscore(that),

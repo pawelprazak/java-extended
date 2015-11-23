@@ -16,6 +16,10 @@
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Guava library extensions.</description>
 
+    <properties>
+        <guava.version>18.0</guava.version>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>com.bluecatcode.core</groupId>

@@ -17,19 +17,14 @@ env:
   global:
     - secure: "HLsGCBxdW7zCX7UCAPZsAgeWpCB0waxz2ePUPhNTIt5ywbm4VDYo0uRm65W/Vht9Wd9pwvO/NBxEwyptQWih2aOXwBd02i63kLYMczoWhGn0SRsHpkhRYuF/pbbRyKoM9BWBrsMF0bBz1y5Q5VPzhnd3DMUK1tx5QTO4Qtbs68k="
     - secure: "bPaiv55l7/hayD0vJe4xVfK+cXTICjfJ+hfz9gDDcyEqEXfosVguOS8Q3COzkmHxjU9yEv9vrxJWyaKBdOUr5FoEIk3UlCnbD0pH21OzT22bJXLl/LZ9biIcmzX37a8XwOS0eDWsyAmLM6vG4OcRu4azd4x42mffsT7T5208DFg="
-  matrix:
-    - OPTS="-Dguava.version=17.0 -Djoda-time.version=2.1 -Djunit.version=4.10"
+
 install:
   - jdk_switcher use oraclejdk7 && export JAVA7_HOME=$JAVA_HOME
   - jdk_switcher use oraclejdk8 && export JAVA8_HOME=$JAVA_HOME
   - mvn clean compile dependency:resolve -U -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 script:
-  - mvn clean install deploy --settings travis-settings.xml -Pbuild-release ${OPTS}
-
-after_success:
-  - echo "Is pull request ${TRAVIS_PULL_REQUEST}"
-  - test "${TRAVIS_PULL_REQUEST}" == "false" && test "${TRAVIS_JOB_NUMBER}" == "${TRAVIS_BUILD_NUMBER}.1" && test $(mvn com.coverity:ondemand-maven-plugin:1.3.710:check) != 0
+  - build.sh
 
 matrix:
   fast_finish: true

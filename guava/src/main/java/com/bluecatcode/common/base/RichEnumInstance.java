@@ -5,9 +5,9 @@ import javax.annotation.Nullable;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
- * An implementation for {@link RichEnum}
- * @see RichEnum
- * @see RichEnumConstants
+ * An implementation for {@link com.bluecatcode.common.base.RichEnum}
+ * @see com.bluecatcode.common.base.RichEnum
+ * @see com.bluecatcode.common.base.RichEnumConstants
  * @param <T> the enum type
  */
 public class RichEnumInstance<T extends Enum & RichEnum> {

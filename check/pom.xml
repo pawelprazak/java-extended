@@ -16,6 +16,11 @@
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Functional Java Check extension</description>
 
+    <properties>
+        <!-- Issuer #4; 4.2 has bugs in reductio -->
+        <functionaljava.version>4.1</functionaljava.version>
+    </properties>
+
     <dependencies>
 
         <!-- Functional Java -->
