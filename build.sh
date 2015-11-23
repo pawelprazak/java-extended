@@ -21,14 +21,14 @@ ${MVN_CMD} -am -pl junit -Djunit.version=4.10 && \
 ${MVN_CMD} -am -pl hamcrest -Dhamcrest.version=1.3 && \
 ${MVN_CMD} -am -pl mockito -Dmockito.version=1.10.19
 
-if [ "${TRAVIS_REPO_SLUG}" == "pawelprazak/java-extended" ] && \
-   [ "${TRAVIS_JDK_VERSION}" == "oraclejdk7" ] && \
-   [ "${TRAVIS_PULL_REQUEST}" == "false" ] && \
-   [ "${TRAVIS_JOB_NUMBER}" == "${TRAVIS_BUILD_NUMBER}.1" ] && \
-   [ "${TRAVIS_BRANCH}" == "master" ]; then
-  echo "Generating Coverity Report..."
-
-  test $(mvn com.coverity:ondemand-maven-plugin:1.3.710:check) != 0
-
-  echo "Generated Coverity Report."
-fi
+#if [ "${TRAVIS_REPO_SLUG}" == "pawelprazak/java-extended" ] && \
+#   [ "${TRAVIS_JDK_VERSION}" == "oraclejdk7" ] && \
+#   [ "${TRAVIS_PULL_REQUEST}" == "false" ] && \
+#   [ "${TRAVIS_JOB_NUMBER}" == "${TRAVIS_BUILD_NUMBER}.1" ] && \
+#   [ "${TRAVIS_BRANCH}" == "master" ]; then
+#  echo "Generating Coverity Report..."
+#
+#  test $(mvn com.coverity:ondemand-maven-plugin:1.3.710:check) != 0
+#
+#  echo "Generated Coverity Report."
+#fi
