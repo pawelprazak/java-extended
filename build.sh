@@ -3,9 +3,9 @@
 set -e -u
 
 if [ "${TRAVIS_BRANCH}" == "master" ]; then
-    MVN_CMD="mvn clean install --settings travis-settings.xml -Pbuild-release"
+    MVN_CMD="mvn clean install --quiet --settings travis-settings.xml -Pbuild-release"
 else
-    MVN_CMD="mvn clean install deploy --settings travis-settings.xml -Pbuild-release"
+    MVN_CMD="mvn clean install deploy --quiet --settings travis-settings.xml -Pbuild-release"
 fi
 
 ${MVN_CMD} -am -pl guava -Dguava.version=15.0 && \

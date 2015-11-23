@@ -25,7 +25,7 @@ install:
   - mvn clean compile dependency:resolve -U -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 script:
-  - build.sh
+  - ./build.sh
 
 matrix:
   fast_finish: true
