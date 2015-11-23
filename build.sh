@@ -3,7 +3,7 @@
 #set -e -u
 
 if [ "${TRAVIS_BRANCH}" == "master" ]; then
-    MVN_CMD="mvn clean install --quiet --settings travis-settings.xml -Pbuild-release -B"
+    MVN_CMD="mvn clean install --settings travis-settings.xml -Pbuild-release -B"
 else
     MVN_CMD="mvn clean install deploy --quiet --settings travis-settings.xml -Pbuild-release -B"
 fi
