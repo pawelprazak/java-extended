@@ -89,7 +89,7 @@
         <dependency>
             <groupId>com.google.truth</groupId>
             <artifactId>truth</artifactId>
-            <version>0.27</version>
+            <version>0.23</version><!-- must be the same as guava-testlib dependency -->
             <scope>test</scope>
             <exclusions>
                 <exclusion>
