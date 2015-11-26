@@ -65,6 +65,9 @@
         <project.build.sourceEncoding>${encoding}</project.build.sourceEncoding>
         <project.reporting.outputEncoding>${encoding}</project.reporting.outputEncoding>
 
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ssa</maven.build.timestamp.format>
+        <timestamp>${maven.build.timestamp}</timestamp>
+
         <jdk.version>1.8</jdk.version>
         <jdk-target.version>1.6</jdk-target.version>
         <scala.version>2.11.7</scala.version>
