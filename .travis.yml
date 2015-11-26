@@ -27,5 +27,8 @@ install:
 script:
   - ./build.sh
 
+after_success:
+  - mvn jacoco:report coveralls:jacoco
+
 matrix:
   fast_finish: true
