@@ -780,7 +780,6 @@
                     <plugin>
                         <groupId>org.jacoco</groupId>
                         <artifactId>jacoco-maven-plugin</artifactId>
-                        <version>${maven.jacoco.version}</version>
                     </plugin>
                     <plugin>
                         <groupId>com.coverity</groupId>
