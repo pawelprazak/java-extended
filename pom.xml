@@ -704,10 +704,6 @@
                 <groupId>org.codehaus.gmaven</groupId>
                 <artifactId>gmaven-plugin</artifactId>
             </plugin>
-            <plugin>
-                <groupId>com.coverity</groupId>
-                <artifactId>ondemand-maven-plugin</artifactId>
-            </plugin>
         </plugins>
     </build>
 
@@ -771,5 +767,27 @@
         </profile>
 
     </profiles>
-
+        <profile>
+            <id>travis</id>
+            <activation>
+                <property>
+                    <name>env.TRAVIS</name>
+                    <value>true</value>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>${maven.jacoco.version}</version>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.coverity</groupId>
+                        <artifactId>ondemand-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
