@@ -19,10 +19,10 @@ LINE="--------------------------------------------------------------------------
 
 echo "Building branch: '${TRAVIS_BRANCH}', tag: '${TRAVIS_TAG}'"
 
-if [[ "${TRAVIS_BRANCH}" =~ ^release.* ]]; then
-    MVN_CMD="mvn install deploy --quiet --settings travis-settings.xml -Pbuild-release -B"
+if [[ "${TRAVIS_BRANCH}" =~ ^release.* ]] || [[ "${TRAVIS_TAG}" =~ ^release.* ]]; then
+    MVN_CMD="mvn deploy --quiet --settings travis-settings.xml -Pbuild-release -B"
 else
-    MVN_CMD="mvn install -Pbuild-test -B"
+    MVN_CMD="mvn test -Pbuild-test -B"
 fi
 
 ${MVN_CMD} -am -pl guava -Dguava.version=15.0
@@ -45,19 +45,12 @@ if [ "${TRAVIS_REPO_SLUG}" == "pawelprazak/java-extended" ] && \
    [ "${TRAVIS_BRANCH}" == "master" ]; then
 
   echo ${LINE}
-  echo "Running tests"
+  echo "Running all tests and reports..."
   echo
-  mvn -Pbuild-test jacoco:report coveralls:report
-  echo
-  echo "Coveralls report done with code"
-  echo ${LINE}
-  echo
-  echo ${LINE}
-  echo "Generating Coverity Report..."
-  echo
+  mvn clean test jacoco:report coveralls:report -Pbuild-test,enable-mutation-tests -B
   test $(mvn coverity-ondemand:check) != 0
   echo
-  echo "Generated Coverity Report."
+  echo "Run all tests and reports."
   echo ${LINE}
 fi
 

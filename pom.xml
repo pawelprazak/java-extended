@@ -744,7 +744,7 @@
             <properties>
                 <skipUnitTests>false</skipUnitTests>
                 <skipIntegrationTests>false</skipIntegrationTests>
-                <skipMutationTests>false</skipMutationTests>
+                <skipMutationTests>true</skipMutationTests>
                 <skipSourceGeneration>true</skipSourceGeneration>
                 <skipJavadocGeneration>true</skipJavadocGeneration>
             </properties>
