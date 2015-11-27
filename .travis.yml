@@ -6,6 +6,9 @@ cache:
   directories:
     - $HOME/.m2
 
+git:
+  depth: 500
+
 branches:
   only:
     - master
