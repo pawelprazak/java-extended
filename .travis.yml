@@ -29,7 +29,7 @@ env:
     - secure: "bPaiv55l7/hayD0vJe4xVfK+cXTICjfJ+hfz9gDDcyEqEXfosVguOS8Q3COzkmHxjU9yEv9vrxJWyaKBdOUr5FoEIk3UlCnbD0pH21OzT22bJXLl/LZ9biIcmzX37a8XwOS0eDWsyAmLM6vG4OcRu4azd4x42mffsT7T5208DFg="
 
 before_install:
-  - pip install codecov
+  - pip install --user codecov
 
 install:
   - jdk_switcher use oraclejdk7 && export JAVA7_HOME=$JAVA_HOME
