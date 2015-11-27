@@ -79,8 +79,8 @@
 
         <!-- Test only dependencies -->
         <spock-core.version>1.0-groovy-2.4</spock-core.version>
-        <groovy-all.version>2.4.4</groovy-all.version>
-        <cglib-nodep.version>3.1</cglib-nodep.version>
+        <groovy-all.version>2.4.5</groovy-all.version>
+        <cglib-nodep.version>3.2.0</cglib-nodep.version>
         <objenesis.version>2.2</objenesis.version>
 
         <!-- Maven profiles properties -->
@@ -449,6 +449,7 @@
                                 <Specification-Version>${project.version}</Specification-Version>
                                 <Implementation-Title>${project.groupId}.${project.artifactId}</Implementation-Title>
                                 <Implementation-Version>${git.buildnumber}</Implementation-Version>
+                                <X-Build-Timestamp>${timestamp}</X-Build-Timestamp>
                                 <X-Git-Revision>${git.revision}</X-Git-Revision>
                                 <X-Git-Branch>${git.branch}</X-Git-Branch>
                                 <X-Git-Tag>${git.tag}</X-Git-Tag>
