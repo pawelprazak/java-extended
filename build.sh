@@ -19,7 +19,7 @@ LINE="--------------------------------------------------------------------------
 
 echo "Building branch: '${TRAVIS_BRANCH}', tag: '${TRAVIS_TAG}'"
 
-if [ "${TRAVIS_BRANCH}" == =~ ^release.* ]; then
+if [ "${TRAVIS_BRANCH}" =~ ^release.* ]; then
     MVN_CMD="mvn clean install deploy --quiet --settings travis-settings.xml -Pbuild-release -B"
 else
     MVN_CMD="mvn clean install -Pbuild-test -B"
