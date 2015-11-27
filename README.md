@@ -13,8 +13,6 @@ java-extended
 
 Java Extended is an experimental set of libraries.
 
-Now it's also available in maven central: http://search.maven.org/#search|ga|1|com.bluecatcode
-
 Core
 ----
 Core Java JDK extensions and backports
