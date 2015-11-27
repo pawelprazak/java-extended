@@ -8,6 +8,7 @@ import com.google.common.collect.ImmutableList;
 
 import javax.annotation.Nullable;
 
+import static com.bluecatcode.common.base.ExceptionSupplier.throwA;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static java.lang.String.format;
 
@@ -129,9 +130,7 @@ public class RichEnumConstants<T extends Enum & RichEnum> {
     private T valueThat(Predicate<? super T> predicate, final String message) {
         return fluent()
                 .firstMatch(predicate)
-                .or(() -> {
-                    throw new IllegalArgumentException(message);
-                });
+                .or(throwA(new IllegalArgumentException(message)));
     }
 
     @Override

@@ -10,3 +10,6 @@ triage:
     - action: suppress
       issueKey: ce12445c1c8fa59dbc71fc7a57e5cc49
       comment: a junit rule
+    - action: suppress
+      issueKey: 9af851803dcf13801b0d50c1161111d1
+      comment: unit test requirement

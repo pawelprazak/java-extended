@@ -1,7 +1,5 @@
 package com.bluecatcode.common.base;
 
-import com.google.common.base.Function;
-
 import java.util.concurrent.Callable;
 
 /**
@@ -43,6 +41,10 @@ public class FunctionalInterfaces {
         };
     }
 
+    public static <T> Callable<T> callable(Block<T> block) {
+        return block::execute;
+    }
+
     public static <T> Callable<T> callable(BlockWithException<T> block) {
         return block::execute;
     }
@@ -54,16 +56,11 @@ public class FunctionalInterfaces {
         };
     }
 
-    public static <T> Function<Void, T> function(Callable<T> callable) {
-        return v -> safeCall(callable);
-    }
-
-    public static <T> Function<Void, T> function(BlockWithException<T> block) {
-        return v -> safeCall(block);
-    }
-
-    public static <T> Function<Void, T> function(Block<T> block) {
-        return v -> block.execute();
+    public static Callable<Void> callable(EffectWithException effect) {
+        return () -> {
+            effect.cause();
+            return null;
+        };
     }
 
 }
