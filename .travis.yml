@@ -28,7 +28,7 @@ script:
   - ./build.sh
 
 after_success:
-  - mvn jacoco:report coveralls:jacoco coveralls:report
+  - mvn jacoco:report coveralls:report coverity-ondemand:check
 
 matrix:
   fast_finish: true
