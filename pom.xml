@@ -89,9 +89,6 @@
         <skipMutationTests>true</skipMutationTests>
         <skipSourceGeneration>true</skipSourceGeneration>
         <skipJavadocGeneration>true</skipJavadocGeneration>
-
-        <!-- will be filled at runtime by the plugin -->
-        <jacoco.agent.argLine/>
     </properties>
 
     <modules>
@@ -333,7 +330,6 @@
                         <threadCount>4</threadCount>
                         <runOrder>failedfirst</runOrder>
                         <jvm>${env.JAVA7_HOME}/bin/java</jvm>
-                        <argLine>${jacoco.agent.argLine} -Xmx2048m</argLine>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -349,7 +345,6 @@
                             <exclude>**/manual/**</exclude>
                             <exclude>**/broken/**</exclude>
                         </excludes>
-                        <argLine>${jacoco.agent.argLine} -Xmx4096m -XX:MaxPermSize=512M</argLine>
                     </configuration>
                     <executions>
                         <execution>
@@ -664,9 +659,6 @@
                             <goals>
                                 <goal>prepare-agent</goal>
                             </goals>
-                            <configuration>
-                                <propertyName>jacoco.agent.argLine</propertyName>
-                            </configuration>
                         </execution>
                         <execution>
                             <id>report</id>

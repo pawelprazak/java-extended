@@ -3,13 +3,9 @@ sudo: false
 
 language:
   - java
-  - python
 
 jdk:
   - oraclejdk7
-
-python:
-  - 2.7
 
 cache:
   directories:
