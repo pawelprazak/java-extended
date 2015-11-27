@@ -3,9 +3,9 @@
 #set -e -u
 
 if [ "${TRAVIS_BRANCH}" == "master" ]; then
-    MVN_CMD="mvn clean install --settings travis-settings.xml -Pbuild-release -B"
-else
     MVN_CMD="mvn clean install deploy --quiet --settings travis-settings.xml -Pbuild-release -B"
+else
+    MVN_CMD="mvn clean test -Pbuild-test -B"
 fi
 
 ${MVN_CMD} -am -pl guava -Dguava.version=15.0 && \
@@ -28,7 +28,8 @@ if [ "${TRAVIS_REPO_SLUG}" == "pawelprazak/java-extended" ] && \
    [ "${TRAVIS_BRANCH}" == "master" ]; then
   echo "Generating Coverity Report..."
 
-  test $(mvn com.coverity:ondemand-maven-plugin:1.4.782:check) != 0
+  test $(mvn com.coverity:ondemand-maven-plugin:1.4.782:check) != 0 && \
+         mvn clean test -Pbuild-test jacoco:report coveralls:report
 
   echo "Generated Coverity Report."
 fi
