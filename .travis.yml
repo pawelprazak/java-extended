@@ -1,6 +1,15 @@
-language: java
 os: linux
 sudo: false
+
+language:
+  - java
+  - python
+
+jdk:
+  - oraclejdk7
+
+python:
+  - 2.7
 
 cache:
   directories:
@@ -13,9 +22,6 @@ branches:
   only:
     - master
     - /^release.*$/
-
-jdk:
-  - oraclejdk7
 
 env:
   global:
