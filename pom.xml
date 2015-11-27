@@ -318,6 +318,7 @@
                     <configuration>
                         <skipTests>${skipUnitTests}</skipTests>
                         <includes>
+                            <include>**/*Test.java</include>
                             <include>**/*Spec.class</include>
                             <include>**/*Suite.class</include>
                         </includes>
@@ -657,14 +658,21 @@
                     <groupId>org.jacoco</groupId>
                     <artifactId>jacoco-maven-plugin</artifactId>
                     <version>0.7.5.201505241946</version>
-                    <configuration>
-                        <propertyName>jacoco.agent.argLine</propertyName>
-                    </configuration>
                     <executions>
                         <execution>
                             <id>prepare-agent</id>
                             <goals>
                                 <goal>prepare-agent</goal>
+                            </goals>
+                            <configuration>
+                                <propertyName>jacoco.agent.argLine</propertyName>
+                            </configuration>
+                        </execution>
+                        <execution>
+                            <id>report</id>
+                            <phase>prepare-package</phase>
+                            <goals>
+                                <goal>report</goal>
                             </goals>
                         </execution>
                     </executions>
