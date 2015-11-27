@@ -6,7 +6,6 @@ import com.google.common.collect.ImmutableMap;
 
 import java.util.*;
 
-import static com.bluecatcode.common.base.Preconditions.checkNotEmpty;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Iterables.getOnlyElement;

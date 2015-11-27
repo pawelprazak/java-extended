@@ -48,7 +48,7 @@ public class KeyStores {
             keyFactory = KeyManagerFactory.getInstance(keyAlgorithm);
             keyFactory.init(keyStore, keyStorePassword.toCharArray());
         } catch (UnrecoverableKeyException ex) {
-            throw new RuntimeException(ex);
+            throw new IllegalArgumentException(ex);
         } catch (NoSuchAlgorithmException | KeyStoreException ex) {
             throw new IllegalStateException(ex);
         }

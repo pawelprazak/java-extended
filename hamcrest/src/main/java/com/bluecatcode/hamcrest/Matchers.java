@@ -39,7 +39,7 @@ public class Matchers {
         for (String string : strings) {
             matchers.add(containsString(string));
         }
-        return org.hamcrest.core.AllOf.allOf(matchers);
+        return allOf(matchers);
     }
 
     /**
@@ -54,7 +54,7 @@ public class Matchers {
         for (String pattern : patterns) {
             matchers.add(pattern(pattern));
         }
-        return org.hamcrest.core.AllOf.allOf(matchers);
+        return allOf(matchers);
     }
 
     /**
@@ -126,7 +126,7 @@ public class Matchers {
      * @return the matcher
      */
     public static <T extends Comparable<T>> Matcher<T> between(T min, T max) {
-        return org.hamcrest.Matchers.allOf(greaterThan(min), lessThan(max));
+        return allOf(greaterThan(min), lessThan(max));
     }
 
     /**
@@ -134,7 +134,7 @@ public class Matchers {
      * @return the matcher
      */
     public static Matcher<Map<?, ?>> isAnEmptyMap() {
-        return org.hamcrest.Matchers.allOf(notNullValue(), not(hasEntry(notNullValue(), notNullValue())));
+        return allOf(notNullValue(), not(hasEntry(notNullValue(), notNullValue())));
     }
 
     /**
