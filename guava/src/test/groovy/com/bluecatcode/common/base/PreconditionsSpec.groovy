@@ -21,7 +21,8 @@ class PreconditionsCheckNotEmptySpec extends Specification {
         where:
         reference << [
                 " ", "some text", Optional.of(1),
-                [""], ["":""], newArrayList(1, 2, 3), ImmutableMap.of("1", "1"), FluentIterable.from([""])
+                [""], ["":""], newArrayList(1, 2, 3),
+                ImmutableMap.of("1", "1"), FluentIterable.from([""])
         ]
     }
 
