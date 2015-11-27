@@ -28,8 +28,8 @@ if [ "${TRAVIS_REPO_SLUG}" == "pawelprazak/java-extended" ] && \
    [ "${TRAVIS_BRANCH}" == "master" ]; then
   echo "Generating Coverity Report..."
 
-  test $(mvn com.coverity:ondemand-maven-plugin:1.4.782:check) != 0 && \
-         mvn clean test -Pbuild-test jacoco:report coveralls:report
+  mvn clean test -Pbuild-test jacoco:report coveralls:report && \
+    test $(mvn coverity-ondemand:check) != 0
 
   echo "Generated Coverity Report."
 fi
