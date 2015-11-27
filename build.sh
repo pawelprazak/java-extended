@@ -48,7 +48,8 @@ if [ "${TRAVIS_REPO_SLUG}" == "pawelprazak/java-extended" ] && \
   echo "Running all tests and reports..."
   echo
   mvn clean test -Pbuild-test,enable-mutation-tests -B
-  test $(mvn coverity-ondemand:check) != 0
+  echo "Running coverity-ondemand..."
+  mvn coverity-ondemand:check
   echo
   echo "Run all tests and reports."
   echo ${LINE}
