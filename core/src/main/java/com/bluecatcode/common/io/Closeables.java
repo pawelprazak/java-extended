@@ -2,7 +2,6 @@ package com.bluecatcode.common.io;
 
 import javax.annotation.Nullable;
 import java.io.Closeable;
-import java.io.IOException;
 import java.sql.Clob;
 import java.sql.Connection;
 import java.sql.Statement;
@@ -46,23 +45,14 @@ public class Closeables {
         return closeableFrom(clob, Clob::free);
     }
 
-
     /**
      * Provides {@link Closeable} interface for {@link T}
      * @param reference the object reference to decorate
      * @param closer the closer function
      * @return a closeable decorated clob
      */
-    public static <T> Closeable closeableFrom(@Nullable final T reference, Closer<T> closer) {
-        return () -> {
-            try {
-                if (reference != null) {
-                    closer.close(reference);
-                }
-            } catch (Exception e) {
-                throw new IOException(e);
-            }
-        };
+    public static <T> CloseableReference<T> closeableFrom(@Nullable final T reference, Closer<T> closer) {
+        return new CloseableReference<>(reference, closer);
     }
 
     private Closeables() {
