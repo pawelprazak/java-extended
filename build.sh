@@ -47,7 +47,8 @@ if [ "${TRAVIS_REPO_SLUG}" == "pawelprazak/java-extended" ] && \
   echo ${LINE}
   echo "Running all tests and reports..."
   echo
-  mvn clean test jacoco:report coveralls:report -Pbuild-test,enable-mutation-tests -B
+#  mvn clean test jacoco:report coveralls:report -Pbuild-test,enable-mutation-tests -B
+  mvn clean test -Pbuild-test,enable-mutation-tests -B
   test $(mvn coverity-ondemand:check) != 0
   echo
   echo "Run all tests and reports."
