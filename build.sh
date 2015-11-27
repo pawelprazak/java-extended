@@ -23,8 +23,6 @@ ${MVN_CMD} -am -pl junit -Djunit.version=4.10 && \
 ${MVN_CMD} -am -pl hamcrest -Dhamcrest.version=1.3 && \
 ${MVN_CMD} -am -pl mockito -Dmockito.version=1.10.19 \
 
-echo "Builds done with code: '${CODE}'"
-
 if [ "${TRAVIS_REPO_SLUG}" == "pawelprazak/java-extended" ] && \
    [ "${TRAVIS_JDK_VERSION}" == "oraclejdk7" ] && \
    [ "${TRAVIS_PULL_REQUEST}" == "false" ] && \
