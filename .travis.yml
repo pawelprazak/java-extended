@@ -37,6 +37,7 @@ script:
 
 after_success:
   - codecov
+  - mvn coverity-ondemand:check
 
 matrix:
   fast_finish: true
