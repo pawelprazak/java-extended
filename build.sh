@@ -36,7 +36,7 @@ if [ "${TRAVIS_REPO_SLUG}" == "pawelprazak/java-extended" ] && \
   echo
   echo "Coveralls report done with code"
   echo ${LINE}
-
+  echo
   echo ${LINE}
   echo "Generating Coverity Report..."
   echo
