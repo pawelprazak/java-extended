@@ -24,7 +24,7 @@ public class Effects {
     public static final Effect<P2<String, CheckResult>> doAssertSummary = new Effect<P2<String, CheckResult>>() {
         public void e(final P2<String, CheckResult> result) {
             String summary = CheckResult.summary.showS(result._2());
-            out.printf("%s (%s)\n", summary, result._1());
+            out.printf("%s (%s)%n", summary, result._1());
             assertFalse(summary, result._2().isFalsified());
         }
     };

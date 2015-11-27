@@ -13,3 +13,6 @@ triage:
     - action: suppress
       issueKey: 9af851803dcf13801b0d50c1161111d1
       comment: unit test requirement
+    - action: suppress
+      issueKey: eb980afd956e45782a00bb2e16d3ce82
+      comment: unit test requirement
