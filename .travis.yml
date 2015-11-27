@@ -22,6 +22,9 @@ env:
     - secure: "HLsGCBxdW7zCX7UCAPZsAgeWpCB0waxz2ePUPhNTIt5ywbm4VDYo0uRm65W/Vht9Wd9pwvO/NBxEwyptQWih2aOXwBd02i63kLYMczoWhGn0SRsHpkhRYuF/pbbRyKoM9BWBrsMF0bBz1y5Q5VPzhnd3DMUK1tx5QTO4Qtbs68k="
     - secure: "bPaiv55l7/hayD0vJe4xVfK+cXTICjfJ+hfz9gDDcyEqEXfosVguOS8Q3COzkmHxjU9yEv9vrxJWyaKBdOUr5FoEIk3UlCnbD0pH21OzT22bJXLl/LZ9biIcmzX37a8XwOS0eDWsyAmLM6vG4OcRu4azd4x42mffsT7T5208DFg="
 
+before_install:
+  - pip install codecov
+
 install:
   - jdk_switcher use oraclejdk7 && export JAVA7_HOME=$JAVA_HOME
   - jdk_switcher use oraclejdk8 && export JAVA8_HOME=$JAVA_HOME
@@ -29,6 +32,9 @@ install:
 
 script:
   - ./build.sh
+
+after_success:
+  - codecov
 
 matrix:
   fast_finish: true
