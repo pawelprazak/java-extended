@@ -20,9 +20,9 @@ LINE="--------------------------------------------------------------------------
 echo "Building branch: '${TRAVIS_BRANCH}', tag: '${TRAVIS_TAG}'"
 
 if [[ "${TRAVIS_BRANCH}" =~ ^release.* ]]; then
-    MVN_CMD="mvn clean install deploy --quiet --settings travis-settings.xml -Pbuild-release -B"
+    MVN_CMD="mvn install deploy --quiet --settings travis-settings.xml -Pbuild-release -B"
 else
-    MVN_CMD="mvn clean install -Pbuild-test -B"
+    MVN_CMD="mvn install -Pbuild-test -B"
 fi
 
 ${MVN_CMD} -am -pl guava -Dguava.version=15.0
@@ -47,7 +47,7 @@ if [ "${TRAVIS_REPO_SLUG}" == "pawelprazak/java-extended" ] && \
   echo ${LINE}
   echo "Running tests"
   echo
-  mvn clean test -Pbuild-test jacoco:report coveralls:report
+  mvn -Pbuild-test jacoco:report coveralls:report
   echo
   echo "Coveralls report done with code"
   echo ${LINE}
