@@ -37,13 +37,7 @@ script:
 
 after_success:
   - codecov
-  - mvn coverity-ondemand:check
+  - test "${TRAVIS_PULL_REQUEST}" == "false" && mvn coverity-ondemand:check
 
 matrix:
   fast_finish: true
-
-deploy:
-  provider: bintray
-  file: bintray-descriptor.json
-  on:
-    branch: /^release.*$/
