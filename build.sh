@@ -46,7 +46,7 @@ if [ "${TRAVIS_REPO_SLUG}" == "pawelprazak/java-extended" ] && \
 
   echo ${LINE}
   echo
-  mvn clean test -Pbuild-test,enable-mutation-tests -B
+  mvn clean test jacoco:report -Pbuild-test,enable-mutation-tests -B
   echo
   echo ${LINE}
 fi
