@@ -15,8 +15,6 @@ trap 'abort' 0
 
 set -e -u
 
-LINE="---------------------------------------------------------------------------------------------------------------"
-
 echo "Building branch: '${TRAVIS_BRANCH}', tag: '${TRAVIS_TAG}'"
 
 if [[ "${TRAVIS_BRANCH}" =~ ^release.* ]]; then
@@ -29,9 +27,9 @@ ${MVN_CMD} -am -pl guava -Dguava.version=15.0
 ${MVN_CMD} -am -pl guava -Dguava.version=16.0
 ${MVN_CMD} -am -pl guava -Dguava.version=17.0
 ${MVN_CMD} -am -pl guava -Dguava.version=18.0
-${MVN_CMD} -am -pl time -Djoda-time.version=2.1
-${MVN_CMD} -am -pl time -Djoda-time.version=2.3
-${MVN_CMD} -am -pl time -Djoda-time.version=2.9.1
+#${MVN_CMD} -am -pl time -Djoda-time.version=2.1
+#${MVN_CMD} -am -pl time -Djoda-time.version=2.3
+#${MVN_CMD} -am -pl time -Djoda-time.version=2.9.1
 ${MVN_CMD} -am -pl junit -Djunit.version=4.10
 ${MVN_CMD} -am -pl junit -Djunit.version=4.11
 ${MVN_CMD} -am -pl junit -Djunit.version=4.12
