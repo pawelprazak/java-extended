@@ -41,3 +41,9 @@ after_success:
 
 matrix:
   fast_finish: true
+
+deploy:
+  provider: bintray
+  file: bintray-descriptor.json
+  on:
+    branch: /^release.*$/
