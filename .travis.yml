@@ -38,7 +38,7 @@ script:
 after_success:
   - codecov
   - mvn coverity-ondemand:check
-  - mvn jacoco:report coveralls:jacoco
+  - mvn jacoco:report coveralls:report
 
 matrix:
   fast_finish: true
