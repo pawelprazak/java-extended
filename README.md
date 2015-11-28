@@ -24,7 +24,7 @@ Google's Guava library extension
     <dependency>
       <groupId>com.bluecatcode.guava</groupId>
       <artifactId>guava-17.0-extended</artifactId>
-      <version>1.0.2</version>
+      <version>1.0.3</version>
     </dependency>
 
 JUnit
@@ -34,7 +34,7 @@ JUnit library extensions
     <dependency>
       <groupId>com.bluecatcode.junit</groupId>
       <artifactId>junit-4.10-extended</artifactId>
-      <version>1.0.2</version>
+      <version>1.0.3</version>
     </dependency>
 
 Hamcrest
@@ -44,7 +44,7 @@ Hamcrest library extensions
     <dependency>
       <groupId>com.bluecatcode.hamcrest</groupId>
       <artifactId>hamcrest-1.3-extended</artifactId>
-      <version>1.0.2</version>
+      <version>1.0.3</version>
     </dependency>
 
 Mockito

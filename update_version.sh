@@ -32,9 +32,10 @@ mvn versions:commit > /dev/null
 
 if [[ "$version" != *-SNAPSHOT ]]; then
     echo "Replacing version numbers in readme"
-    sed -n -i '1h;1!H;${;g;s,<artifactId>coveralls-maven-plugin</artifactId>\n    <version>[^<]*</version>,<artifactId>coveralls-maven-plugin</artifactId>\n    <version>'"$version"'</version>,g;p;}' README.md
+    sed -n -i '1h;1!H;${;g;s,<version>[^<]*</version>,<version>'"$version"'</version>,g;p;}' README.md
 fi
 
 echo "Committing version changes"
-git add ${files[@]}
-git commit -m "Updated to version $version."
+git add -A
+git commit -m "Updated to version ${version}"
+git tag -a release-${version} -m "Release version ${version}"
