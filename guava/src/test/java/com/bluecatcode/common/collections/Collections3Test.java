@@ -26,6 +26,9 @@ import static org.junit.Assert.assertThat;
 @RunWith(Theories.class)
 public class Collections3Test {
 
+    private static Matcher<? super Map<String, String>> isAnEmptyMap =
+            allOf(notNullValue(), not(hasEntry(notNullValue(), notNullValue())));
+
     @Rule
     public ExpectedException exception = ExpectedException.none();
 
@@ -86,7 +89,30 @@ public class Collections3Test {
         assertThat(map, is(data.map()));
     }
 
-    private static Matcher<? super Map<String, String>> isAnEmptyMap = allOf(notNullValue(), not(hasEntry(notNullValue(), notNullValue())));
+    @Theory
+    public void shouldConvertFromDictionaryWithFunction(DictionaryData data) throws Exception {
+        // given
+        Dictionary<String, String> dictionary = data.dictionary();
+
+        // when
+        Map<String, String> map = Collections3.fromDictionary(dictionary, Object::toString);
+
+        // then
+        assertThat(map, is(data.map()));
+    }
+
+    @Test
+    public void shouldThrowOnFromDictionaryWithFunctionReturningNull() throws Exception {
+        // given
+        Dictionary<String, String> dictionary = new Hashtable<>(ImmutableMap.of("1", "2"));
+
+        // expect
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage(startsWith("Provided transformer"));
+
+        // when
+        Collections3.fromDictionary(dictionary, input -> null);
+    }
 
     @DataPoints
     public static final MapData[] samples = new MapData[]{
@@ -95,12 +121,13 @@ public class Collections3Test {
             mapData(emptyHashMap(), null, IllegalArgumentException.class),
             mapData(emptyHashMap(), emptyHashMap(), isAnEmptyMap),
             mapData(emptyHashMap(), hashMapWith(null, null), isAnEmptyMap),
+            mapData(hashMapWith(null, null), hashMapWith(null, null), isAnEmptyMap),
             mapData(hashMapWith("1", null), emptyHashMap(), hasEntry("1", "")),
             mapData(hashMapWith("1", null), ImmutableMap.of("2", "2"), allOf(
                     hasEntry("1", ""), hasEntry("2", "2"))
             ),
             mapData(ImmutableMap.of("2", "2", "3", "3"), ImmutableMap.of("2", "2", "3", "3"), allOf(
-                            hasEntry("2", "2"), hasEntry("3", "3"))
+                    hasEntry("2", "2"), hasEntry("3", "3"))
             ),
     };
 
@@ -124,6 +151,55 @@ public class Collections3Test {
         if (matcher.isPresent()) {
             assertThat(map, matcher.get());
         }
+    }
+
+    @Test
+    public void shouldGetOnlyMapEntry() throws Exception {
+        // given
+        ImmutableMap<Integer, Integer> aSingletonMap = ImmutableMap.of(1, 2);
+
+        // when
+        Map.Entry<Integer, Integer> onlyEntry = Collections3.getOnlyEntry(aSingletonMap);
+
+        // then
+        assertThat(onlyEntry, is(notNullValue()));
+    }
+
+    @Test
+    public void shouldThrowOnGetOnlyMapEntryIfEmpty() throws Exception {
+        // given
+        ImmutableMap<Integer, Integer> aSingletonMap = ImmutableMap.of();
+
+        // expect
+        exception.expect(NoSuchElementException.class);
+
+        // when
+        Collections3.getOnlyEntry(aSingletonMap);
+    }
+
+    @Test
+    public void shouldThrowOnGetOnlyMapEntryIfMoreThanOne() throws Exception {
+        // given
+        ImmutableMap<Integer, Integer> aSingletonMap = ImmutableMap.of(1,2,3,4);
+
+        // expect
+        exception.expect(IllegalArgumentException.class);
+
+        // when
+        Collections3.getOnlyEntry(aSingletonMap);
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    @Test
+    public void shouldThrowOnGetOnlyMapEntryIfNull() throws Exception {
+        // given
+        ImmutableMap<Integer, Integer> aSingletonMap = null;
+
+        // expect
+        exception.expect(IllegalArgumentException.class);
+
+        // when
+        Collections3.getOnlyEntry(aSingletonMap);
     }
 
     @AutoValue
@@ -156,9 +232,9 @@ public class Collections3Test {
     public static abstract class MapData {
 
         public static MapData mapData(Map<String, String> first, Map<String, String> second,
-                                      Matcher<? super Map<String,String>> matcher) {
+                                      Matcher<? super Map<String, String>> matcher) {
             return new AutoValue_Collections3Test_MapData(first, second,
-                    Optional.<Matcher<? super Map<String,String>>>of(matcher),
+                    Optional.<Matcher<? super Map<String, String>>>of(matcher),
                     Optional.<Class<? extends Throwable>>absent()
             );
         }
@@ -166,23 +242,29 @@ public class Collections3Test {
         public static MapData mapData(Map<String, String> first, Map<String, String> second,
                                       Class<? extends Throwable> exception) {
             return new AutoValue_Collections3Test_MapData(first, second,
-                    Optional.<Matcher<? super Map<String,String>>>absent(),
+                    Optional.<Matcher<? super Map<String, String>>>absent(),
                     Optional.<Class<? extends Throwable>>of(exception));
         }
 
-        public abstract @Nullable Map<String, String> first();
+        public abstract
+        @Nullable
+        Map<String, String> first();
 
-        public abstract @Nullable Map<String, String> second();
-        public abstract Optional<Matcher<? super Map<String,String>>> matcher();
+        public abstract
+        @Nullable
+        Map<String, String> second();
+
+        public abstract Optional<Matcher<? super Map<String, String>>> matcher();
+
         public abstract Optional<Class<? extends Throwable>> exception();
     }
 
     private static HashMap<String, String> emptyHashMap() {
-        return new HashMap<String, String>();
+        return new HashMap<>();
     }
 
-    private static HashMap<String, String> hashMapWith(String key, String value) {
-        HashMap<String, String> map = new HashMap<String, String>();
+    private static <K, V> Map<K, V> hashMapWith(K key, V value) {
+        Map<K, V> map = new HashMap<>();
         map.put(key, value);
         return map;
     }

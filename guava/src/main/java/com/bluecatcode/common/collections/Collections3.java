@@ -7,7 +7,6 @@ import com.google.common.collect.ImmutableMap;
 import java.util.*;
 
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.Iterables.getOnlyElement;
 
 public class Collections3 {
@@ -24,8 +23,8 @@ public class Collections3 {
      */
     @Beta
     public static <K, V> Map<K, V> zip(List<K> keys, List<V> values) {
-        checkNotNull(keys);
-        checkNotNull(values);
+        checkArgument(keys != null, "Expected non-null keys");
+        checkArgument(values != null, "Expected non-null values");
         checkArgument(keys.size() == values.size(), "Expected equal size of lists, got %s and %s", keys.size(), values.size());
 
         ImmutableMap.Builder<K, V> builder = ImmutableMap.builder();
@@ -46,7 +45,7 @@ public class Collections3 {
      */
     @Beta
     public static <K, V> Map<K, V> fromDictionary(Dictionary<K, V> dictionary) {
-        checkNotNull(dictionary);
+        checkArgument(dictionary != null, "Expected non-null dictionary");
 
         ImmutableMap.Builder<K, V> builder = ImmutableMap.builder();
 
@@ -62,7 +61,8 @@ public class Collections3 {
     @Beta
     @SuppressWarnings("ConstantConditions")
     public static <K, V> Map<K, V> fromDictionary(Dictionary<K, ?> dictionary, Function<Object, V> transformer) {
-        checkNotNull(dictionary);
+        checkArgument(dictionary != null, "Expected non-null dictionary");
+        checkArgument(transformer != null, "Expected non-null transformer");
 
         ImmutableMap.Builder<K, V> builder = ImmutableMap.builder();
 
@@ -84,6 +84,7 @@ public class Collections3 {
      */
     @Beta
     public static <K, V> Map.Entry<K, V> getOnlyEntry(Map<K, V> map) {
+        checkArgument(map != null, "Expected non-null map");
         return getOnlyElement(map.entrySet());
     }
 
