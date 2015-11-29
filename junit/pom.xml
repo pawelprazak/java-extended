@@ -21,10 +21,17 @@
     </properties>
 
     <dependencies>
+
+        <dependency>
+            <groupId>com.bluecatcode.core</groupId>
+            <artifactId>core</artifactId>
+        </dependency>
+
         <!-- Build time only -->
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
+            <scope>compile</scope>
         </dependency>
 
         <!-- JUnit -->
@@ -32,6 +39,7 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
         </dependency>
+
     </dependencies>
     
 </project>

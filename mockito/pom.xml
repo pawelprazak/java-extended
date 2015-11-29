@@ -14,6 +14,7 @@
     <artifactId>mockito-${mockito.version}-extended</artifactId>
     <version>1.0.3</version>
     <name>${project.groupId}:${project.artifactId}</name>
+    <description>Mockito library extensions.</description>
 
     <properties>
         <mockito.version>1.10.19</mockito.version>

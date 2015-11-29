@@ -24,10 +24,6 @@ if [[ "${TRAVIS_BRANCH}" =~ ^release.* ]]; then
 
     MVN_CMD="${MVN_CMD} deploy --settings travis-settings.xml -X"
 
-    ${MVN_CMD} -pl time -Djoda-time.version=2.9.1
-    ${MVN_CMD} -pl time -Djoda-time.version=2.3
-    ${MVN_CMD} -pl time -Djoda-time.version=2.1
-
     ${MVN_CMD} -pl junit -Djunit.version=4.12
     ${MVN_CMD} -pl junit -Djunit.version=4.11
     ${MVN_CMD} -pl junit -Djunit.version=4.10
@@ -35,6 +31,10 @@ if [[ "${TRAVIS_BRANCH}" =~ ^release.* ]]; then
     ${MVN_CMD} -pl hamcrest -Dhamcrest.version=1.3
 
     ${MVN_CMD} -pl mockito -Dmockito.version=1.10.19
+
+    ${MVN_CMD} -pl time -Djoda-time.version=2.9.1
+    ${MVN_CMD} -pl time -Djoda-time.version=2.3
+    ${MVN_CMD} -pl time -Djoda-time.version=2.1
 
     ${MVN_CMD} -pl guava -Dguava.version=18.0
     ${MVN_CMD} -pl guava -Dguava.version=17.0
