@@ -26,6 +26,7 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
         </dependency>
+
         <!-- Build time only -->
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
@@ -48,9 +49,11 @@
                 <artifactId>maven-shade-plugin</artifactId>
                 <configuration>
                     <artifactSet>
+                        <excludes>
+                            <exclude>org.mockito:*</exclude>
+                            <exclude>*:jsr305</exclude>
+                        </excludes>
                     </artifactSet>
-                    <relocations>
-                    </relocations>
                 </configuration>
             </plugin>
         </plugins>

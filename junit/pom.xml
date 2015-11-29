@@ -44,9 +44,11 @@
                 <artifactId>maven-shade-plugin</artifactId>
                 <configuration>
                     <artifactSet>
+                        <excludes>
+                            <exclude>junit:junit</exclude>
+                            <exclude>*:jsr305</exclude>
+                        </excludes>
                     </artifactSet>
-                    <relocations>
-                    </relocations>
                 </configuration>
             </plugin>
         </plugins>

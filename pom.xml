@@ -105,7 +105,7 @@
     <dependencyManagement>
         <dependencies>
 
-            <!-- Internal dependecies -->
+            <!-- Internal dependencies -->
             <dependency>
                 <groupId>com.bluecatcode.core</groupId>
                 <artifactId>core</artifactId>
