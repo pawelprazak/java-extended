@@ -773,6 +773,13 @@
         </profile>
 
         <profile>
+            <id>enable-unit-tests</id>
+            <properties>
+                <skipUnitTests>false</skipUnitTests>
+            </properties>
+        </profile>
+
+        <profile>
             <id>enable-integration-tests</id>
             <properties>
                 <skipIntegrationTests>false</skipIntegrationTests>
