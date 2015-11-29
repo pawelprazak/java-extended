@@ -19,6 +19,7 @@ import static java.util.regex.Pattern.compile;
  * Additional Preconditions as an extension to {@link com.google.common.base.Preconditions}
  * <p>
  * In performance critical contexts it is probably better to use hand-written checks, but <b>measure first!</b>.
+ * </p>
  * <ul>
  *     <li>check - Performs check with a predicate</li>
  *     <li>checkNotEmpty - Performs emptiness and nullness check for:
@@ -97,7 +98,7 @@ public final class Preconditions {
      * <p>
      * Supports the following types:
      * String, CharSequence, Optional, Stream, Iterable, Collection, Map, Object[], primitive[]
-     *
+     * </p>
      * @param reference reference to check
      * @param errorMessageTemplate a template for the exception message should the
      *     check fail. The message is formed by replacing each {@code %s}

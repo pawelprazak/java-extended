@@ -38,6 +38,7 @@ public class PatternMatcher extends TypeSafeMatcher<CharSequence> {
      * <p>
      * For example:
      * <pre>assertThat("myStringOfNote", pattern("[0-9]+"))</pre>
+     * </p>
      *
      * @param regex the regular expression that the returned matcher will use to match any examined {@link CharSequence}
      * @return the matcher
@@ -53,6 +54,7 @@ public class PatternMatcher extends TypeSafeMatcher<CharSequence> {
      * <p>
      * For example:
      * <pre>assertThat("myStringOfNote", Pattern.compile("[0-9]+"))</pre>
+     * </p>
      *
      * @param pattern the pattern that the returned matcher will use to match any examined {@link CharSequence}
      * @return the matcher

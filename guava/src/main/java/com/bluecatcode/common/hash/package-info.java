@@ -1,6 +1,5 @@
 /**
  * Hashing utility libraries and interfaces.
- * <p>
  * <h3>Main goals:</h3>
  * <ul>
  *     <li>Provide easy to use and less error prone abstraction for hashing operations

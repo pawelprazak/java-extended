@@ -8,7 +8,7 @@ import org.hamcrest.StringDescription;
  * Convenience class for writing one off matchers with validation.
  * <p>
  * You should provide a description and override the validation method.
- * <p>
+ * </p>
  * Usage:<br>
  * <pre>
  *  public class IsValidEmail extends TypeSafeValidatingMatcher&lt;String&gt; {
@@ -18,7 +18,7 @@ import org.hamcrest.StringDescription;
  *          super("a valid e-mail (RFC822)");
  *      }
  *
- *      {@literal@}Override
+ *     {@literal @}Override
  *      protected boolean isValid(String item, Description errorDescription) {
  *          try {
  *              new InternetAddress(item).validate();
@@ -29,7 +29,7 @@ import org.hamcrest.StringDescription;
  *          return true;
  *      }
  *
- *      {@literal@}Factory
+ *     {@literal @}Factory
  *      public static Matcher&lt;? super String&gt; isValidEmail() {
  *          return NOT_EMPTY_INSTANCE;
  *      }

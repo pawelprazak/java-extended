@@ -45,7 +45,7 @@ public class Environment {
      * at java.net.InetAddress.getLocalHost(InetAddress.java:1425)
      * ...
      * </code>
-     * <p>
+     * </p>
      * Instead of just throwing an UnknownHostException and giving up, this
      * method grabs a suitable hostname from the exception and prevents the
      * exception from being thrown. If a suitable hostname cannot be acquired

@@ -25,11 +25,10 @@ public class LongCloseTo extends ComparableCloseTo<Long> {
      * <p>
      * For example:
      * <pre>assertThat(103L, is(closeTo(100, 0.03)))</pre>
+     * </p>
      *
-     * @param operand
-     *     the expected value of matching Long
-     * @param error
-     *     the delta (+/-) within which matches will be allowed
+     * @param operand the expected value of matching Long
+     * @param error   the delta (+/-) within which matches will be allowed
      * @return the matcher
      */
     public static Matcher<Long> closeTo(Long operand, Long error) {

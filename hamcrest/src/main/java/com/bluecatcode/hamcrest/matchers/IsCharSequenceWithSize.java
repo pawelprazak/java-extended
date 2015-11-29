@@ -37,9 +37,9 @@ public class IsCharSequenceWithSize<E extends CharSequence> extends TypeSafeMatc
      * <p>
      * For example:
      * <pre>assertThat("foo", hasSize(equalTo(3)))</pre>
+     * </p>
      *
-     * @param sizeMatcher
-     *     a matcher for the size of an examined {@link java.lang.CharSequence}
+     * @param sizeMatcher a matcher for the size of an examined {@link java.lang.CharSequence}
      */
     @Factory
     public static <E extends CharSequence> Matcher<E> hasSize(Matcher<? super Integer> sizeMatcher) {
@@ -52,6 +52,7 @@ public class IsCharSequenceWithSize<E extends CharSequence> extends TypeSafeMatc
      * <p>
      * For example:
      * <pre>assertThat("foo", hasSize(3))</pre>
+     * </p>
      *
      * @param size the expected size of an examined {@link java.lang.CharSequence}
      */

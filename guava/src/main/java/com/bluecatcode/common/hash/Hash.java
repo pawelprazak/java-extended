@@ -12,7 +12,7 @@ import static com.google.common.hash.Hashing.*;
  * <p>
  * When hashing a String it is very important to get the encoding right, otherwise
  * the resulting hash value might be invalid or "unexpected".
- *
+ * </p>
  * @see com.google.common.hash.Hashing
  */
 @Beta

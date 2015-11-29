@@ -19,6 +19,7 @@ import static java.lang.String.format;
  * Additional Predicates as an extension to {@link com.google.common.base.Predicates}
  * <p>
  * In performance critical contexts it is probably better to use hand-written checks, but <b>measure first!</b>.
+ * </p>
  * <ul>
  *     <li>nor - A 'not or' predicate</li>
  *     <li>isEmpty* - Performs emptiness and nullness check for:

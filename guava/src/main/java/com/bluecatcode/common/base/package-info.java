@@ -1,7 +1,7 @@
 /**
  * Basic utility libraries and interfaces.
  *
- * <p>This package is a part of the open-source
+ * <p>This package is a part of the open-source</p>
  * <a href="https://github.com/pawelprazak/guava-extended">Guava Extended libraries</a>.
 
  * <h3>Main goals:</h3>
@@ -34,7 +34,7 @@
  * </ul>
  * <p>
  * Summary of the major kinds of runtime checks.
- * <p>
+ * </p>
  * <table summary="">
  * <thead>
  * <tr><th>Kind of check</th><th>Description</th></tr>
@@ -50,6 +50,7 @@
  * </table>
  * <p>
  * @see <a href="https://code.google.com/p/guava-libraries/wiki/ConditionalFailuresExplained">Conditional Failures Explained</a>
+ * </p>
  */
 @ParametersAreNonnullByDefault
 package com.bluecatcode.common.base;

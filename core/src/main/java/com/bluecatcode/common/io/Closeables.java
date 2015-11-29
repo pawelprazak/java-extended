@@ -11,7 +11,7 @@ import java.sql.Statement;
  * <p>
  * Enables usage of resources incompatible with Closable interface in contexts
  * where they are required, e.g. Java 7 try-with-resources.
- * <p>
+ * </p>
  * Methods are wrapped with decorators and parameters can safely be null.
  * All decorators have non-throwing null-checks, <b>null values are silently ignored</b>.
  * All checked exceptions are translated to IOException and rethrown.

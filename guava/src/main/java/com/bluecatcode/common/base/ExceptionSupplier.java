@@ -6,6 +6,7 @@ import com.google.common.base.Supplier;
  * Optional supplier for exceptions
  * <p>
  * The supplier is designed to be used for more DLS usage of the following pattern:
+ * </p>
  * {@code}
  * <pre>
  *  Optional&lt;Something&gt; optionalSomething = ...;
