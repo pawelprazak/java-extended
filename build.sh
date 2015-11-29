@@ -13,7 +13,7 @@ abort()
 
 trap 'abort' 0
 
-set -e -u
+set -e -u -x
 
 echo "Building branch: '${TRAVIS_BRANCH}', tag: '${TRAVIS_TAG}'"
 
