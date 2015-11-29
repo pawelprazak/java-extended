@@ -35,7 +35,7 @@ public class PatternMatcher extends TypeSafeMatcher<CharSequence> {
     /**
      * Creates a matcher that matches if the examined {@link CharSequence} matches the specified
      * regular expression.
-     * <br/>
+     *
      * For example:
      * <pre>assertThat("myStringOfNote", pattern("[0-9]+"))</pre>
      *
@@ -50,7 +50,7 @@ public class PatternMatcher extends TypeSafeMatcher<CharSequence> {
     /**
      * Creates a matcher that matches if the examined {@link CharSequence} matches the specified
      * {@link java.util.regex.Pattern}.
-     * <br>
+     *
      * For example:
      * <pre>assertThat("myStringOfNote", Pattern.compile("[0-9]+"))</pre>
      *

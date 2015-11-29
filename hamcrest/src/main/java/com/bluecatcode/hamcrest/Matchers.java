@@ -61,6 +61,7 @@ public class Matchers {
      * Equivalent of {@code not(isIn(Collection<T>)} matcher combination
      * @see org.hamcrest.Matchers#isIn(java.util.Collection)
      * @param collection the collection to match against
+     * @param <T> the matcher type
      * @return the matcher
      */
     public static <T> Matcher<T> isNotIn(Collection<T> collection) {
@@ -71,6 +72,7 @@ public class Matchers {
      * Equivalent of {@code not(isIn(Collection<T>)} matcher combination
      * @see org.hamcrest.Matchers#isIn(Object[])
      * @param array the array to match against
+     * @param <T> the matcher type
      * @return the matcher
      */
     public static <T> Matcher<T> isNotIn(T[] array) {
@@ -80,6 +82,7 @@ public class Matchers {
     /**
      * Equivalent of {@code allOf(hasItem(T), ...)} matcher combination
      * @param items the items to match against
+     * @param <T> the matcher type
      * @return the matcher
      */
     public static <T> Matcher<Iterable<T>> hasItems(Iterable<T> items) {
@@ -123,6 +126,7 @@ public class Matchers {
      * Equivalent of {@code allOf(greaterThan(min), lessThan(max))} matcher combination
      * @param min the minimum value of the range
      * @param max the maximum value of the range
+     * @param <T> the matcher type
      * @return the matcher
      */
     public static <T extends Comparable<T>> Matcher<T> between(T min, T max) {

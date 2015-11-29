@@ -9,7 +9,8 @@ import org.hamcrest.StringDescription;
  * <p>
  * You should provide a description and override the validation method.
  * </p>
- * Usage:<br>
+ *
+ * Usage:
  * <pre>
  *  public class IsValidEmail extends TypeSafeValidatingMatcher&lt;String&gt; {
  *      private static final IsValidEmail NOT_EMPTY_INSTANCE = new IsValidEmail();
