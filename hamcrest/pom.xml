@@ -49,7 +49,6 @@
                     <artifactSet>
                         <excludes>
                             <exclude>org.hamcrest:*</exclude>
-                            <exclude>*:jsr305</exclude>
                         </excludes>
                     </artifactSet>
                 </configuration>

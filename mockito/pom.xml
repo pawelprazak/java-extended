@@ -51,7 +51,6 @@
                     <artifactSet>
                         <excludes>
                             <exclude>org.mockito:*</exclude>
-                            <exclude>*:jsr305</exclude>
                         </excludes>
                     </artifactSet>
                 </configuration>

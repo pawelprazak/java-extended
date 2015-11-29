@@ -58,7 +58,6 @@
                     <artifactSet>
                         <excludes>
                             <exclude>joda-time:*</exclude>
-                            <exclude>*:jsr305</exclude>
                         </excludes>
                     </artifactSet>
                 </configuration>

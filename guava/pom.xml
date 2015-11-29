@@ -144,9 +144,6 @@
                 <artifactId>maven-shade-plugin</artifactId>
                 <configuration>
                     <artifactSet>
-                        <excludes>
-                            <exclude>*:jsr305</exclude>
-                        </excludes>
                         <includes>
                             <include>javax.mail:javax.mail-api</include>
                             <include>javax.activation:activation</include>
