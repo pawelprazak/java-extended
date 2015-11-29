@@ -21,6 +21,7 @@ public class Postconditions {
     /**
      * Fail with an AssertionError and a message.
      *
+     * @param message the fail message
      * @throws AssertionError every time
      */
     public static void fail(String message) {
@@ -31,6 +32,8 @@ public class Postconditions {
      * Fail with an AssertionError and a message which may use String.format if any
      * subsequent parameters are provided.
      *
+     * @param message the fail message template
+     * @param args the message template arguments
      * @throws AssertionError every time
      */
     public static void fail(String message, Object... args) {
@@ -41,6 +44,7 @@ public class Postconditions {
      * Test the condition and throw an AssertionError if false with
      * a stock message.
      *
+     * @param condition the assertion condition
      * @throws AssertionError if the <tt>condition</tt> is <b>false</b>
      */
     public static void assertTrue(boolean condition) {
@@ -53,6 +57,8 @@ public class Postconditions {
      * Test the condition and throw an AssertionError with a
      * provided message.
      *
+     * @param condition the assertion condition
+     * @param message the fail message
      * @throws AssertionError if the <tt>condition</tt> is <b>false</b>
      */
     public static void assertTrue(boolean condition, String message) {
@@ -65,6 +71,9 @@ public class Postconditions {
      * Test the condition and throw an AssertionError if false with
      * a stock message.
      *
+     * @param condition the assertion condition
+     * @param message the fail message template
+     * @param args the message template arguments
      * @throws AssertionError if the <tt>condition</tt> is <b>false</b>
      */
     public static void assertTrue(boolean condition, String message, Object... args) {
@@ -77,6 +86,7 @@ public class Postconditions {
      * Test the negation of the condition and throw an AssertionError with a
      * canned message.
      *
+     * @param condition the assertion condition
      * @throws AssertionError if the <tt>condition</tt> is <b>true</b>
      */
     public static void assertFalse(boolean condition) {
@@ -87,6 +97,8 @@ public class Postconditions {
      * Test the negation of the condition and throw an AssertionError with a
      * provided message.
      *
+     * @param condition the assertion condition
+     * @param message the fail message
      * @throws AssertionError if the <tt>condition</tt> is <b>true</b>
      */
     public static void assertFalse(boolean condition, String message) {
@@ -97,6 +109,9 @@ public class Postconditions {
      * Test the negation of the condition and throw an AssertionError with a
      * canned message.
      *
+     * @param condition the assertion condition
+     * @param message the fail message template
+     * @param args the message template arguments
      * @throws AssertionError if the <tt>condition</tt> is <b>true</b>
      */
     public static void assertFalse(boolean condition, String message, Object... args) {
@@ -106,6 +121,8 @@ public class Postconditions {
     /**
      * Assert that the provided reference is null else throw an AssertionError
      * with a canned error message.
+     * @param reference the reference
+     * @return the passed reference
      * @throws IllegalStateException if the reference is not <tt>null</tt>
      */
     public static <T> T assertNull(@Nullable T reference) {
@@ -116,6 +133,10 @@ public class Postconditions {
     /**
      * Assert that the provided reference is null else throw an AssertionError
      * with a canned error message.
+     * @param reference the reference
+     * @param format the fail message template
+     * @param args the message template arguments
+     * @return the passed reference
      * @throws IllegalStateException if the reference is not <tt>null</tt>
      */
     public static <T> T assertNull(@Nullable T reference, String format, Object... args) {
@@ -125,6 +146,9 @@ public class Postconditions {
     /**
      * Assert that the provided reference is null else throw an AssertionError
      * with a canned error message.
+     * @param reference the reference
+     * @param message the fail message
+     * @return the passed reference
      * @throws IllegalStateException if the reference is not <tt>null</tt>
      */
     public static <T> T assertNull(@Nullable T reference, String message) {
@@ -140,12 +164,16 @@ public class Postconditions {
      * @throws IllegalStateException if the reference is <tt>null</tt>
      */
     public static <T> T assertNotNull(@Nullable T reference) {
-        return assertNotNull(reference, format("Null returned where expected non null result."));
+        return assertNotNull(reference, "Null returned where expected non null result.");
     }
 
     /**
      * Assert that the provided reference is null else throw an AssertionError
      * with a canned error message.
+     * @param reference the reference
+     * @param format the fail message template
+     * @param args the message template arguments
+     * @return the passed reference
      * @throws IllegalStateException if the reference is <tt>null</tt>
      */
     public static <T> T assertNotNull(@Nullable T reference, String format, Object... args) {
@@ -155,6 +183,9 @@ public class Postconditions {
     /**
      * Assert that the provided reference is null else throw an AssertionError
      * with a canned error message.
+     * @param reference the reference
+     * @param message the fail message
+     * @return the passed reference
      * @throws IllegalStateException if the reference is <tt>null</tt>
      */
     public static <T> T assertNotNull(@Nullable T reference, String message) {

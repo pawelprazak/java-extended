@@ -1,6 +1,7 @@
 package com.bluecatcode.common.base;
 
 /**
+ * @param <T> the result type
  * @see java.util.concurrent.Callable
  * @see Consumer
  * @see Effect
