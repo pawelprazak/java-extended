@@ -18,11 +18,7 @@ set -e -u
 echo "Building branch: '${TRAVIS_BRANCH}', tag: '${TRAVIS_TAG}'"
 
 if [[ "${TRAVIS_BRANCH}" =~ ^release.* ]]; then
-    MVN_CMD="mvn -Pbuild-release -B"
-
-    ${MVN_CMD} install jacoco:report -Pbuild-release,enable-unit-tests,enable-integration-tests
-
-    MVN_CMD="${MVN_CMD} deploy --settings travis-settings.xml"
+    MVN_CMD="mvn -B install jacoco:report -Pbuild-release,enable-unit-tests,enable-integration-tests deploy --settings travis-settings.xml -am"
 
     ${MVN_CMD} -pl junit -Djunit.version=4.12
     ${MVN_CMD} -pl junit -Djunit.version=4.11
