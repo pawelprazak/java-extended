@@ -26,20 +26,10 @@ public class Files {
     public static Properties getFileAsProperties(String path) {
         checkFileExists(path);
         Properties properties = new Properties();
-        InputStream stream = null;
-        try {
-            stream = new FileInputStream(path);
+        try (InputStream stream = new FileInputStream(path)) {
             properties.load(stream);
         } catch (IOException e) {
             throw new IllegalArgumentException(e);
-        } finally {
-            if (stream != null) {
-                try {
-                    stream.close();
-                } catch (IOException e) {
-                    // safe to ignore
-                }
-            }
         }
         return properties;
     }
@@ -61,7 +51,8 @@ public class Files {
         //noinspection ConstantConditions
         File parentFile = file.getParentFile();
         String fileMessage = format("%s; exists: %s, can read: %s", file, file.exists(), file.canRead());
-        String parentFileMessage = (parentFile == null) ? "" : format(", dir exists: %s, dir can read: %s", parentFile.exists(), parentFile.canRead());
+        String parentFileMessage = (parentFile == null) ? "" :
+                format(", dir exists: %s, dir can read: %s", parentFile.exists(), parentFile.canRead());
 
         log.log(Level.FINE, fileMessage + parentFileMessage);
 
@@ -81,22 +72,12 @@ public class Files {
     public static void consumeLines(File file, Charset charset, Consumer<String> consumer) {
         try {
             CharSource charSource = com.google.common.io.Files.asCharSource(file, charset);
-            BufferedReader bufferedReader = null;
-            try {
-                bufferedReader = charSource.openBufferedStream();
+            try (BufferedReader bufferedReader = charSource.openBufferedStream()) {
                 for (String line; (line = bufferedReader.readLine()) != null; ) {
                     try {
                         consumer.accept(line);
                     } catch (Exception e) {
                         throw new IllegalStateException(e);
-                    }
-                }
-            } finally {
-                if (bufferedReader != null) {
-                    try {
-                        bufferedReader.close();
-                    } catch (IOException e) {
-                        // safe to ignore
                     }
                 }
             }
