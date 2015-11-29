@@ -17,7 +17,7 @@ set -e -u
 
 echo "Building branch: '${TRAVIS_BRANCH}', tag: '${TRAVIS_TAG}'"
 
-set -e -u -x
+MAVEN_OPTS=$MAVEN_OPTS -Dorg.slf4j.simpleLogger.defaultLogLevel=warn
 
 if [[ "${TRAVIS_BRANCH}" =~ ^release.* ]]; then
     MVN_CMD="mvn -Pbuild-release -B"
