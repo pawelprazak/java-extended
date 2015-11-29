@@ -46,9 +46,16 @@
                     <artifactSet>
                         <excludes>
                             <exclude>junit:junit</exclude>
+                            <exclude>org.hamcrest:*</exclude>
                             <exclude>*:jsr305</exclude>
                         </excludes>
                     </artifactSet>
+                    <relocations>
+                        <relocation>
+                            <pattern>*</pattern>
+                            <shadedPattern>${project.groupId}.shaded</shadedPattern>
+                        </relocation>
+                    </relocations>
                 </configuration>
             </plugin>
         </plugins>
