@@ -51,10 +51,22 @@ Mockito
 ---------
 Mockito library extensions
 
+    <dependency>
+      <groupId>com.bluecatcode.hamcrest</groupId>
+      <artifactId>mockito-1.10.19-extended</artifactId>
+      <version>1.0.3</version>
+    </dependency>
+
 Joda Time
 ---------
 Joda Time library extensions
 
-Functional Java Check
+    <dependency>
+      <groupId>com.bluecatcode.hamcrest</groupId>
+      <artifactId>joda-time-2.9.1-extended</artifactId>
+      <version>1.0.3</version>
+    </dependency>
+
+Functional Java Check (deprecated in version > 1.0.2)
 ---------------------
 Functional Java test module (a.k.a. Reduction) library extensions
