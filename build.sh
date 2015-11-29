@@ -24,7 +24,7 @@ if [[ "${TRAVIS_BRANCH}" =~ ^release.* ]]; then
 
     ${MVN_CMD} install jacoco:report -Pbuild-release,enable-unit-tests,enable-integration-tests
 
-    MVN_CMD="${MVN_CMD} deploy --settings travis-settings.xml"
+    MVN_CMD="${MVN_CMD} deploy --settings travis-settings.xml -X"
 
     #${MVN_CMD} -pl guava -Dguava.version=18.0
     ${MVN_CMD} -pl guava -Dguava.version=17.0
