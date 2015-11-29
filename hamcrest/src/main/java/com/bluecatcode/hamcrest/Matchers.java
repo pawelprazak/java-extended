@@ -166,7 +166,7 @@ public class Matchers {
 
     /**
      * Throwable matcher to be used with {@link #isThrowable(Class, Matcher)}
-     * @see #isThrowable(Class, Matcher)}
+     * @see #isThrowable(Class, Matcher)
      * @param matcher the cause matcher
      * @param <T> the throwable type
      * @param <C> the cause type
@@ -178,7 +178,7 @@ public class Matchers {
 
     /**
      * Throwable matcher to be used with {@link #isThrowable(Class, Matcher)}
-     * @see #isThrowable(Class, Matcher)}
+     * @see #isThrowable(Class, Matcher)
      * @param matcher the message matcher
      * @param <T> the throwable type
      * @return the matcher
@@ -189,7 +189,7 @@ public class Matchers {
 
     /**
      * Throwable matcher to be used with {@link #isThrowable(Class, Matcher)}
-     * @see #isThrowable(Class, Matcher)}
+     * @see #isThrowable(Class, Matcher)
      * @param message the message
      * @param <T> the throwable type
      * @return the matcher

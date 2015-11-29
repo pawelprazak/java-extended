@@ -11,7 +11,6 @@
  * <li>{@link com.bluecatcode.common.hash.Hash}
  * </ul>
  *
- * <p>
  * @see com.google.common.hash
  */
 @ParametersAreNonnullByDefault

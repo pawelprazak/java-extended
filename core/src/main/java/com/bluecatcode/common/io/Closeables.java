@@ -49,6 +49,7 @@ public class Closeables {
      * Provides {@link Closeable} interface for {@link T}
      * @param reference the object reference to decorate
      * @param closer the closer function
+     * @param <T> the closeable reference type
      * @return a closeable decorated clob
      */
     public static <T> CloseableReference<T> closeableFrom(@Nullable final T reference, Closer<T> closer) {
