@@ -13,9 +13,11 @@ abort()
 
 trap 'abort' 0
 
-set -e -u -x
+set -e -u
 
 echo "Building branch: '${TRAVIS_BRANCH}', tag: '${TRAVIS_TAG}'"
+
+set -e -u -x
 
 if [[ "${TRAVIS_BRANCH}" =~ ^release.* ]]; then
     MVN_CMD="mvn -Pbuild-release -B"
