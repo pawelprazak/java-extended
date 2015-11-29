@@ -9,7 +9,6 @@
         <artifactId>project</artifactId>
         <version>1.0.3</version>
     </parent>
-
     <groupId>com.bluecatcode.guava</groupId>
     <artifactId>guava-${guava.version}-extended</artifactId>
     <version>1.0.3</version>
@@ -21,6 +20,7 @@
     </properties>
 
     <dependencies>
+
         <dependency>
             <groupId>com.bluecatcode.core</groupId>
             <artifactId>core</artifactId>
@@ -43,6 +43,7 @@
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
+            <scope>compile</scope>
         </dependency>
 
         <!-- Test -->
