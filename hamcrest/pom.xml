@@ -31,6 +31,13 @@
             <artifactId>hamcrest-all</artifactId>
         </dependency>
 
+        <!-- Build time only -->
+        <dependency>
+            <groupId>com.google.code.findbugs</groupId>
+            <artifactId>jsr305</artifactId>
+            <scope>compile</scope>
+        </dependency>
+
         <!-- Tests -->
         <dependency>
             <groupId>junit</groupId>
