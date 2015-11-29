@@ -23,6 +23,7 @@ else
     MVN_CMD="mvn test jacoco:report -Pbuild-test -B"
 fi
 
+${MVN_CMD}
 ${MVN_CMD} -am -pl guava -Dguava.version=15.0
 ${MVN_CMD} -am -pl guava -Dguava.version=16.0
 ${MVN_CMD} -am -pl guava -Dguava.version=17.0
