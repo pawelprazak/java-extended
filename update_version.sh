@@ -33,9 +33,14 @@ mvn versions:commit > /dev/null
 if [[ "$version" != *-SNAPSHOT ]]; then
     echo "Replacing version numbers in readme"
     sed -n -i '1h;1!H;${;g;s,<version>[^<]*</version>,<version>'"$version"'</version>,g;p;}' README.md
+    sed -n -i '1h;1!H;${;g;s,Release [^<]*,Release '"$version"',g;p;}' RELEASE.md
 fi
 
 echo "Committing version changes"
 git add -A
 git commit -m "Updated to version ${version}"
-git tag -a release-${version} -m "Release version ${version}"
+
+if [[ "$version" != *-SNAPSHOT ]]; then
+    echo "Tagging the release in git"
+    git tag -a release-${version} -m "Release version ${version}"
+fi
