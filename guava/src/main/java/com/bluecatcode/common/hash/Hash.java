@@ -38,7 +38,7 @@ public final class Hash {
      * @see com.google.common.hash.HashCode#toString()
      */
     public static String md5AsString(String input) {
-        return newHash(input, sha1()).toString();
+        return newHash(input, md5()).toString();
     }
 
     /**
