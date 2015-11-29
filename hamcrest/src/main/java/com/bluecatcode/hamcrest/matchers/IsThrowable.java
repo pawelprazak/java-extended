@@ -31,6 +31,8 @@ public class IsThrowable<T extends Throwable> extends CustomTypeSafeMatcher<T> {
      * Matches if value is a Throwable of type <tt>type</tt>
      *
      * @param type throwable type
+     * @param <T> the throwable type
+     * @return the matcher
      */
     @Factory
     public static <T extends Throwable> Matcher<T> isThrowable(Class<?> type) {
@@ -43,6 +45,8 @@ public class IsThrowable<T extends Throwable> extends CustomTypeSafeMatcher<T> {
      *
      * @param type    throwable type
      * @param matcher throwable matcher
+     * @param <T> the throwable type
+     * @return the matcher
      */
     @Factory
     public static <T extends Throwable> Matcher<T> isThrowable(Class<?> type, Matcher<? super T> matcher) {
@@ -54,6 +58,8 @@ public class IsThrowable<T extends Throwable> extends CustomTypeSafeMatcher<T> {
      * Matches if value is a throwable with the <tt>message</tt>
      *
      * @param message message to match
+     * @param <T> the throwable type
+     * @return the matcher
      */
     @Factory
     public static <T extends Throwable> Matcher<T> withMessage(String message) {
@@ -64,6 +70,8 @@ public class IsThrowable<T extends Throwable> extends CustomTypeSafeMatcher<T> {
      * Matches if value is a throwable with a message that matches the <tt>matcher</tt>
      *
      * @param matcher message matcher
+     * @param <T> the throwable type
+     * @return the matcher
      */
     @Factory
     public static <T extends Throwable> Matcher<T> withMessage(final Matcher<String> matcher) {
@@ -83,6 +91,8 @@ public class IsThrowable<T extends Throwable> extends CustomTypeSafeMatcher<T> {
      * Matches if value is a throwable with a cause that matches the <tt>matcher</tt>
      *
      * @param matcher cause matcher
+     * @param <T> the throwable type
+     * @return the matcher
      */
     @Factory
     public static <T extends Throwable, C extends Throwable> Matcher<T> withCause(final Matcher<C> matcher) {
