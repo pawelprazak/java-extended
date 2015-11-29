@@ -13,13 +13,14 @@ public class Collections3 {
 
     /**
      * Combine two lists into a map. Lists must have the same size.
-     * @param keys the key list
+     *
+     * @param keys   the key list
      * @param values the value list
-     * @param <K> the key type
-     * @param <V> the value type
+     * @param <K>    the key type
+     * @param <V>    the value type
      * @return the resulting map
      * @throws IllegalArgumentException if lists size differ
-     * @throws NullPointerException if any of the lists is null
+     * @throws NullPointerException     if any of the lists is null
      */
     @Beta
     public static <K, V> Map<K, V> zip(List<K> keys, List<V> values) {
@@ -38,9 +39,10 @@ public class Collections3 {
 
     /**
      * Convert a {@link Dictionary} to a {@link Map}
+     *
      * @param dictionary the dictionary to convert
-     * @param <K> the key type
-     * @param <V> the value type
+     * @param <K>        the key type
+     * @param <V>        the value type
      * @return the resulting map
      */
     @Beta
@@ -58,6 +60,15 @@ public class Collections3 {
         return builder.build();
     }
 
+    /**
+     * Convert a {@link Dictionary} to a {@link Map} using a {@link Function}
+     *
+     * @param dictionary  the dictionary to convert
+     * @param transformer the dictionary value transformer
+     * @param <K>         the key type
+     * @param <V>         the value type
+     * @return the resulting map
+     */
     @Beta
     @SuppressWarnings("ConstantConditions")
     public static <K, V> Map<K, V> fromDictionary(Dictionary<K, ?> dictionary, Function<Object, V> transformer) {
@@ -77,8 +88,13 @@ public class Collections3 {
     }
 
     /**
+     * Gets the only element from a given map or throws an exception
+     *
+     * @param map the map to get only entry from
+     * @param <K> the key type
+     * @param <V> the value type
      * @return the single entry contained in the map
-     * @throws NoSuchElementException if the map is empty
+     * @throws NoSuchElementException   if the map is empty
      * @throws IllegalArgumentException if the map contains multiple entries
      * @see com.google.common.collect.Iterables#getOnlyElement
      */
@@ -90,9 +106,12 @@ public class Collections3 {
 
     /**
      * Mergers two maps handling null keys, null values and duplicates
-     * @param first the first map to merge
-     * @param second the second map to merge
+     *
+     * @param first        the first map to merge
+     * @param second       the second map to merge
      * @param defaultValue the value to be used in case of null value
+     * @param <K> the key type
+     * @param <V> the value type
      * @return a single map containing entries from the given maps
      * @throws IllegalArgumentException if any of the arguments is null
      */

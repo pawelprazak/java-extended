@@ -16,7 +16,7 @@ import static java.lang.String.format;
  * A companion class for {@link com.bluecatcode.common.base.RichEnum}
  * @see com.bluecatcode.common.base.RichEnum
  * @see com.bluecatcode.common.base.RichEnumInstance
- * @param <T>
+ * @param <T> the enum type
  */
 public class RichEnumConstants<T extends Enum & RichEnum> {
 

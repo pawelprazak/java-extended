@@ -155,6 +155,8 @@ public final class Predicates {
     }
 
     /**
+     * NOT OR Predicate
+     *
      * Truth table:
      * <pre>
      * B  A  Q
@@ -164,6 +166,10 @@ public final class Predicates {
      * 1  0  0
      * 1  1  0
      * </pre>
+     *
+     * @param first the first argument
+     * @param second the second argument
+     * @return the predicate
      */
     @Beta
     public static <T> Predicate<T> nor(Predicate<? super T> first, Predicate<? super T> second) {
@@ -177,6 +183,8 @@ public final class Predicates {
     }
 
     /**
+     * NOT AND Predicate
+     *
      * Truth table:
      * <pre>
      * B  A  Q
@@ -186,14 +194,22 @@ public final class Predicates {
      * 1  0  1
      * 1  1  0
      * </pre>
+     *
+     * @param first the first argument
+     * @param second the second argument
+     * @return the predicate
      */
     @Beta
-    public static <T> Predicate<T> nand(Predicate<? super T> predicate1, Predicate<? super T> predicate2) {
-        return com.google.common.base.Predicates.<T>not(com.google.common.base.Predicates.<T>and(predicate1, predicate2));
+    public static <T> Predicate<T> nand(Predicate<? super T> first, Predicate<? super T> second) {
+        return com.google.common.base.Predicates.<T>not(com.google.common.base.Predicates.<T>and(first, second));
     }
 
     /**
+     * NOT AND Predicate
+     *
      * @see #nand(com.google.common.base.Predicate, com.google.common.base.Predicate)
+     * @param components the operator arguments
+     * @return the predicate
      */
     @Beta
     @SafeVarargs

@@ -92,6 +92,7 @@ public class IsThrowable<T extends Throwable> extends CustomTypeSafeMatcher<T> {
      *
      * @param matcher cause matcher
      * @param <T> the throwable type
+     * @param <C> the cause throwable type
      * @return the matcher
      */
     @Factory

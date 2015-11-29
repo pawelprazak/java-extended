@@ -47,6 +47,7 @@ public final class Preconditions {
      * @param errorMessageArgs the arguments to be substituted into the message
      *     template. Arguments are converted to strings using
      *     {@link String#valueOf(Object)}.
+     * @param <T> the reference type
      * @return the original reference
      * @throws IllegalArgumentException if the {@code reference} doesn't match provided predicate
      * @throws NullPointerException if the {@code reference} or {@code predicate} is null
@@ -67,6 +68,7 @@ public final class Preconditions {
      * @param reference reference to check
      * @param errorMessage the exception message to use if the check fails; will
      *     be converted to a string using {@link String#valueOf(Object)}
+     * @param <T> the reference type
      * @return the original reference
      * @throws IllegalArgumentException if the {@code reference} is empty
      * @throws NullPointerException     if the {@code reference} is null
@@ -82,6 +84,7 @@ public final class Preconditions {
      * Performs check with the predicate.
      *
      * @param reference String reference to check
+     * @param <T> the reference type
      * @return the original reference
      * @throws IllegalArgumentException if the {@code reference} is empty
      * @throws NullPointerException     if the {@code reference} is null
@@ -109,7 +112,7 @@ public final class Preconditions {
      * @param errorMessageArgs the arguments to be substituted into the message
      *     template. Arguments are converted to strings using
      *     {@link String#valueOf(Object)}.
-     * @param <T> reference type
+     * @param <T> the reference type
      * @return the checked reference
      * @throws IllegalArgumentException if the {@code reference} is empty
      *     or the reference type is not supported
@@ -131,6 +134,7 @@ public final class Preconditions {
      * @param reference reference to check
      * @param errorMessage the exception message to use if the check fails; will
      *     be converted to a string using {@link String#valueOf(Object)}
+     * @param <T> the reference type
      * @return the checked reference
      * @throws IllegalArgumentException if the {@code reference} is empty
      * @throws NullPointerException     if the {@code reference} is null
@@ -146,6 +150,7 @@ public final class Preconditions {
      * Performs emptiness and nullness check.
      *
      * @param reference String reference to check
+     * @param <T> the reference type
      * @return the original reference
      * @throws IllegalArgumentException if the {@code reference} is empty
      * @throws NullPointerException     if the {@code reference} is null
@@ -216,6 +221,12 @@ public final class Preconditions {
     /**
      * Performs a runtime check if the reference is an instance of the provided class
      *
+     * @param class_ the class to use
+     * @param reference reference to check
+     * @param errorMessageTemplate the exception message template to use if the check fails; will
+     *     be converted to a string using {@link String#valueOf(Object)}
+     * @param errorMessageArgs the <tt>errorMessageTemplate</tt> arguments
+     * @param <T> the reference type
      * @return the original reference
      * @throws IllegalArgumentException if the {@code reference} is not an instance of provided class {@code class_}
      * @throws NullPointerException if the {@code reference} is null; also when the check fails and either
@@ -234,6 +245,13 @@ public final class Preconditions {
     }
 
     /**
+     * Performs a runtime check if the reference is an instance of the provided class
+     *
+     * @param class_ the class to use
+     * @param reference reference to check
+     * @param errorMessage the exception message to use if the check fails; will
+     *     be converted to a string using {@link String#valueOf(Object)}
+     * @param <T> the reference type
      * @see Preconditions#checkIsInstance(Class, Object, String, Object...)
      */
     @Beta
@@ -243,6 +261,11 @@ public final class Preconditions {
     }
 
     /**
+     * Performs a runtime check if the reference is an instance of the provided class
+     *
+     * @param class_ the class to use
+     * @param reference reference to check
+     * @param <T> the reference type
      * @see Preconditions#checkIsInstance(Class, Object, String, Object...)
      */
     @Beta
