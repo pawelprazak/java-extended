@@ -30,7 +30,7 @@ before_install:
 install:
   - jdk_switcher use oraclejdk7 && export JAVA7_HOME=$JAVA_HOME
   - jdk_switcher use oraclejdk8 && export JAVA8_HOME=$JAVA_HOME
-  - mvn clean compile dependency:resolve --quiet -U -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+#  - mvn clean compile dependency:resolve --quiet -U -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 script:
   - ./build.sh
