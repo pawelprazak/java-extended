@@ -35,6 +35,8 @@ public class BoundedByteArrayOutputStreamTest {
             data(new byte[30], 31, 1, IndexOutOfBoundsException.class, startsWith("Invalid offset")),
             data(new byte[30], -1, 30, IndexOutOfBoundsException.class, startsWith("Invalid offset")),
             data(new byte[30], 0, 31, IndexOutOfBoundsException.class, startsWith("Invalid length")),
+            data(new byte[30], 0, -1, IndexOutOfBoundsException.class, startsWith("Invalid length")),
+            data(new byte[0], 0, -1, IndexOutOfBoundsException.class, startsWith("Invalid length")),
     };
 
     @Theory
