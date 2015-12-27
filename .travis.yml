@@ -36,11 +36,11 @@ install:
 #  - mvn clean compile dependency:resolve --quiet -U -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 script:
-  - if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then ./build.sh; fi
+  - test "${TRAVIS_PULL_REQUEST}" == "false" && "${COVERITY_SCAN_BRANCH}" != 1 && ./build.sh
 
 after_success:
-  - codecov
-  - test "${TRAVIS_PULL_REQUEST}" == "false" && mvn coverity-ondemand:check
+  - test "${TRAVIS_PULL_REQUEST}" == "false" && "${COVERITY_SCAN_BRANCH}" != 1 && codecov
+  - test "${TRAVIS_PULL_REQUEST}" == "false" && "${COVERITY_SCAN_BRANCH}" != 1 && mvn coverity-ondemand:check
 
 matrix:
   fast_finish: true
@@ -50,6 +50,7 @@ addons:
     project:
       name: "pawelprazak/java-extended"
       description: "Coverity via Travis CI"
+      email: "pawel@bluecatcode.com"
 
     build_command: "./build.sh"
 
