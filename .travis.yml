@@ -28,6 +28,12 @@ env:
     - secure: "Qwgm1E4rVWsRUd1hNaZ8xIkf/tX9zTkR5T5JtB3K+3kqKWp2dJ51m9rhlNR+pMF9/+zaWnPJRz2Oah1Bs3FHMA6f1qzU4h8nWW7jGal1g/yz9oPzBe2kaxnBalrbbP9OQWC8hAN/oYehCTth4N5IOBvlqVHnq6+jqLJr9mmElec="
 
 before_install:
+  # ugly hack; if running a coverity scan abort all except the 1st build
+  # see note re gcc compiler above needing to be 1st
+  # also note that branch_pattern & the TRAVIS_BRANCH check must match
+  # unfortunately COVERITY_SCAN_BRANCH isn't defined until later in the
+  # build process
+  - if ([[ "${TRAVIS_JOB_NUMBER##*.}" != "1" ]] && [[ "${TRAVIS_BRANCH}" == "coverity_scan" ]]); then false ; fi
   - pip install --user codecov
 
 install:
@@ -36,11 +42,11 @@ install:
 #  - mvn clean compile dependency:resolve --quiet -U -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 script:
-  - test "${TRAVIS_PULL_REQUEST}" == "false" && "${COVERITY_SCAN_BRANCH}" != 1 && ./build.sh
+  - if [ "${COVERITY_SCAN_BRANCH}" != 1 ] then ./build.sh; fi
 
 after_success:
   - test "${TRAVIS_PULL_REQUEST}" == "false" && "${COVERITY_SCAN_BRANCH}" != 1 && codecov
-  - test "${TRAVIS_PULL_REQUEST}" == "false" && "${COVERITY_SCAN_BRANCH}" != 1 && mvn coverity-ondemand:check
+  - test "${TRAVIS_PULL_REQUEST}" == "false" && "${COVERITY_SCAN_BRANCH}" == 1 && mvn coverity-ondemand:check
 
 matrix:
   fast_finish: true
