@@ -18,12 +18,13 @@ branches:
   only:
     - master
     - /^release.*$/
-    - coverity_scan
 
 env:
   global:
     - secure: "HLsGCBxdW7zCX7UCAPZsAgeWpCB0waxz2ePUPhNTIt5ywbm4VDYo0uRm65W/Vht9Wd9pwvO/NBxEwyptQWih2aOXwBd02i63kLYMczoWhGn0SRsHpkhRYuF/pbbRyKoM9BWBrsMF0bBz1y5Q5VPzhnd3DMUK1tx5QTO4Qtbs68k="
     - secure: "bPaiv55l7/hayD0vJe4xVfK+cXTICjfJ+hfz9gDDcyEqEXfosVguOS8Q3COzkmHxjU9yEv9vrxJWyaKBdOUr5FoEIk3UlCnbD0pH21OzT22bJXLl/LZ9biIcmzX37a8XwOS0eDWsyAmLM6vG4OcRu4azd4x42mffsT7T5208DFg="
+    # Coverity Scan Token
+    - secure: "acrUF/mV52089UECOubOKAChoPXjTbZ6ubgvKyK8wOjH271DBt0u3fRmfMiqXzkWn53lvFYCWP4UZtl97aX6/IbB8XNt0B43VTPyFbBc9fjdTveg42NXN09t/44vQboDcOwidkCsvKS0Fu6XJvRWHU9InKcYVcsHWxm9a6WQX3M="
 
 before_install:
   - pip install --user codecov
@@ -34,6 +35,7 @@ install:
 #  - mvn clean compile dependency:resolve --quiet -U -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 script:
+  - if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then false; fi
   - ./build.sh
 
 after_success:
@@ -42,3 +44,16 @@ after_success:
 
 matrix:
   fast_finish: true
+
+addons:
+  coverity_scan:
+    project:
+      name: "pawelprazak/java-extended"
+      description: "Coverity via Travis CI"
+
+    build_command:   "./build.sh"
+
+    # must match TRAVIS_BRANCH check below
+    # Take care in resource usage, and consider the build frequency allowances per
+    #   https://scan.coverity.com/faq#frequency
+    branch_pattern: coverity_scan
