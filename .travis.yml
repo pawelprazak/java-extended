@@ -33,8 +33,8 @@ before_install:
   # also note that branch_pattern & the TRAVIS_BRANCH check must match
   # unfortunately COVERITY_SCAN_BRANCH isn't defined until later in the
   # build process
-  - if ([[ "${TRAVIS_JOB_NUMBER##*.}" != "1" ]] && [[ "${TRAVIS_BRANCH}" == "coverity_scan" ]]); then false ; fi
-  - pip install --user codecov
+  - if ([[ "${TRAVIS_JOB_NUMBER##*.}" != "1" ]] && [[ "${TRAVIS_BRANCH}" == "coverity_scan" ]]); then false; fi
+  - if [ "${TRAVIS_BRANCH}" != "coverity_scan" ]; then pip install --user codecov; fi
 
 install:
   - jdk_switcher use oraclejdk7 && export JAVA7_HOME=$JAVA_HOME
@@ -42,11 +42,11 @@ install:
 #  - mvn clean compile dependency:resolve --quiet -U -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 script:
-  - if [ "${COVERITY_SCAN_BRANCH}" != 1 ] then ./build.sh; fi
+  - if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then ./build.sh; fi
 
 after_success:
   - test "${TRAVIS_PULL_REQUEST}" == "false" && "${COVERITY_SCAN_BRANCH}" != 1 && codecov
-  - test "${TRAVIS_PULL_REQUEST}" == "false" && "${COVERITY_SCAN_BRANCH}" == 1 && mvn coverity-ondemand:check
+  - test "${COVERITY_SCAN_BRANCH}" == 1 && mvn coverity-ondemand:check
 
 matrix:
   fast_finish: true
