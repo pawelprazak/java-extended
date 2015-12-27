@@ -7,6 +7,7 @@ java-extended
 
 [![codecov.io](https://codecov.io/github/pawelprazak/java-extended/coverage.svg?branch=master)](https://codecov.io/github/pawelprazak/java-extended?branch=master)
 [![Code Advisor On Demand Status](https://badges.ondemand.coverity.com/streams/vefu0dfhbd6nhbmbugq2s08g6k)](https://ondemand.coverity.com/streams/vefu0dfhbd6nhbmbugq2s08g6k/jobs)
+[![Coverity Scan Build Status](https://scan.coverity.com/projects/7212/badge.svg)](https://scan.coverity.com/projects/pawelprazak-java-extended)
 [![Codacy Badge](https://api.codacy.com/project/badge/2b3bd5330c744938862bf83c79cba7f3)](https://www.codacy.com/app/pawelprazak/java-extended)
 [![Dependency Status](https://www.versioneye.com/user/projects/5534f70f050e7cfd3100008b/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5534f70f050e7cfd3100008b)
 
