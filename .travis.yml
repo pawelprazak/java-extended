@@ -52,7 +52,7 @@ addons:
       description: "Coverity via Travis CI"
       notification_email: "pawel@bluecatcode.com"
 
-    build_command: "./build.sh"
+    build_command: "mvn test -Pbuild-test -B"
 
     # must match TRAVIS_BRANCH check below
     # Take care in resource usage, and consider the build frequency allowances per
