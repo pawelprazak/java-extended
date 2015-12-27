@@ -16,7 +16,7 @@
     <description>Guava library extensions.</description>
 
     <properties>
-        <guava.version>18.0</guava.version>
+        <guava.version>19.0</guava.version>
     </properties>
 
     <dependencies>

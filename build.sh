@@ -32,6 +32,7 @@ if [[ "${TRAVIS_BRANCH}" =~ ^release.* ]]; then
     ${MVN_CMD} -pl time -Djoda-time.version=2.3
     ${MVN_CMD} -pl time -Djoda-time.version=2.1
 
+    ${MVN_CMD} -pl guava -Dguava.version=19.0
     ${MVN_CMD} -pl guava -Dguava.version=18.0
     ${MVN_CMD} -pl guava -Dguava.version=17.0
     ${MVN_CMD} -pl guava -Dguava.version=16.0.1
