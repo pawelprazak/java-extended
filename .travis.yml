@@ -25,7 +25,7 @@ env:
     - secure: "HLsGCBxdW7zCX7UCAPZsAgeWpCB0waxz2ePUPhNTIt5ywbm4VDYo0uRm65W/Vht9Wd9pwvO/NBxEwyptQWih2aOXwBd02i63kLYMczoWhGn0SRsHpkhRYuF/pbbRyKoM9BWBrsMF0bBz1y5Q5VPzhnd3DMUK1tx5QTO4Qtbs68k="
     - secure: "bPaiv55l7/hayD0vJe4xVfK+cXTICjfJ+hfz9gDDcyEqEXfosVguOS8Q3COzkmHxjU9yEv9vrxJWyaKBdOUr5FoEIk3UlCnbD0pH21OzT22bJXLl/LZ9biIcmzX37a8XwOS0eDWsyAmLM6vG4OcRu4azd4x42mffsT7T5208DFg="
     # Coverity Scan Token
-    - secure: "acrUF/mV52089UECOubOKAChoPXjTbZ6ubgvKyK8wOjH271DBt0u3fRmfMiqXzkWn53lvFYCWP4UZtl97aX6/IbB8XNt0B43VTPyFbBc9fjdTveg42NXN09t/44vQboDcOwidkCsvKS0Fu6XJvRWHU9InKcYVcsHWxm9a6WQX3M="
+    - secure: "Qwgm1E4rVWsRUd1hNaZ8xIkf/tX9zTkR5T5JtB3K+3kqKWp2dJ51m9rhlNR+pMF9/+zaWnPJRz2Oah1Bs3FHMA6f1qzU4h8nWW7jGal1g/yz9oPzBe2kaxnBalrbbP9OQWC8hAN/oYehCTth4N5IOBvlqVHnq6+jqLJr9mmElec="
 
 before_install:
   - pip install --user codecov
