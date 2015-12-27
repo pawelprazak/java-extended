@@ -35,8 +35,7 @@ install:
 #  - mvn clean compile dependency:resolve --quiet -U -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 script:
-  - if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then false; fi
-  - ./build.sh
+  - if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then ./build.sh; fi
 
 after_success:
   - codecov
@@ -51,9 +50,10 @@ addons:
       name: "pawelprazak/java-extended"
       description: "Coverity via Travis CI"
 
-    build_command:   "./build.sh"
+    build_command: "./build.sh"
 
     # must match TRAVIS_BRANCH check below
     # Take care in resource usage, and consider the build frequency allowances per
     #   https://scan.coverity.com/faq#frequency
     branch_pattern: coverity_scan
+
