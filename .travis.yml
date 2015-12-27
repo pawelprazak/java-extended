@@ -50,7 +50,8 @@ addons:
     project:
       name: "pawelprazak/java-extended"
       description: "Coverity via Travis CI"
-      notification_email: "pawel@bluecatcode.com"
+
+    notification_email: "pawel@bluecatcode.com"
 
     build_command: "mvn test -Pbuild-test -B"
 
