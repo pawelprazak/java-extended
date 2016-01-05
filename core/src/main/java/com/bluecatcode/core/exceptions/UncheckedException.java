@@ -40,10 +40,4 @@ public class UncheckedException extends RuntimeException {
         super(cause);
     }
 
-    /**
-     * @see RuntimeException#RuntimeException(String, Throwable, boolean, boolean)
-     */
-    public UncheckedException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
 }

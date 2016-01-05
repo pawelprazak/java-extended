@@ -40,10 +40,4 @@ public class CheckedException extends Exception {
         super(cause);
     }
 
-    /**
-     * @see Exception#Exception(String, Throwable, boolean, boolean)
-     */
-    public CheckedException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
 }
