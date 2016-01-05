@@ -34,7 +34,7 @@ before_install:
   # unfortunately COVERITY_SCAN_BRANCH isn't defined until later in the
   # build process
   - if ([[ "${TRAVIS_JOB_NUMBER##*.}" != "1" ]] && [[ "${TRAVIS_BRANCH}" == "coverity_scan" ]]); then false; fi
-  - if [ "${TRAVIS_BRANCH}" != "coverity_scan" ]; then pip install --user codecov; fi
+  - pip install --user codecov
 
 install:
   - jdk_switcher use oraclejdk7 && export JAVA7_HOME=$JAVA_HOME
@@ -45,7 +45,7 @@ script:
   - if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then ./build.sh; fi
 
 after_success:
-  - test "${TRAVIS_PULL_REQUEST}" == "false" && "${COVERITY_SCAN_BRANCH}" != 1 && codecov
+  - test "${COVERITY_SCAN_BRANCH}" != 1 && codecov
   - test "${COVERITY_SCAN_BRANCH}" == 1 && mvn coverity-ondemand:check
 
 matrix:
