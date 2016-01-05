@@ -1,6 +1,7 @@
 package com.bluecatcode.common.concurrent;
 
 import com.bluecatcode.common.base.Effect;
+import com.bluecatcode.core.exceptions.UncheckedException;
 import com.google.common.util.concurrent.SimpleTimeLimiter;
 import com.google.common.util.concurrent.TimeLimiter;
 
@@ -15,7 +16,7 @@ public class Try {
         } catch (RuntimeException e) {
             throw e; // no need to wrap
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new UncheckedException(e);
         }
     }
 
@@ -25,7 +26,7 @@ public class Try {
         } catch (RuntimeException e) {
             throw e; // no need to wrap
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new UncheckedException(e);
         }
     }
 
@@ -38,7 +39,7 @@ public class Try {
         } catch (RuntimeException e) {
             throw e; // no need to wrap
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new UncheckedException(e);
         }
     }
 
@@ -51,7 +52,7 @@ public class Try {
         } catch (RuntimeException e) {
             throw e; // no need to wrap
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new UncheckedException(e);
         }
     }
 }
