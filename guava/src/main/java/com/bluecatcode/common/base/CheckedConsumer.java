@@ -14,7 +14,7 @@ package com.bluecatcode.common.base;
  * @see java.util.concurrent.Callable
  * @param <T> the input type of method {@code accept}
  */
-public interface ConsumerWithException<T> {
+public interface CheckedConsumer<T> {
 
     /**
      * Performs this operation on the given argument.

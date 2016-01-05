@@ -8,7 +8,7 @@ package com.bluecatcode.common.base;
  * @see com.google.common.base.Supplier
  * @see java.util.concurrent.Callable
  */
-public interface EffectWithException {
+public interface CheckedEffect {
 
     /**
      * Performs this operation for side effect.

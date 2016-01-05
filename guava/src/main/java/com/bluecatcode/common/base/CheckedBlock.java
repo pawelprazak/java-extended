@@ -9,7 +9,7 @@ package com.bluecatcode.common.base;
  * @see com.google.common.base.Predicate
  * @see com.google.common.base.Supplier
  */
-public interface BlockWithException<T> {
+public interface CheckedBlock<T> {
 
     /**
      * Performs this operation returning value.
