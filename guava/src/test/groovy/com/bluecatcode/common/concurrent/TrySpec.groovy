@@ -1,5 +1,6 @@
-package com.bluecatcode.common.base
+package com.bluecatcode.common.concurrent
 
+import com.bluecatcode.common.base.Effect
 import com.google.common.util.concurrent.UncheckedTimeoutException
 import spock.lang.FailsWith
 import spock.lang.Specification
@@ -7,7 +8,7 @@ import spock.lang.Unroll
 
 import java.util.concurrent.TimeUnit
 
-import static com.bluecatcode.common.base.Try.tryWith
+import static com.bluecatcode.common.concurrent.Try.tryWith
 
 class TrySpec extends Specification {
 

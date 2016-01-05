@@ -1,5 +1,6 @@
-package com.bluecatcode.common.base;
+package com.bluecatcode.common.concurrent;
 
+import com.bluecatcode.common.base.Effect;
 import com.google.common.util.concurrent.SimpleTimeLimiter;
 import com.google.common.util.concurrent.TimeLimiter;
 
