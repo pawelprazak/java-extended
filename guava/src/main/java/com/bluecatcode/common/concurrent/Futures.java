@@ -7,10 +7,11 @@ import com.google.common.util.concurrent.ListeningExecutorService;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.util.concurrent.Futures.addCallback;
-import static com.google.common.util.concurrent.Futures.immediateFailedFuture;
 
 /**
  * @see com.google.common.util.concurrent.Futures
+ *
+ * @since 1.0.4
  */
 public class Futures {
 
@@ -32,14 +33,9 @@ public class Futures {
         checkArgument(callback != null, "Expected non-null callback");
 
         return input -> {
-            try {
-                ListenableFuture<R> future = executor.submit(() -> task.apply(input));
-                addCallback(future, callback, executor);
-                return future;
-            } catch (Throwable t) {
-                callback.onFailure(t);
-                return immediateFailedFuture(t);
-            }
+            ListenableFuture<R> future = executor.submit(() -> task.apply(input));
+            addCallback(future, callback, executor);
+            return future;
         };
     }
 }
