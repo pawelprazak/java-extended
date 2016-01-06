@@ -16,6 +16,7 @@
     <description>Guava library extensions.</description>
 
     <properties>
+        <mail.version>1.5.2</mail.version>
         <guava.version>19.0</guava.version>
     </properties>
 
@@ -37,6 +38,11 @@
             <groupId>javax.mail</groupId>
             <artifactId>javax.mail-api</artifactId>
             <version>1.5.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>${mail.version}</version>
         </dependency>
 
         <!-- Build time only -->
@@ -151,6 +157,7 @@
                 <configuration>
                     <artifactSet>
                         <includes>
+                            <include>com.sun.mail:javax.mail</include>
                             <include>javax.mail:javax.mail-api</include>
                             <include>javax.activation:activation</include>
                         </includes>

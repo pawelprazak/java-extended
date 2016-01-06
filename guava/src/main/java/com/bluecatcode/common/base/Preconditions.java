@@ -319,6 +319,8 @@ public final class Preconditions {
     /**
      * Performs email address check against RFC 822 specification
      *
+     * TODO:  RFC 5322 and RFC 5321
+     *
      * @param email an Email to check
      * @return checked Email
      * @throws IllegalArgumentException if the {@code email} is invalid

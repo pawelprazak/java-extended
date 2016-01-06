@@ -7,22 +7,27 @@ import spock.lang.FailsWith
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static com.bluecatcode.common.base.Preconditions.checkMatches
-import static com.bluecatcode.common.base.Preconditions.checkNotEmpty
+import static com.bluecatcode.common.base.Preconditions.*
 import static com.google.common.collect.Lists.newArrayList
 import static com.google.common.collect.Maps.newHashMap
 
 class PreconditionsCheckNotEmptySpec extends Specification {
 
+    @Unroll("reference: '#reference' (#reference.class)")
     def "checkNotEmpty should check for emptiness and return the reference"() {
         expect:
         reference.is(checkNotEmpty(reference))
 
         where:
         reference << [
-                " ", "some text", Optional.of(1),
-                [""], ["":""], newArrayList(1, 2, 3),
-                ImmutableMap.of("1", "1"), FluentIterable.from([""])
+                " ",
+                "some text",
+                Optional.of(1),
+                [""],
+                ["":""],
+                newArrayList(1, 2, 3),
+                ImmutableMap.of("1", "1"),
+                FluentIterable.from([""])
         ]
     }
 
@@ -75,5 +80,82 @@ class PreconditionsCheckMatchesSpec extends Specification {
         reference | pattern
         "xyz"     | ~/^v[a-z]*e$/
         "x"       | ~/^/
+    }
+}
+
+class PreconditionsCheckEmailSpec extends Specification {
+
+    @Unroll("email: '#email'")
+    def "checkEmail should check against RFC 822"() {
+        expect:
+        checkEmail(email)
+
+        where:
+        email << [
+                "test@test.pl",
+                "!test-name#@server-name.com"
+        ]
+    }
+
+    @FailsWith(NullPointerException)
+    @Unroll("email: '#email'")
+    def "checkEmail should throw if null"() {
+        expect:
+        checkEmail(email)
+
+        where:
+        email << [ (String) null ]
+    }
+
+    @FailsWith(IllegalArgumentException)
+    @Unroll("email: '#email'")
+    def "checkEmail should throw if invalid"() {
+        expect:
+        checkEmail(email)
+
+        where:
+        email << [
+                "",
+                "invalid@server_name.com"
+        ]
+    }
+
+}
+
+class PreconditionsCheckHostnameSpec extends Specification {
+
+    @Unroll("hostname: '#hostname'")
+    def "checkEmail should check against RFC 952, RFC 1123 and RFC 1034"() {
+        expect:
+        checkHostname(hostname)
+
+        where:
+        hostname << [
+                "test.pl",
+                "server-name.com"
+        ]
+    }
+
+    @FailsWith(NullPointerException)
+    @Unroll("hostname: '#hostname'")
+    def "checkEmail should throw if null"() {
+        expect:
+        checkHostname(hostname)
+
+        where:
+        hostname << [ (String) null ]
+    }
+
+    @FailsWith(IllegalArgumentException)
+    @Unroll("hostname: '#hostname'")
+    def "checkEmail should throw if invalid"() {
+        expect:
+        checkHostname(hostname)
+
+        where:
+        hostname << [
+                "",
+                "server_name.com"
+        ]
     }
 }
