@@ -111,6 +111,22 @@ public class Files {
         }
     }
 
+    public static void write(CharSequence from, File to) throws IOException {
+        write(from, to, Charsets.UTF_8);
+    }
+
+    public static void write(CharSequence from, File to, Charset charset) throws IOException {
+        com.google.common.io.Files.write(from, to, charset);
+    }
+
+    public static void append(CharSequence from, File to) throws IOException {
+        append(from, to, Charsets.UTF_8);
+    }
+
+    public static void append(CharSequence from, File to, Charset charset) throws IOException {
+        com.google.common.io.Files.append(from, to, charset);
+    }
+
     private Files() {
         throw new UnsupportedOperationException();
     }

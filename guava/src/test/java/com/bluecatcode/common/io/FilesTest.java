@@ -18,6 +18,7 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
 
+import static com.bluecatcode.hamcrest.Matchers.hasSize;
 import static com.bluecatcode.hamcrest.Matchers.isThrowable;
 import static java.lang.String.format;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -111,7 +112,24 @@ public class FilesTest {
         File file3 = tmp.newFile(path3);
 
         // when
+        Files.checkFilesExist(file1, file2, file3);
         Files.checkFilesExist(file1.getAbsolutePath(), file2.getAbsolutePath(), file3.getAbsolutePath());
     }
 
+    @Test
+    public void shouldConsumeLines() throws Exception {
+        // given
+        String expectedValue = "Hello world\n";
+        File file = tmp.newFile("test-hello.txt");
+        Files.write(expectedValue, file);
+        Files.append(expectedValue, file);
+
+        StringBuilder builder = new StringBuilder();
+
+        // when
+        Files.consumeLines(file, (s) -> builder.append(s).append('\n'));
+
+        // then
+        assertThat(builder, hasSize(expectedValue.length() * 2));
+    }
 }
