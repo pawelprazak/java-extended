@@ -17,21 +17,46 @@ import static java.lang.String.format;
 
 /**
  * @see com.google.common.io.Files
+ * @since 1.0
  */
 @Beta
 public class Files {
 
     private static final Logger log = Logger.getLogger(Files.class.getName());
 
+    /**
+     * Loads properties from file path
+     * @param path the path to properties file
+     * @return the loaded properties
+     */
     public static Properties getFileAsProperties(String path) {
-        checkFileExists(path);
+        File file = new File(nullToEmpty(path));
+        return getFileAsProperties(file);
+    }
+
+    /**
+     * Loads properties from file
+     * @param file the properties file
+     * @return the loaded properties
+     *
+     * @since 1.0.4
+     */
+    public static Properties getFileAsProperties(File file) {
+        checkFileExists(file);
         Properties properties = new Properties();
-        try (InputStream stream = new FileInputStream(path)) {
+        try (InputStream stream = new FileInputStream(file)) {
             properties.load(stream);
         } catch (IOException e) {
             throw new IllegalArgumentException(e);
         }
         return properties;
+    }
+
+
+    public static void checkFilesExist(File... files) {
+        for (File file : files) {
+            checkFileExists(file);
+        }
     }
 
     public static void checkFilesExist(String... paths) {
@@ -46,7 +71,7 @@ public class Files {
     }
 
     public static void checkFileExists(File file) {
-        checkArgument(file != null, "File is null");
+        checkArgument(file != null, "Expected non-null file");
 
         //noinspection ConstantConditions
         File parentFile = file.getParentFile();

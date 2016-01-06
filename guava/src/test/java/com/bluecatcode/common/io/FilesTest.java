@@ -14,9 +14,14 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
 
+import static com.bluecatcode.hamcrest.Matchers.isThrowable;
+import static java.lang.String.format;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.startsWith;
 import static org.hamcrest.core.Is.is;
 
 public class FilesTest {
@@ -25,7 +30,7 @@ public class FilesTest {
     public static TemporaryFolder tmp = new TemporaryFolder();
 
     @Rule
-    public ExpectedException thrown = ExpectedException.none();
+    public ExpectedException exception = ExpectedException.none();
 
     @Rule
     public TestRule ignoreIfNotUnix = (base, description) -> {
@@ -33,10 +38,25 @@ public class FilesTest {
         return new Statement() {
             @Override
             public void evaluate() throws Throwable {
-                Assume.assumeThat(SystemUtils.IS_OS_UNIX, is(true));
+                Assume.assumeThat(format("Expected UNIX, got SystemUtils.IS_OS_UNIX: %s", SystemUtils.IS_OS_UNIX),
+                        SystemUtils.IS_OS_UNIX, is(true));
+
+                base.evaluate();
             }
         };
     };
+
+    @Test
+    public void shouldPreventConstruction() throws Exception {
+        // expect
+        exception.expect(InvocationTargetException.class);
+        exception.expectCause(isThrowable(UnsupportedOperationException.class));
+
+        // when
+        Constructor[] cons = Files.class.getDeclaredConstructors();
+        cons[0].setAccessible(true);
+        cons[0].newInstance();
+    }
 
     @Test
     public void shouldFail() throws IOException {
@@ -44,8 +64,8 @@ public class FilesTest {
         String path = null;
 
         // expect
-        thrown.expect(IllegalArgumentException.class);
-        thrown.expectMessage("File is null");
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage(startsWith("File doesn't exist"));
 
         // when
         //noinspection ConstantConditions
@@ -55,7 +75,7 @@ public class FilesTest {
     @Test
     public void shouldPass() throws IOException {
         // given
-        File file = tmp.newFile("/tmp/ordinary.file");
+        File file = tmp.newFile("test-ordinary.file");
 
         // when
         Files.checkFileExists(file);
@@ -65,15 +85,16 @@ public class FilesTest {
     @Test
     public void shouldGetFileAsProperties() throws IOException {
         // given
-        String path = "/tmp/example_config.properties";
-        try (OutputStream output = new FileOutputStream(path)) {
+        File file = tmp.newFile("example_config.properties");
+
+        try (OutputStream output = new FileOutputStream(file)) {
             Properties prop = new Properties();
             prop.setProperty("example.key", "example_value");
             prop.store(output, "test properties");
         }
 
         // when
-        Properties returnedProperties = Files.getFileAsProperties(path);
+        Properties returnedProperties = Files.getFileAsProperties(file.getAbsolutePath());
 
         // then
         assertThat(returnedProperties.getProperty("example.key"), is("example_value"));
@@ -82,15 +103,15 @@ public class FilesTest {
     @Test
     public void shouldPassWithMultipleFiles() throws IOException {
         // given
-        String path1 = "/tmp/more.file";
-        String path2 = "/tmp/another.file";
-        String path3 = "/tmp/further.file";
-        tmp.newFile(path1);
-        tmp.newFile(path2);
-        tmp.newFile(path3);
+        String path1 = "test-more.file";
+        String path2 = "test-another.file";
+        String path3 = "test-further.file";
+        File file1 = tmp.newFile(path1);
+        File file2 = tmp.newFile(path2);
+        File file3 = tmp.newFile(path3);
 
         // when
-        Files.checkFilesExist(path1, path2, path3);
+        Files.checkFilesExist(file1.getAbsolutePath(), file2.getAbsolutePath(), file3.getAbsolutePath());
     }
 
 }
