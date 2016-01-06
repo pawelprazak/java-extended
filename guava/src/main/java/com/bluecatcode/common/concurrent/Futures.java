@@ -38,4 +38,8 @@ public class Futures {
             return future;
         };
     }
+
+    private Futures() {
+        throw new UnsupportedOperationException();
+    }
 }

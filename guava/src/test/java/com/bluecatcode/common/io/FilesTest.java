@@ -14,12 +14,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
 
 import static com.bluecatcode.hamcrest.Matchers.hasSize;
-import static com.bluecatcode.hamcrest.Matchers.isThrowable;
 import static java.lang.String.format;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.startsWith;
@@ -46,18 +43,6 @@ public class FilesTest {
             }
         };
     };
-
-    @Test
-    public void shouldPreventConstruction() throws Exception {
-        // expect
-        exception.expect(InvocationTargetException.class);
-        exception.expectCause(isThrowable(UnsupportedOperationException.class));
-
-        // when
-        Constructor[] cons = Files.class.getDeclaredConstructors();
-        cons[0].setAccessible(true);
-        cons[0].newInstance();
-    }
 
     @Test
     public void shouldFail() throws IOException {

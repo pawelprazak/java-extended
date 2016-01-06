@@ -55,4 +55,8 @@ public class Try {
             throw new UncheckedException(e);
         }
     }
+
+    private Try() {
+        throw new UnsupportedOperationException();
+    }
 }
