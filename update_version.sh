@@ -27,13 +27,21 @@ then
 fi
 
 echo "Updating version to $version in all poms"
-mvn versions:set -DnewVersion=$version > /dev/null
+echo
+mvn versions:set -DnewVersion=$version
 mvn versions:commit > /dev/null
+echo
+
+STATUS=$?
+if [[ $STATUS != 0 ]]; then
+    echo "Version update failed with mvn status '$STATUS'"; exit $STATUS
+else
+    echo "Version update done"
+fi
 
 if [[ "$version" != *-SNAPSHOT ]]; then
     echo "Replacing version numbers in readme"
     sed -n -i '1h;1!H;${;g;s,<version>[^<]*</version>,<version>'"$version"'</version>,g;p;}' README.md
-    sed -n -i '1h;1!H;${;g;s,Release [^<]*,Release '"$version"',g;p;}' RELEASE.md
 fi
 
 echo "Committing version changes"
