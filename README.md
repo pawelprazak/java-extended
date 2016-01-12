@@ -11,6 +11,7 @@ java-extended
 [![Codacy Badge](https://api.codacy.com/project/badge/2b3bd5330c744938862bf83c79cba7f3)](https://www.codacy.com/app/pawelprazak/java-extended)
 [![Dependency Status](https://www.versioneye.com/user/projects/5534f70f050e7cfd3100008b/badge.svg?style=flat)](https://www.versioneye.com/user/projects/5534f70f050e7cfd3100008b)
 
+[![][license img]][license]
 
 Java Extended is an experimental set of libraries.
 
@@ -79,3 +80,7 @@ Joda Time library extensions
 Functional Java Check (deprecated in version > 1.0.2)
 ---------------------
 Functional Java test module (a.k.a. Reduction) library extensions
+
+
+[license]:LICENSE
+[license img]:https://img.shields.io/badge/license-APACHE%202.0-blue.svg
