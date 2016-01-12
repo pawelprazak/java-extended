@@ -83,4 +83,4 @@ Functional Java test module (a.k.a. Reduction) library extensions
 
 
 [license]:LICENSE
-[license img]:https://img.shields.io/badge/license-Apache--2.0A-blue.svg
+[license img]:https://img.shields.io/badge/license-Apache--2.0-blue.svg
