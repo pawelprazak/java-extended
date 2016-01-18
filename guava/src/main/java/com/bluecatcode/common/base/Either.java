@@ -6,6 +6,7 @@ import com.google.common.base.Function;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nullable;
 import java.io.Serializable;
+import java.util.concurrent.Callable;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
@@ -43,6 +44,34 @@ public abstract class Either<L, R> implements Serializable {
 
     Either() {
         /* Empty */
+    }
+
+    public static <T, R> Function<T, Either<Exception, R>> either(Function<T, R> function) {
+        checkNotNull(function, "Expected non-null function");
+        return input -> {
+            try {
+                R reference = function.apply(input);
+                return Either.valueOf(checkNotNull(reference, "Expected non-null function result"));
+            } catch (Exception e) {
+                return Either.errorOf(e);
+            }
+        };
+    }
+
+    public static <R> Either<Exception, R> either(Callable<R> callable) {
+        try {
+            return Either.valueOf(callable.call());
+        } catch (Exception e) {
+            return Either.errorOf(e);
+        }
+    }
+
+    public static <R> Either<Exception, R> either(Block<R> block) {
+        try {
+            return Either.valueOf(block.execute());
+        } catch (Exception e) {
+            return Either.errorOf(e);
+        }
     }
 
     /**
@@ -143,7 +172,7 @@ public abstract class Either<L, R> implements Serializable {
      *
      * @throws NullPointerException if right value is absent and the function returns {@code null}
      */
-    public abstract <E extends RuntimeException> R or(Function<L, E> leftFunction);
+    public abstract <E extends RuntimeException> R orThrow(Function<L, E> leftFunction);
 
     /**
      * Applies {@code leftFunction} if this is a Left or {@code rightFunction if this is a Right.

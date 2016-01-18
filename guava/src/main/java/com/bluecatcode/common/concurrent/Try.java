@@ -1,32 +1,31 @@
 package com.bluecatcode.common.concurrent;
 
 import com.bluecatcode.common.base.Effect;
-import com.bluecatcode.core.exceptions.UncheckedException;
+import com.google.common.base.Function;
 import com.google.common.util.concurrent.SimpleTimeLimiter;
 import com.google.common.util.concurrent.TimeLimiter;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
+import static com.bluecatcode.common.base.Either.either;
+import static com.bluecatcode.common.base.Exceptions.uncheckedException;
+
 public class Try {
 
     public static <T> T tryWith(Callable<T> callable) {
-        try {
-            return callable.call();
-        } catch (RuntimeException e) {
-            throw e; // no need to wrap
-        } catch (Exception e) {
-            throw new UncheckedException(e);
-        }
+        return either(callable).orThrow(uncheckedException());
+    }
+
+    public static <T> T tryWith(Callable<T> callable, Function<Exception, RuntimeException> exceptionFunction) {
+        return either(callable).orThrow(exceptionFunction);
     }
 
     public static void tryWith(Effect effect) {
         try {
             effect.cause();
-        } catch (RuntimeException e) {
-            throw e; // no need to wrap
         } catch (Exception e) {
-            throw new UncheckedException(e);
+            throw uncheckedException().apply(e);
         }
     }
 
@@ -36,10 +35,8 @@ public class Try {
             //noinspection unchecked
             Callable<T> proxy = limiter.newProxy(callable, Callable.class, timeoutDuration, timeoutUnit);
             return proxy.call();
-        } catch (RuntimeException e) {
-            throw e; // no need to wrap
         } catch (Exception e) {
-            throw new UncheckedException(e);
+            throw uncheckedException().apply(e);
         }
     }
 
@@ -49,10 +46,8 @@ public class Try {
             //noinspection unchecked
             Effect proxy = limiter.newProxy(effect, Effect.class, timeoutDuration, timeoutUnit);
             proxy.cause();
-        } catch (RuntimeException e) {
-            throw e; // no need to wrap
         } catch (Exception e) {
-            throw new UncheckedException(e);
+            throw uncheckedException().apply(e);
         }
     }
 

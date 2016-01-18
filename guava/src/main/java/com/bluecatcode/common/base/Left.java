@@ -44,7 +44,7 @@ final class Left<L, R> extends Either<L, R> {
     }
 
     @Override
-    public <E extends RuntimeException> R or(Function<L, E> leftFunction) {
+    public <E extends RuntimeException> R orThrow(Function<L, E> leftFunction) {
         checkNotNull(leftFunction, "Expected non-null leftFunction");
 
         throw checkNotNull(leftFunction.apply(left()), "Expected non-null leftFunction result");

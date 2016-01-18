@@ -23,6 +23,7 @@ class PrivateConstructorSpec extends Specification {
         type << [
                 Collections3,
                 Environment,
+                Exceptions,
                 Files,
                 Futures,
                 Hash,
