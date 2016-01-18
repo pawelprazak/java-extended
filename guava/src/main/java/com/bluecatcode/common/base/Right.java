@@ -1,6 +1,10 @@
 package com.bluecatcode.common.base;
 
+import com.google.common.base.Function;
+
 import javax.annotation.Nullable;
+
+import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Implementation of an {@link Either} containing a right reference.
@@ -10,7 +14,7 @@ final class Right<L, R> extends Either<L, R> {
     private final R right;
 
     Right(R right) {
-        this.right = right;
+        this.right = checkNotNull(right, "Expected non-null right");
     }
 
     @Override
@@ -31,6 +35,37 @@ final class Right<L, R> extends Either<L, R> {
     @Override
     public R right() {
         return this.right;
+    }
+
+    @Override
+    public Either<L, R> or(Either<? extends L, ? extends R> secondChoice) {
+        checkNotNull(secondChoice, "Expected non-null secondChoice");
+        return this;
+    }
+
+    @Override
+    public <E extends RuntimeException> R or(Function<L, E> leftFunction) {
+        checkNotNull(leftFunction, "Expected non-null leftFunction");
+
+        return right;
+    }
+
+    @Override
+    public <V> V either(Function<L, V> leftFunction, Function<R, V> rightFunction) {
+        return rightFunction.apply(right());
+    }
+
+    @Override
+    public <A, B> Either<A, B> transform(Function<L, A> leftFunction, Function<R, B> rightFunction) {
+        checkNotNull(leftFunction, "Expected non-null leftFunction");
+        checkNotNull(rightFunction, "Expected non-null rightFunction");
+        //noinspection ConstantConditions
+        return rightOf(rightFunction.apply(right()));
+    }
+
+    @Override
+    public Either<R, L> swap() {
+        return leftOf(right());
     }
 
     @Override

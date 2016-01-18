@@ -134,14 +134,16 @@ public abstract class Either<L, R> implements Serializable {
     public abstract R right();
 
     /**
-     * Applies {@code leftFunction} if this is a Left or {@code rightFunction if this is a Right.
-     *
-     * @return the result of the {@code function}.
-     * @throws NullPointerException if the function returns {@code null}
+     * Returns this {@code Either} if it has the right value present; {@code secondChoice} otherwise.
      */
-    public <V> V either(Function<L, V> leftFunction, Function<R, V> rightFunction) {
-        return isLeft() ? leftFunction.apply(left()) : rightFunction.apply(right());
-    }
+    public abstract Either<L, R> or(Either<? extends L, ? extends R> secondChoice);
+
+    /**
+     * Returns the left instance if it is present; {@code throw leftFunction.apply(left())} otherwise.
+     *
+     * @throws NullPointerException if right value is absent and the function returns {@code null}
+     */
+    public abstract <E extends RuntimeException> R or(Function<L, E> leftFunction);
 
     /**
      * Applies {@code leftFunction} if this is a Left or {@code rightFunction if this is a Right.
@@ -149,21 +151,22 @@ public abstract class Either<L, R> implements Serializable {
      * @return the result of the {@code function}.
      * @throws NullPointerException if the function returns {@code null}
      */
-    public <A, B> Either<A, B> transform(Function<L, A> leftFunction, Function<R, B> rightFunction) {
-        checkNotNull(leftFunction, "Expected non-null leftFunction");
-        checkNotNull(rightFunction, "Expected non-null rightFunction");
-        //noinspection ConstantConditions
-        return isLeft() ? leftOf(leftFunction.apply(left())) : rightOf(rightFunction.apply(right()));
-    }
+    public abstract <V> V either(Function<L, V> leftFunction, Function<R, V> rightFunction);
+
+    /**
+     * Applies {@code leftFunction} if this is a Left or {@code rightFunction if this is a Right.
+     *
+     * @return the result of the {@code function}.
+     * @throws NullPointerException if the function returns {@code null}
+     */
+    public abstract <A, B> Either<A, B> transform(Function<L, A> leftFunction, Function<R, B> rightFunction);
 
     /**
      * If this is a Left, then return the left value in Right or vice versa.
      *
      * @return a new {@code Either<R,L>}
      */
-    public Either<R, L> swap() {
-        return isLeft() ? rightOf(left()) : leftOf(right());
-    }
+    public abstract Either<R, L> swap();
 
     /**
      * Returns {@code true} if {@code object} is an {@code Either} instance, and either
