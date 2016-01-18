@@ -1,15 +1,7 @@
 #!/usr/bin/env bash
 
-abort()
-{
-    echo >&2 '
-***************
-*** ABORTED ***
-***************
-'
-    echo "An error occurred. Exiting..." >&2
-    exit 1
-}
+script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source $script_dir/functions.sh
 
 trap 'abort' 0
 

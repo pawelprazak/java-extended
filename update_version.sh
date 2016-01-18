@@ -8,10 +8,10 @@ then
 fi
 
 version=$1
-script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 working_dir="$( pwd )"
 files=( "pom.xml" "README.md" )
 
+script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source $script_dir/functions.sh
 
 if ! ( contains_files ${files[@]} )

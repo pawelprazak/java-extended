@@ -78,8 +78,28 @@ Joda Time library extensions
     </dependency>
 
 Functional Java Check (deprecated in version > 1.0.2)
----------------------
+-----------------------------------------------------
 Functional Java test module (a.k.a. Reduction) library extensions
+
+Build on Ubuntu Linux
+---------------------
+
+To build this project you'll need Oracle Java *7 and 8*
+
+There are convinience scripts available:
+
+    install_java7_and_java8.sh
+    use_jdk_switcher.sh
+    build.sh
+    update_version.sh
+
+To run a simple build use:
+
+    source use_jdk_switcher.sh; mvn install
+
+To run a more comprehensive build:
+
+    source use_jdk_switcher.sh; mvn install jacoco:report -Penable-unit-tests,enable-integration-tests,enable-mutation-tests
 
 
 [license]:LICENSE
