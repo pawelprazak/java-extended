@@ -4,12 +4,15 @@ import com.google.common.base.Function;
 
 import javax.annotation.Nullable;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
  * Implementation of an {@link Either} containing a left reference.
  */
 final class Left<L, R> extends Either<L, R> {
+
+    private static final long serialVersionUID = 0L;
 
     private final L left;
 
@@ -39,26 +42,26 @@ final class Left<L, R> extends Either<L, R> {
 
     @Override
     public Either<L, R> or(Either<? extends L, ? extends R> secondChoice) {
+        checkArgument(secondChoice != null, "Expected non-null secondChoice");
         //noinspection unchecked
-        return checkNotNull((Either<L, R>) secondChoice, "Expected non-null secondChoice");
+        return (Either<L, R>) secondChoice;
     }
 
     @Override
     public <E extends RuntimeException> R orThrow(Function<L, E> leftFunction) {
-        checkNotNull(leftFunction, "Expected non-null leftFunction");
-
-        throw checkNotNull(leftFunction.apply(left()), "Expected non-null leftFunction result");
+        checkArgument(leftFunction != null, "Expected non-null leftFunction");
+        throw leftFunction.apply(left());
     }
 
     @Override
     public <V> V either(Function<L, V> leftFunction, Function<R, V> rightFunction) {
+        checkArgument(leftFunction != null, "Expected non-null leftFunction");
         return leftFunction.apply(left());
     }
 
     @Override
     public <A, B> Either<A, B> transform(Function<L, A> leftFunction, Function<R, B> rightFunction) {
-        checkNotNull(leftFunction, "Expected non-null leftFunction");
-        checkNotNull(rightFunction, "Expected non-null rightFunction");
+        checkArgument(leftFunction != null, "Expected non-null leftFunction");
         //noinspection ConstantConditions
         return leftOf(leftFunction.apply(left()));
     }

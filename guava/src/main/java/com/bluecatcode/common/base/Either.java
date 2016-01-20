@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 import java.io.Serializable;
 import java.util.concurrent.Callable;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkArgument;
 
 /**
  * Represents a value of one of two possible types (a disjoint union). Instances of {@code Either} are either an instance of {@code Left} or {@code Right}.
@@ -47,11 +47,16 @@ public abstract class Either<L, R> implements Serializable {
     }
 
     public static <T, R> Function<T, Either<Exception, R>> either(Function<T, R> function) {
-        checkNotNull(function, "Expected non-null function");
+        checkArgument(function != null, "Expected non-null function");
         return input -> {
             try {
                 R reference = function.apply(input);
-                return Either.valueOf(checkNotNull(reference, "Expected non-null function result"));
+                if (reference == null){
+                    throw new EitherException("Expected function to return non-null reference");
+                }
+                return Either.valueOf(reference);
+            } catch (EitherException e) {
+                throw new IllegalArgumentException(e.getMessage());
             } catch (Exception e) {
                 return Either.errorOf(e);
             }
@@ -59,16 +64,30 @@ public abstract class Either<L, R> implements Serializable {
     }
 
     public static <R> Either<Exception, R> either(Callable<R> callable) {
+        checkArgument(callable != null, "Expected non-null callable");
         try {
-            return Either.valueOf(callable.call());
+            R reference = callable.call();
+            if (reference == null){
+                throw new EitherException("Expected callable to return non-null reference");
+            }
+            return Either.valueOf(reference);
+        } catch (EitherException e) {
+            throw new IllegalArgumentException(e.getMessage());
         } catch (Exception e) {
             return Either.errorOf(e);
         }
     }
 
     public static <R> Either<Exception, R> either(Block<R> block) {
+        checkArgument(block != null, "Expected non-null block");
         try {
-            return Either.valueOf(block.execute());
+            R reference = block.execute();
+            if (reference == null){
+                throw new EitherException("Expected block to return non-null reference");
+            }
+            return Either.valueOf(reference);
+        } catch (EitherException e) {
+            throw new IllegalArgumentException(e.getMessage());
         } catch (Exception e) {
             return Either.errorOf(e);
         }
@@ -94,7 +113,8 @@ public abstract class Either<L, R> implements Serializable {
      * @throws NullPointerException if {@code reference} is null
      */
     public static <L, R> Either<L, R> leftOf(L reference) {
-        return new Left<>(checkNotNull(reference));
+        checkArgument(reference != null, "Expected non-null reference");
+        return new Left<>(reference);
     }
 
     /**
@@ -103,7 +123,8 @@ public abstract class Either<L, R> implements Serializable {
      * @throws NullPointerException if {@code reference} is null
      */
     public static <L, R> Either<L, R> rightOf(R reference) {
-        return new Right<>(checkNotNull(reference));
+        checkArgument(reference != null, "Expected non-null reference");
+        return new Right<>(reference);
     }
 
     /**
@@ -218,4 +239,12 @@ public abstract class Either<L, R> implements Serializable {
     @Override
     public abstract String toString();
 
+    private static class EitherException extends RuntimeException {
+
+        private static final long serialVersionUID = 0L;
+
+        public EitherException(String message) {
+            super(message);
+        }
+    }
 }

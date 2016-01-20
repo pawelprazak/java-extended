@@ -5,12 +5,14 @@ import com.google.common.base.Function;
 import com.google.common.util.concurrent.SimpleTimeLimiter;
 import com.google.common.util.concurrent.TimeLimiter;
 
+import javax.annotation.CheckReturnValue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
 import static com.bluecatcode.common.base.Either.either;
 import static com.bluecatcode.common.base.Exceptions.uncheckedException;
 
+@CheckReturnValue
 public class Try {
 
     public static <T> T tryWith(Callable<T> callable) {
