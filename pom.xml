@@ -83,10 +83,15 @@
         <cglib-nodep.version>3.2.0</cglib-nodep.version>
         <objenesis.version>2.2</objenesis.version>
 
+        <!-- Test argument line (will be also used with jacoco) -->
+        <argLine>-XX:PermSize=512m -XX:MaxPermSize=1024m -XX:+UseCompressedOops -XX:+TieredCompilation -XX:TieredStopAtLevel=1</argLine>
+
         <!-- Maven profiles properties -->
         <skipUnitTests>false</skipUnitTests>
         <skipIntegrationTests>true</skipIntegrationTests>
         <skipMutationTests>true</skipMutationTests>
+        <skipCoverageTest>true</skipCoverageTest>
+        <skipDependencyTest>true</skipDependencyTest>
         <skipSourceGeneration>true</skipSourceGeneration>
         <skipJavadocGeneration>true</skipJavadocGeneration>
     </properties>
@@ -528,7 +533,7 @@
                         <detectLinks/>
                         <links>
                             <link>http://docs.oracle.com/javase/8/docs/api/</link>
-                            <link>http://docs.guava-libraries.googlecode.com/git-history/v16.0/javadoc/</link>
+                            <link>http://google.github.io/guava/releases/19.0/api/docs/</link>
                             <link>http://www.joda.org/joda-time/apidocs/</link>
                         </links>
                     </configuration>
@@ -671,13 +676,34 @@
                             </goals>
                         </execution>
                         <execution>
+                            <id>prepare-agent-integration</id>
+                            <goals>
+                                <goal>prepare-agent-integration</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>merge</id>
+                            <phase>post-integration-test</phase>
+                            <goals>
+                                <goal>merge</goal>
+                            </goals>
+                        </execution>
+                        <execution>
                             <id>report</id>
-                            <phase>prepare-package</phase>
                             <goals>
                                 <goal>report</goal>
                             </goals>
                         </execution>
+                        <execution>
+                            <id>report-integration</id>
+                            <goals>
+                                <goal>report-integration</goal>
+                            </goals>
+                        </execution>
                     </executions>
+                    <configuration>
+                        <skip>${skipCoverageTest}</skip>
+                    </configuration>
                 </plugin>
 
                 <plugin>
@@ -699,6 +725,9 @@
                             </goals>
                         </execution>
                     </executions>
+                    <configuration>
+                        <skip>${skipDependencyTest}</skip>
+                    </configuration>
                 </plugin>
 
                 <plugin>
@@ -755,6 +784,10 @@
                 <artifactId>animal-sniffer-maven-plugin</artifactId>
             </plugin>
             <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
             </plugin>
@@ -780,6 +813,8 @@
                 <skipUnitTests>false</skipUnitTests>
                 <skipIntegrationTests>false</skipIntegrationTests>
                 <skipMutationTests>true</skipMutationTests>
+                <skipCoverageTest>true</skipCoverageTest>
+                <skipDependencyTest>true</skipDependencyTest>
                 <skipSourceGeneration>true</skipSourceGeneration>
                 <skipJavadocGeneration>true</skipJavadocGeneration>
             </properties>
@@ -791,6 +826,8 @@
                 <skipUnitTests>true</skipUnitTests>
                 <skipIntegrationTests>true</skipIntegrationTests>
                 <skipMutationTests>true</skipMutationTests>
+                <skipCoverageTest>true</skipCoverageTest>
+                <skipDependencyTest>true</skipDependencyTest>
                 <skipSourceGeneration>false</skipSourceGeneration>
                 <skipJavadocGeneration>false</skipJavadocGeneration>
             </properties>
@@ -821,6 +858,20 @@
             <id>enable-mutation-tests</id>
             <properties>
                 <skipMutationTests>false</skipMutationTests>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>enable-coverage-tests</id>
+            <properties>
+                <skipCoverageTest>false</skipCoverageTest>
+            </properties>
+        </profile>
+
+        <profile>
+            <id>enable-dependency-tests</id>
+            <properties>
+                <skipDependencyTest>false</skipDependencyTest>
             </properties>
         </profile>
 
