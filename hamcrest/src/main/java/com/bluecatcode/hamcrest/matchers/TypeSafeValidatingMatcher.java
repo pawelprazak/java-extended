@@ -1,8 +1,8 @@
 package com.bluecatcode.hamcrest.matchers;
 
-import org.hamcrest.CustomTypeSafeMatcher;
 import org.hamcrest.Description;
 import org.hamcrest.StringDescription;
+import org.hamcrest.TypeSafeMatcher;
 
 /**
  * Convenience class for writing one off matchers with validation.
@@ -40,12 +40,18 @@ import org.hamcrest.StringDescription;
  *
  * @param <T> The type of object being matched
  */
-public abstract class TypeSafeValidatingMatcher<T> extends CustomTypeSafeMatcher<T> {
+public abstract class TypeSafeValidatingMatcher<T> extends TypeSafeMatcher<T> {
+
+    private final String fixedDescription;
 
     private Description errorDescription = new StringDescription();
 
-    public TypeSafeValidatingMatcher(String description) {
-        super(description);
+    public TypeSafeValidatingMatcher() {
+        this.fixedDescription = "a valid item";
+    }
+
+    public TypeSafeValidatingMatcher(String fixedDescription) {
+        this.fixedDescription = fixedDescription;
     }
 
     protected abstract boolean isValid(T item, Description errorDescription);
@@ -57,8 +63,18 @@ public abstract class TypeSafeValidatingMatcher<T> extends CustomTypeSafeMatcher
 
     @Override
     protected void describeMismatchSafely(T item, Description mismatchDescription) {
-        mismatchDescription.appendValue(item)
-                .appendText(" is not valid, cause: ")
+        mismatchDescription
+                .appendValue(item)
+                .appendText(" is not valid (cause: '")
+                .appendText(errorDescription.toString())
+                .appendText("')");
+    }
+
+    @Override
+    public void describeTo(Description description) {
+        description
+                .appendText(fixedDescription)
+                .appendText(", ")
                 .appendText(errorDescription.toString());
     }
 }
