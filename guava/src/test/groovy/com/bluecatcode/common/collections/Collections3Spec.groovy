@@ -1,5 +1,6 @@
 package com.bluecatcode.common.collections
 
+import com.google.common.base.Function
 import spock.lang.FailsWith
 import spock.lang.Specification
 import spock.lang.Unroll
@@ -26,10 +27,12 @@ class Collections3Spec extends Specification {
         Collections3."${methodName}"(arg1, arg2)
 
         where:
-        methodName       | arg1             | arg2
-        "zip"            | null             | null
-        "zip"            | [] as List       | null
-        "fromDictionary" | null             | null
-        "fromDictionary" | {} as Dictionary | null
+        methodName       | arg1            | arg2
+        "zip"            | null            | null
+        "zip"            | [] as List      | null
+        "zip"            | null            | [] as List
+        "fromDictionary" | null            | null as Function
+        "fromDictionary" | new Hashtable() | null as Function
+        "fromDictionary" | null            | { i -> 1 } as Function
     }
 }
