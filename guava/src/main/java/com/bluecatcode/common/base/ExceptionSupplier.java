@@ -5,7 +5,7 @@ import com.google.common.base.Supplier;
 /**
  * Optional supplier for exceptions
  * <p>
- * The supplier is designed to be used for more DLS usage of the following pattern:
+ * The supplier is designed to be used for more DSL-like usage of the following pattern:
  * </p>
  * {@code}
  * <pre>
@@ -57,15 +57,6 @@ public class ExceptionSupplier<T, E extends RuntimeException> implements Supplie
     public static <T, E extends RuntimeException> ExceptionSupplier<T, E> throwA(
             @SuppressWarnings("UnusedParameters") Class<T> type, E exception) {
         return new ExceptionSupplier<>(exception);
-    }
-
-    /**
-     * @see #throwA(RuntimeException)
-     * @param message the exception message
-     * @return the exception supplier
-     */
-    public static ExceptionSupplier<String, IllegalArgumentException> throwIllegalArgumentException(String message) {
-        return throwA(new IllegalArgumentException(message));
     }
 
     /**
