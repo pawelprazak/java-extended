@@ -31,7 +31,7 @@ if [[ "${TRAVIS_BRANCH}" =~ ^release.* ]]; then
     ${MVN_CMD} -pl guava -Dguava.version=15.0
 
 else
-    mvn test jacoco:report -Pbuild-test -B
+    mvn test jacoco:report -Pbuild-test,enable-coverage-tests -B
 fi
 
 trap : 0
