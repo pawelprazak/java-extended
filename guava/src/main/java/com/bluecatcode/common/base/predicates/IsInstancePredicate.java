@@ -1,21 +1,26 @@
 package com.bluecatcode.common.base.predicates;
 
-import com.google.common.annotations.Beta;
 import com.google.common.base.Predicate;
 
 import javax.annotation.Nullable;
 import java.util.Arrays;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 /**
  * Checks if the input object is an instance of any of provided class(es)
  */
-@Beta
 public class IsInstancePredicate<T> implements Predicate<T> {
 
     private final Class[] types;
 
     public IsInstancePredicate(Class[] types) {
+        checkArgument(types != null, "Expected non-null types");
         this.types = Arrays.copyOf(types, types.length);
+    }
+
+    public static IsInstancePredicate isInstancePredicate(Class[] types) {
+        return new IsInstancePredicate(types);
     }
 
     @Override
