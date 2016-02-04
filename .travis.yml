@@ -45,7 +45,7 @@ script:
   - if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then ./build.sh; fi
 
 after_success:
-  - test "${COVERITY_SCAN_BRANCH}" != 1 && codecov
+  - codecov
   - test "${COVERITY_SCAN_BRANCH}" == 1 && mvn coverity-ondemand:check
 
 matrix:
