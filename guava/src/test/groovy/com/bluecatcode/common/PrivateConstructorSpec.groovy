@@ -3,6 +3,7 @@ package com.bluecatcode.common
 import com.bluecatcode.common.base.*
 import com.bluecatcode.common.collections.Collections3
 import com.bluecatcode.common.concurrent.Futures
+import com.bluecatcode.common.concurrent.Sleep
 import com.bluecatcode.common.concurrent.Try
 import com.bluecatcode.common.hash.Hash
 import com.bluecatcode.common.io.Files
@@ -30,6 +31,7 @@ class PrivateConstructorSpec extends Specification {
                 Preconditions,
                 Predicates,
                 Resources,
+                Sleep,
                 Strings,
                 Try
         ]

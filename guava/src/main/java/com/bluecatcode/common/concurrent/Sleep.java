@@ -13,6 +13,10 @@ import java.util.concurrent.TimeUnit;
  */
 public class Sleep {
 
+    private Sleep() {
+        throw new UnsupportedOperationException();
+    }
+
     /**
      * Interruptible sleep of the current thread
      *
