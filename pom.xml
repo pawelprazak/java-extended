@@ -161,7 +161,7 @@
             <dependency>
                 <groupId>nl.jqno.equalsverifier</groupId>
                 <artifactId>equalsverifier</artifactId>
-                <version>1.7.6</version>
+                <version>1.7.7</version>
             </dependency>
 
             <!-- Used in some tests -->
@@ -370,13 +370,14 @@
                 <plugin>
                     <groupId>org.pitest</groupId>
                     <artifactId>pitest-maven</artifactId>
-                    <version>1.1.8</version>
+                    <version>1.1.9</version>
                     <configuration>
                         <skip>${skipMutationTests}</skip>
                         <verbose>false</verbose>
                         <threads>4</threads>
                         <mutateStaticInitializers>true</mutateStaticInitializers>
                         <failWhenNoMutations>false</failWhenNoMutations>
+                        <withHistory>true</withHistory>
                         <targetClasses>
                             <param>com.bluecatcode*</param>
                         </targetClasses>
@@ -733,7 +734,7 @@
                 <plugin>
                     <groupId>com.coverity</groupId>
                     <artifactId>ondemand-maven-plugin</artifactId>
-                    <version>1.4.782</version>
+                    <version>1.5.60</version>
                 </plugin>
 
                 <plugin>
@@ -914,5 +915,32 @@
                 </plugins>
             </build>
         </profile>
+
+        <profile>
+            <id>report-pit</id>
+            <activation>
+                <file>
+                    <exists>target/pit-reports</exists>
+                </file>
+            </activation>
+
+            <reporting>
+                <plugins>
+                    <plugin>
+                        <groupId>org.pitest</groupId>
+                        <artifactId>pitest-maven</artifactId>
+                        <version>1.1.9</version>
+                        <reportSets>
+                            <reportSet>
+                                <reports>
+                                    <report>report</report>
+                                </reports>
+                            </reportSet>
+                        </reportSets>
+                    </plugin>
+                </plugins>
+            </reporting>
+        </profile>
+
     </profiles>
 </project>

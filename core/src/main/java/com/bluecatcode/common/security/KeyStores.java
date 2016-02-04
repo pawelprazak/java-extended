@@ -41,8 +41,16 @@ public class KeyStores {
     }
 
     public static KeyManager[] loadKeyManagers(String keyStorePath, String keyStorePassword) {
-        KeyStore keyStore = KeyStores.loadKeyStore("JKS", keyStorePath, keyStorePassword);
+        return loadKeyManagers(KeyStore.getDefaultType(), keyStorePath, keyStorePassword);
+    }
+
+    public static KeyManager[] loadKeyManagers(String keyStoreType, String keyStorePath, String keyStorePassword) {
+        KeyStore keyStore = KeyStores.loadKeyStore(keyStoreType, keyStorePath, keyStorePassword);
         String keyAlgorithm = KeyManagerFactory.getDefaultAlgorithm();
+        return loadKeyManagers(keyAlgorithm, keyStore, keyStorePassword);
+    }
+
+    public static KeyManager[] loadKeyManagers(String keyAlgorithm, KeyStore keyStore, String keyStorePassword) {
         KeyManagerFactory keyFactory;
         try {
             keyFactory = KeyManagerFactory.getInstance(keyAlgorithm);
@@ -55,9 +63,17 @@ public class KeyStores {
         return keyFactory.getKeyManagers();
     }
 
-    public static TrustManager[] loadTrustManagers(String trustStorePath, String trustStorePassword) {
-        KeyStore trustStore = KeyStores.loadKeyStore("JKS", trustStorePath, trustStorePassword);
+    public static TrustManager[] loadTrustManagers(String keyStorePath, String keyStorePassword) {
+        return loadTrustManagers(KeyStore.getDefaultType(), keyStorePath, keyStorePassword);
+    }
+
+    public static TrustManager[] loadTrustManagers(String trustStoreType, String trustStorePath, String trustStorePassword) {
+        KeyStore trustStore = KeyStores.loadKeyStore(trustStoreType, trustStorePath, trustStorePassword);
         String trustAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
+        return loadTrustManagers(trustAlgorithm, trustStore);
+    }
+
+    public static TrustManager[] loadTrustManagers(String trustAlgorithm, KeyStore trustStore) {
         TrustManagerFactory trustFactory;
         try {
             trustFactory = TrustManagerFactory.getInstance(trustAlgorithm);

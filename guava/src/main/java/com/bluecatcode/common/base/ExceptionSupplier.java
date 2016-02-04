@@ -15,8 +15,8 @@ import com.google.common.base.Supplier;
  *  }
  *  Something something = optionalSomething.get();
  * </pre>
- * As shown here:
  * {@code}
+ * As shown here:
  * <pre>
  *  Something something = optionalSomething.or(throwA(Something.class, new SomeException()));
  * </pre>

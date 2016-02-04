@@ -15,11 +15,11 @@ class TrySpec extends Specification {
     @Unroll("result: '#result'")
     def "should pass the result"() {
         expect:
-        result.equals(tryWith({->result}))
+        result.equals(tryWith({ -> result }))
 
         where:
         result << [
-            1, "lol", "", null
+            1, "lol", ""
         ]
     }
 
@@ -27,7 +27,7 @@ class TrySpec extends Specification {
     @FailsWith(RuntimeException)
     def "should throw on exception with callable"() {
         expect:
-        tryWith({->throw exception})
+        tryWith({ -> throw exception })
 
         where:
         exception << [
