@@ -42,7 +42,7 @@ install:
 #  - mvn clean compile dependency:resolve --quiet -U -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 
 script:
-  - if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then ./build.sh; fi
+  - ./build.sh
 
 after_success:
   - codecov
