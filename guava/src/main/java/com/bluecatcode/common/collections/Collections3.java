@@ -9,6 +9,9 @@ import java.util.*;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.collect.Iterables.getOnlyElement;
 
+/**
+ * Collection utility functions: {@link #zip}, {@link #fromDictionary}, {@link #mergeMaps}, {@link #getOnlyEntry}
+ */
 public class Collections3 {
 
     /**

@@ -23,6 +23,9 @@ import static com.bluecatcode.common.collections.Collections3Test.ZipData.zipDat
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
+/**
+ * @see Collections3Spec
+ */
 @RunWith(Theories.class)
 public class Collections3Test {
 
@@ -114,6 +117,7 @@ public class Collections3Test {
         Collections3.fromDictionary(dictionary, input -> null);
     }
 
+    @SuppressWarnings("ConstantConditions")
     @DataPoints
     public static final MapData[] samples = new MapData[]{
             mapData(null, null, IllegalArgumentException.class),
@@ -122,6 +126,7 @@ public class Collections3Test {
             mapData(emptyHashMap(), emptyHashMap(), isAnEmptyMap),
             mapData(emptyHashMap(), hashMapWith(null, null), isAnEmptyMap),
             mapData(hashMapWith(null, null), hashMapWith(null, null), isAnEmptyMap),
+            mapData(hashMapWith("1", null), hashMapWith("1", null), hasEntry("1", "")),
             mapData(hashMapWith("1", null), emptyHashMap(), hasEntry("1", "")),
             mapData(hashMapWith("1", null), ImmutableMap.of("2", "2"), allOf(
                     hasEntry("1", ""), hasEntry("2", "2"))
@@ -145,12 +150,27 @@ public class Collections3Test {
         }
 
         // when
+        //noinspection ConstantConditions
         Map<String, String> map = Collections3.mergeMaps(first, second, "");
 
         // then
         if (matcher.isPresent()) {
             assertThat(map, matcher.get());
         }
+    }
+
+    @Test
+    public void shouldThrowWhenMergeMapsDefaultIsNull() throws Exception {
+        // given
+        String nullDefault = null;
+
+        // expect
+        exception.expect(IllegalArgumentException.class);
+        exception.expectMessage(startsWith("Expected non-null default"));
+
+        // when
+        //noinspection ConstantConditions
+        Collections3.mergeMaps(emptyHashMap(), emptyHashMap(), nullDefault);
     }
 
     @Test
