@@ -26,6 +26,12 @@ Core
 ----
 Core Java JDK extensions and backports
 
+    <dependency>
+      <groupId>com.bluecatcode.core</groupId>
+      <artifactId>core</artifactId>
+      <version>1.0.4</version>
+    </dependency>
+
 Guava
 -----
 Google's Guava library extension
@@ -98,7 +104,7 @@ To run a simple build use:
 
 To run a more comprehensive build:
 
-    source use_jdk_switcher.sh; mvn install jacoco:report -Penable-unit-tests,enable-integration-tests,enable-mutation-tests
+    source use_jdk_switcher.sh; mvn install jacoco:report -Penable-unit-tests,enable-integration-tests,enable-mutation-tests,enable-coverage-tests
 
 
 [license]:LICENSE
