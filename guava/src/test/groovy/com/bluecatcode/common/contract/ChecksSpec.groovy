@@ -2,6 +2,7 @@ package com.bluecatcode.common.contract
 
 import com.google.common.base.Optional
 import com.google.common.base.Predicate
+import com.google.common.base.Supplier
 import com.google.common.collect.FluentIterable
 import com.google.common.collect.ImmutableMap
 import spock.lang.FailsWith
@@ -23,26 +24,43 @@ class CheckSpec extends Specification {
         reference << [1, 1L, "1", [], [:]]
     }
 
-    @FailsWith(IllegalArgumentException)
     @Unroll("reference: '#reference'")
-    def "check should check for the predicate and throw"() {
+    def "check should check for the predicate and return reference or throw custom exception"() {
         expect:
-        reference.is(check(reference, { false } as Predicate))
+        check(true, new IllegalArgumentException())
+        reference.is(check(reference, { true } as Predicate))
+        reference.is(check(reference, { true } as Predicate, IllegalArgumentException))
+        reference.is(check(reference, { true } as Predicate, IllegalArgumentException, "test"))
+        reference.is(check(reference, { true } as Predicate, IllegalArgumentException, "%s", "test"))
+        reference.is(check(reference, { true } as Predicate, new IllegalArgumentException()))
+        reference.is(check(reference, { true } as Predicate, { new IllegalArgumentException() } as Supplier))
 
         where:
         reference << [1, 1L, "1", [], [:]]
     }
 
+
     @FailsWith(IllegalArgumentException)
-    @Unroll("reference: '#reference', predicate: '#predicate'")
-    def "checkNotEmpty should throw on null"() {
+    @Unroll("reference: '#reference'")
+    def "check should check for the predicate and throw"() {
         expect:
-        check(reference, predicate as Predicate)
+        check(false, new IllegalArgumentException())
+        check(reference, { false } as Predicate)
+        check(reference, { false } as Predicate, IllegalArgumentException)
+        check(reference, { false } as Predicate, IllegalArgumentException, "test")
+        check(reference, { false } as Predicate, IllegalArgumentException, "%s", "test")
+        check(reference, { false } as Predicate, new IllegalArgumentException())
+        check(reference, { false } as Predicate, { new IllegalArgumentException() } as Supplier)
+        check(true, (Throwable) null)
+        check(null, (Predicate) null)
+        check(reference, (Predicate) null)
+        check(reference, { true } as Predicate, (Class) null)
+        check(reference, { true } as Predicate, (Throwable) null)
+        check(reference, { true } as Predicate, (Supplier) null)
+        check(reference, { true } as Predicate, { null } as Supplier)
 
         where:
-        reference | predicate
-        null      | null
-        ""        | null
+        reference = 1
     }
 
     @Unroll("'#template', '#args' -> '#result")
@@ -239,5 +257,36 @@ class CheckIsInstanceSpec extends Specification {
         Long    | 1L
         Integer | 1
         Object  | String
+    }
+}
+
+class CheckUriSpec extends Specification {
+
+    @FailsWith(IllegalArgumentException)
+    @Unroll("checkUri'#reference' -> throws IAE")
+    def "should throw if illegal argument"() {
+        expect:
+        checkUri(reference)
+        checkUri(reference, (Object) "test")
+        checkUri(reference, "%s", "test")
+
+        where:
+        reference << [
+                (String) null,
+                "",
+                "a" * 2000
+        ]
+    }
+
+    def "checkUri return the same reference"() {
+        expect:
+        reference.is(checkUri(reference))
+        reference.is(checkUri(reference, (Object) "test"))
+        reference.is(checkUri(reference, "%s", "test"))
+
+        where:
+        reference << [
+                "file:/tmp/example"
+        ]
     }
 }

@@ -430,6 +430,8 @@ public final class Checks {
                                   @Nullable String errorMessageTemplate,
                                   @Nullable Object... errorMessageArgs) {
         checkNotEmpty(uri, "Expected non-null and non-empty uri, got %s", uri);
+        checkArgument(uri.length() > 0 && uri.length() < 2000,
+                "Expected a email in range 1 to 2000 characters, got %s", uri.length());
         return check(uri, isValidURI(), errorMessageTemplate, errorMessageArgs);
     }
 
@@ -443,7 +445,7 @@ public final class Checks {
      * @see Checks#checkUri(String, String, Object...)
      */
     public static String checkUri(String uri, @Nullable Object errorMessage) {
-        return check(uri, isValidURI(), String.valueOf(errorMessage), EMPTY_ERROR_MESSAGE_ARGS);
+        return checkUri(uri, String.valueOf(errorMessage), EMPTY_ERROR_MESSAGE_ARGS);
     }
 
     /**
@@ -456,7 +458,7 @@ public final class Checks {
      * @see Checks#checkUri(String, String, Object...)
      */
     public static String checkUri(String uri) {
-        return check(uri, isValidURI(), "Expected a valid URI, got %s", uri);
+        return checkUri(uri, "Expected a valid URI, got %s", uri);
     }
 
     /**
