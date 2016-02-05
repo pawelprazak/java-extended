@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 
 import static com.bluecatcode.common.contract.Checks.EMPTY_ERROR_MESSAGE_ARGS;
 import static com.bluecatcode.common.contract.Checks.check;
+import static java.lang.String.format;
 
 /**
  * Preconditions that clients are required to fulfill.
@@ -28,7 +29,36 @@ public class Preconditions {
      */
     public static void require(boolean condition) {
         if (!condition) {
-            throw new RequireViolation("Expected the condition to be meet");
+            throw new RequireViolation("Expected the condition to be true");
+        }
+    }
+
+    /**
+     * Precondition that clients are required to fulfill.
+     * Violations are considered to be programming errors, on the clients part.
+     *
+     * @param condition the condition to check
+     * @param message   the fail message template
+     * @throws RequireViolation if the <tt>predicate</tt> is <b>false</b>
+     */
+    public static void require(boolean condition, String message) {
+        if (!condition) {
+            throw new RequireViolation(message);
+        }
+    }
+
+    /**
+     * Precondition that clients are required to fulfill.
+     * Violations are considered to be programming errors, on the clients part.
+     *
+     * @param condition the condition to check
+     * @param message   the fail message template
+     * @param args      the message template arguments
+     * @throws RequireViolation if the <tt>predicate</tt> is <b>false</b>
+     */
+    public static void require(boolean condition, String message, Object... args) {
+        if (!condition) {
+            throw new RequireViolation(format(message, args));
         }
     }
 

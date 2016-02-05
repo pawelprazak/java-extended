@@ -36,31 +36,42 @@ class CheckSpec extends Specification {
         reference.is(check(reference, { true } as Predicate, { new IllegalArgumentException() } as Supplier))
 
         where:
-        reference << [1, 1L, "1", [], [:]]
+        reference << [1]
     }
 
-
     @FailsWith(IllegalArgumentException)
-    @Unroll("reference: '#reference'")
+    @Unroll
     def "check should check for the predicate and throw"() {
         expect:
-        check(false, new IllegalArgumentException())
-        check(reference, { false } as Predicate)
-        check(reference, { false } as Predicate, IllegalArgumentException)
-        check(reference, { false } as Predicate, IllegalArgumentException, "test")
-        check(reference, { false } as Predicate, IllegalArgumentException, "%s", "test")
-        check(reference, { false } as Predicate, new IllegalArgumentException())
-        check(reference, { false } as Predicate, { new IllegalArgumentException() } as Supplier)
-        check(true, (Throwable) null)
-        check(null, (Predicate) null)
-        check(reference, (Predicate) null)
-        check(reference, { true } as Predicate, (Class) null)
-        check(reference, { true } as Predicate, (Throwable) null)
-        check(reference, { true } as Predicate, (Supplier) null)
-        check(reference, { true } as Predicate, { null } as Supplier)
+        call()
 
         where:
-        reference = 1
+        call << [
+                { -> check(true, (Throwable) null) },
+                { -> check(false, new IllegalArgumentException()) },
+
+                { -> check(null, (Predicate) null) },
+                { -> check(1, (Predicate) null) },
+                { -> check(1, { false } as Predicate) },
+
+                { -> check(null, { true } as Predicate, IllegalArgumentException) },
+                { -> check(1, (Predicate) null, IllegalArgumentException) },
+                { -> check(1, { true } as Predicate, (Class) null) },
+                { -> check(1, { false } as Predicate, IllegalArgumentException) },
+                { -> check(1, { false } as Predicate, IllegalArgumentException, "test") },
+                { -> check(1, { false } as Predicate, IllegalArgumentException, "%s", "test") },
+
+                { -> check(null, { true } as Predicate, new IllegalArgumentException()) },
+                { -> check(1, (Predicate) null, new IllegalArgumentException()) },
+                { -> check(1, { true } as Predicate, (Throwable) null) },
+                { -> check(1, { false } as Predicate, new IllegalArgumentException()) },
+
+                { -> check(null, { true } as Predicate, { new IllegalArgumentException() } as Supplier) },
+                { -> check(1, (Predicate) null, { new IllegalArgumentException() } as Supplier) },
+                { -> check(1, { true } as Predicate, (Supplier) null) },
+                { -> check(1, { true } as Predicate, { null } as Supplier) },
+                { -> check(1, { false } as Predicate, { new IllegalArgumentException() } as Supplier) },
+        ]
     }
 
     @Unroll("'#template', '#args' -> '#result")
@@ -155,6 +166,9 @@ class CheckMatchesSpec extends Specification {
         reference | pattern
         "xyz"     | ~/^v[a-z]*e$/
         "x"       | ~/^/
+        null      | ~/.*/
+        "a"       | null
+        ""        | ~/ /
     }
 }
 
@@ -185,6 +199,8 @@ class CheckEmailSpec extends Specification {
                 (String) null,
                 "",
                 "@",
+                "test@",
+                "@test",
                 "invalid@server_name.com",
                 "a" * 64 + "@test.com",
                 "test@" + "a" * 250 + ".com",
@@ -206,6 +222,7 @@ class CheckHostnameSpec extends Specification {
         hostname << [
                 "test.pl",
                 "server-name.com",
+                "server-name.com",
                 ("a" * 63 + ".") * 3 + "a" * 59 + ".com",
                 "a" * 63 + "." + "a" * 63 + ".com"
         ]
@@ -222,6 +239,7 @@ class CheckHostnameSpec extends Specification {
                 (String) null,
                 "",
                 "...",
+                ".com",
                 "server_name.com",
                 ("a" * 63 + ".") * 3 + "a" * 60 + ".com",
                 "a" * 64 + ".test.com",

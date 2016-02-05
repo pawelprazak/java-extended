@@ -357,7 +357,7 @@ public final class Checks {
      */
     @Beta
     public static void checkMatches(String reference, Pattern pattern) {
-        checkMatches(reference, pattern, "Expected %s to match %s", reference, pattern.pattern());
+        checkMatches(reference, pattern, "Expected %s to match '%s'", reference, pattern == null ? "null" : pattern.pattern());
     }
 
     /**
@@ -412,9 +412,8 @@ public final class Checks {
      */
     @Beta
     public static <T> T checkIsInstance(Class<T> class_, Object reference) {
-        checkArgument(class_ != null, "Expected non-null class_");
         return checkIsInstance(class_, reference, "Expected reference to be instance of %s, got %s",
-                class_.getName(), reference == null ? "null" : reference.getClass().getName());
+                class_ == null ? "null" : class_.getName(), reference == null ? "null" : reference.getClass().getName());
     }
 
     /**
@@ -429,7 +428,7 @@ public final class Checks {
     public static String checkUri(String uri,
                                   @Nullable String errorMessageTemplate,
                                   @Nullable Object... errorMessageArgs) {
-        checkNotEmpty(uri, "Expected non-null and non-empty uri, got %s", uri);
+        checkArgument(uri != null, "Expected non-null uri");
         checkArgument(uri.length() > 0 && uri.length() < 2000,
                 "Expected a email in range 1 to 2000 characters, got %s", uri.length());
         return check(uri, isValidURI(), errorMessageTemplate, errorMessageArgs);
@@ -472,7 +471,7 @@ public final class Checks {
      * @see <a href="http://www.rfc-editor.org/errata_search.php?rfc=3696&eid=1690">RFC3696 Errata</a>
      */
     public static String checkEmail(String email) {
-        checkNotEmpty(email, "Expected non-null and non-empty email, got %s", email);
+        checkArgument(email != null, "Expected non-null email");
         checkArgument(email.length() > 0 && email.length() < 255,
                 "Expected a email in range 1 to 254 characters, got %s", email.length());
 
@@ -502,11 +501,11 @@ public final class Checks {
                                        @Nullable Object... errorMessageArgs) {
         String message = messageFromNullable(errorMessageTemplate, errorMessageArgs, "; ");
 
-        checkNotEmpty(hostname, "%sExpected non-null and non-empty hostname, got %s", message, hostname);
+        checkArgument(hostname != null, "%sExpected non-null hostname", message);
         checkArgument(hostname.length() > 0 && hostname.length() < 256,
                 "%sExpected a hostname in range 1 to 255 characters, got %s", message, hostname.length());
 
-        Iterable<String> labels = on('.').omitEmptyStrings().split(hostname);
+        Iterable<String> labels = on('.').split(hostname);
         for (String label : labels) {
             checkArgument(label.length() > 0 && label.length() < 64,
                     "%sExpected a hostname label in range 1 to 63 characters, got %s", message, label.length());

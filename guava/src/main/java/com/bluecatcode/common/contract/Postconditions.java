@@ -31,7 +31,7 @@ public class Postconditions {
      */
     public static void ensure(boolean condition) {
         if (!condition) {
-            throw new EnsureViolation("Condition expected to be true");
+            throw new EnsureViolation("Expected the condition to be true");
         }
     }
 
