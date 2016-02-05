@@ -21,10 +21,10 @@ import static java.util.regex.Pattern.compile;
  * In performance critical contexts it is probably better to use hand-written checks, but <b>measure first!</b>.
  * </p>
  * <ul>
- *     <li>check - Performs check with a predicate</li>
- *     <li>checkNotEmpty - Performs emptiness and nullness check for:
- *     String, CharSequence, Optional, Collection, Iterable, Map, Object[], prim[]</li>
- *     <li>checkMatches - Performs check against a regular expression or a hamcrest matcher</li>
+ * <li>check - Performs check with a predicate</li>
+ * <li>checkNotEmpty - Performs emptiness and nullness check for:
+ * String, CharSequence, Optional, Collection, Iterable, Map, Object[], prim[]</li>
+ * <li>checkMatches - Performs check against a regular expression or a hamcrest matcher</li>
  * </ul>
  *
  * @see com.google.common.base.Preconditions
@@ -36,26 +36,26 @@ public final class Preconditions {
     /**
      * Performs check with the predicate.
      *
-     * @param reference reference to check
-     * @param predicate the regular expression pattern
+     * @param reference            reference to check
+     * @param predicate            the regular expression pattern
      * @param errorMessageTemplate a template for the exception message should the
-     *     check fail. The message is formed by replacing each {@code %s}
-     *     placeholder in the template with an argument. These are matched by
-     *     position - the first {@code %s} gets {@code errorMessageArgs[0]}, etc.
-     *     Unmatched arguments will be appended to the formatted message in square
-     *     braces. Unmatched placeholders will be left as-is.
-     * @param errorMessageArgs the arguments to be substituted into the message
-     *     template. Arguments are converted to strings using
-     *     {@link String#valueOf(Object)}.
-     * @param <T> the reference type
+     *                             check fail. The message is formed by replacing each {@code %s}
+     *                             placeholder in the template with an argument. These are matched by
+     *                             position - the first {@code %s} gets {@code errorMessageArgs[0]}, etc.
+     *                             Unmatched arguments will be appended to the formatted message in square
+     *                             braces. Unmatched placeholders will be left as-is.
+     * @param errorMessageArgs     the arguments to be substituted into the message
+     *                             template. Arguments are converted to strings using
+     *                             {@link String#valueOf(Object)}.
+     * @param <T>                  the reference type
      * @return the original reference
      * @throws IllegalArgumentException if the {@code reference} doesn't match provided predicate
-     * @throws NullPointerException if the {@code reference} or {@code predicate} is null
+     * @throws NullPointerException     if the {@code reference} or {@code predicate} is null
      * @see java.util.regex.Pattern
      */
     public static <T> T check(T reference, Predicate<T> predicate,
-                                     @Nullable String errorMessageTemplate,
-                                     @Nullable Object... errorMessageArgs) {
+                              @Nullable String errorMessageTemplate,
+                              @Nullable Object... errorMessageArgs) {
         checkNotNull(predicate, errorMessageTemplate, errorMessageArgs);
         checkNotNull(reference, errorMessageTemplate, errorMessageArgs);
         checkArgument(predicate.apply(reference), errorMessageTemplate, errorMessageArgs);
@@ -65,10 +65,10 @@ public final class Preconditions {
     /**
      * Performs check with the predicate.
      *
-     * @param reference reference to check
+     * @param reference    reference to check
      * @param errorMessage the exception message to use if the check fails; will
-     *     be converted to a string using {@link String#valueOf(Object)}
-     * @param <T> the reference type
+     *                     be converted to a string using {@link String#valueOf(Object)}
+     * @param <T>          the reference type
      * @return the original reference
      * @throws IllegalArgumentException if the {@code reference} is empty
      * @throws NullPointerException     if the {@code reference} is null
@@ -84,7 +84,7 @@ public final class Preconditions {
      * Performs check with the predicate.
      *
      * @param reference String reference to check
-     * @param <T> the reference type
+     * @param <T>       the reference type
      * @return the original reference
      * @throws IllegalArgumentException if the {@code reference} is empty
      * @throws NullPointerException     if the {@code reference} is null
@@ -102,23 +102,24 @@ public final class Preconditions {
      * Supports the following types:
      * String, CharSequence, Optional, Stream, Iterable, Collection, Map, Object[], primitive[]
      * </p>
-     * @param reference reference to check
+     *
+     * @param reference            reference to check
      * @param errorMessageTemplate a template for the exception message should the
-     *     check fail. The message is formed by replacing each {@code %s}
-     *     placeholder in the template with an argument. These are matched by
-     *     position - the first {@code %s} gets {@code errorMessageArgs[0]}, etc.
-     *     Unmatched arguments will be appended to the formatted message in square
-     *     braces. Unmatched placeholders will be left as-is.
-     * @param errorMessageArgs the arguments to be substituted into the message
-     *     template. Arguments are converted to strings using
-     *     {@link String#valueOf(Object)}.
-     * @param <T> the reference type
+     *                             check fail. The message is formed by replacing each {@code %s}
+     *                             placeholder in the template with an argument. These are matched by
+     *                             position - the first {@code %s} gets {@code errorMessageArgs[0]}, etc.
+     *                             Unmatched arguments will be appended to the formatted message in square
+     *                             braces. Unmatched placeholders will be left as-is.
+     * @param errorMessageArgs     the arguments to be substituted into the message
+     *                             template. Arguments are converted to strings using
+     *                             {@link String#valueOf(Object)}.
+     * @param <T>                  the reference type
      * @return the checked reference
      * @throws IllegalArgumentException if the {@code reference} is empty
-     *     or the reference type is not supported
-     * @throws NullPointerException if the {@code reference} is null
-     *     or the check fails and either {@code errorMessageTemplate} or {@code errorMessageArgs} is null
-     *     (don't let this happen)
+     *                                  or the reference type is not supported
+     * @throws NullPointerException     if the {@code reference} is null
+     *                                  or the check fails and either {@code errorMessageTemplate} or {@code errorMessageArgs} is null
+     *                                  (don't let this happen)
      */
     public static <T> T checkNotEmpty(T reference,
                                       @Nullable String errorMessageTemplate,
@@ -131,10 +132,10 @@ public final class Preconditions {
     /**
      * Performs emptiness and nullness check.
      *
-     * @param reference reference to check
+     * @param reference    reference to check
      * @param errorMessage the exception message to use if the check fails; will
-     *     be converted to a string using {@link String#valueOf(Object)}
-     * @param <T> the reference type
+     *                     be converted to a string using {@link String#valueOf(Object)}
+     * @param <T>          the reference type
      * @return the checked reference
      * @throws IllegalArgumentException if the {@code reference} is empty
      * @throws NullPointerException     if the {@code reference} is null
@@ -150,7 +151,7 @@ public final class Preconditions {
      * Performs emptiness and nullness check.
      *
      * @param reference String reference to check
-     * @param <T> the reference type
+     * @param <T>       the reference type
      * @return the original reference
      * @throws IllegalArgumentException if the {@code reference} is empty
      * @throws NullPointerException     if the {@code reference} is null
@@ -165,19 +166,19 @@ public final class Preconditions {
     /**
      * Performs check with the regular expression pattern.
      *
-     * @param reference reference to check
-     * @param pattern the regular expression pattern
+     * @param reference            reference to check
+     * @param pattern              the regular expression pattern
      * @param errorMessageTemplate a template for the exception message should the
-     *     check fail. The message is formed by replacing each {@code %s}
-     *     placeholder in the template with an argument. These are matched by
-     *     position - the first {@code %s} gets {@code errorMessageArgs[0]}, etc.
-     *     Unmatched arguments will be appended to the formatted message in square
-     *     braces. Unmatched placeholders will be left as-is.
-     * @param errorMessageArgs the arguments to be substituted into the message
-     *     template. Arguments are converted to strings using {@link String#valueOf(Object)}.
+     *                             check fail. The message is formed by replacing each {@code %s}
+     *                             placeholder in the template with an argument. These are matched by
+     *                             position - the first {@code %s} gets {@code errorMessageArgs[0]}, etc.
+     *                             Unmatched arguments will be appended to the formatted message in square
+     *                             braces. Unmatched placeholders will be left as-is.
+     * @param errorMessageArgs     the arguments to be substituted into the message
+     *                             template. Arguments are converted to strings using {@link String#valueOf(Object)}.
      * @throws IllegalArgumentException if the {@code reference} doesn't match provided regular expression
-     * @throws NullPointerException if the {@code reference} is null; also when the check fails and either
-     *     {@code errorMessageTemplate} or {@code errorMessageArgs} is null (don't let this happen)
+     * @throws NullPointerException     if the {@code reference} is null; also when the check fails and either
+     *                                  {@code errorMessageTemplate} or {@code errorMessageArgs} is null (don't let this happen)
      * @see java.util.regex.Pattern
      */
     @Beta
@@ -192,10 +193,10 @@ public final class Preconditions {
     /**
      * Performs check with the regular expression pattern.
      *
-     * @param reference reference to check
-     * @param pattern the regular expression pattern
+     * @param reference    reference to check
+     * @param pattern      the regular expression pattern
      * @param errorMessage the exception message to use if the check fails; will
-     *     be converted to a string using {@link String#valueOf(Object)}
+     *                     be converted to a string using {@link String#valueOf(Object)}
      * @throws IllegalArgumentException if the {@code reference} doesn't match provided regular expression
      * @see Preconditions#checkMatches(String, java.util.regex.Pattern, String, Object...)
      */
@@ -209,7 +210,7 @@ public final class Preconditions {
      * Performs check with the regular expression pattern.
      *
      * @param reference reference to check
-     * @param pattern the regular expression pattern
+     * @param pattern   the regular expression pattern
      * @throws IllegalArgumentException if the {@code reference} doesn't match provided regular expression
      * @see Preconditions#checkMatches(String, java.util.regex.Pattern, String, Object...)
      */
@@ -221,16 +222,16 @@ public final class Preconditions {
     /**
      * Performs a runtime check if the reference is an instance of the provided class
      *
-     * @param class_ the class to use
-     * @param reference reference to check
+     * @param class_               the class to use
+     * @param reference            reference to check
      * @param errorMessageTemplate the exception message template to use if the check fails; will
-     *     be converted to a string using {@link String#valueOf(Object)}
-     * @param errorMessageArgs the <tt>errorMessageTemplate</tt> arguments
-     * @param <T> the reference type
+     *                             be converted to a string using {@link String#valueOf(Object)}
+     * @param errorMessageArgs     the <tt>errorMessageTemplate</tt> arguments
+     * @param <T>                  the reference type
      * @return the original reference
      * @throws IllegalArgumentException if the {@code reference} is not an instance of provided class {@code class_}
-     * @throws NullPointerException if the {@code reference} is null; also when the check fails and either
-     *     {@code errorMessageTemplate} or {@code errorMessageArgs} is null (don't let this happen)
+     * @throws NullPointerException     if the {@code reference} is null; also when the check fails and either
+     *                                  {@code errorMessageTemplate} or {@code errorMessageArgs} is null (don't let this happen)
      * @see Class#isInstance(Object)
      */
     @Beta
@@ -247,11 +248,11 @@ public final class Preconditions {
     /**
      * Performs a runtime check if the reference is an instance of the provided class
      *
-     * @param class_ the class to use
-     * @param reference reference to check
+     * @param class_       the class to use
+     * @param reference    reference to check
      * @param errorMessage the exception message to use if the check fails; will
-     *     be converted to a string using {@link String#valueOf(Object)}
-     * @param <T> the reference type
+     *                     be converted to a string using {@link String#valueOf(Object)}
+     * @param <T>          the reference type
      * @see Preconditions#checkIsInstance(Class, Object, String, Object...)
      */
     @Beta
@@ -263,9 +264,9 @@ public final class Preconditions {
     /**
      * Performs a runtime check if the reference is an instance of the provided class
      *
-     * @param class_ the class to use
+     * @param class_    the class to use
      * @param reference reference to check
-     * @param <T> the reference type
+     * @param <T>       the reference type
      * @see Preconditions#checkIsInstance(Class, Object, String, Object...)
      */
     @Beta
@@ -280,7 +281,7 @@ public final class Preconditions {
      * @param uri the URI to check
      * @return the checked uri
      * @throws IllegalArgumentException if the {@code uri} is invalid
-     * @throws NullPointerException if the {@code uri} is null
+     * @throws NullPointerException     if the {@code uri} is null
      * @see java.net.URI
      */
     public static String checkUri(String uri,
@@ -296,7 +297,7 @@ public final class Preconditions {
      * @param uri the URI to check
      * @return the checked uri
      * @throws IllegalArgumentException if the {@code uri} is invalid
-     * @throws NullPointerException if the {@code uri} is null
+     * @throws NullPointerException     if the {@code uri} is null
      * @see Preconditions#checkUri(String, String, Object...)
      */
     public static String checkUri(String uri, @Nullable Object errorMessage) {
@@ -309,7 +310,7 @@ public final class Preconditions {
      * @param uri the URI to check
      * @return the checked uri
      * @throws IllegalArgumentException if the {@code uri} is invalid
-     * @throws NullPointerException if the {@code uri} is null
+     * @throws NullPointerException     if the {@code uri} is null
      * @see Preconditions#checkUri(String, String, Object...)
      */
     public static String checkUri(String uri) {
@@ -319,13 +320,25 @@ public final class Preconditions {
     /**
      * Performs email address check against RFC 822 specification
      *
-     * TODO:  RFC 5322 and RFC 5321
+     * TODO:  RFC3696, RFC 5322 and RFC 5321
      *
      * @param email an Email to check
      * @return checked Email
      * @throws IllegalArgumentException if the {@code email} is invalid
+     * @see <a href="http://www.rfc-editor.org/errata_search.php?rfc=3696&eid=1690">RFC3696 Errata</a>
      */
     public static String checkEmail(String email) {
+        checkNotEmpty(email, "Expected non-null and non-empty email, got %s", email);
+        checkArgument(email.length() > 0 && email.length() < 255,
+                "Expected a email in range 1 to 254 characters, got %s", email.length());
+
+        String[] split = email.split("@", 2);
+        String localPart = split[0];
+        String domainPart = split[1];
+        checkArgument(localPart.length() > 0 && localPart.length() < 64,
+                    "Expected a email local part in range 1 to 63 characters, got %s", localPart.length());
+        checkArgument(domainPart.length() > 0 && domainPart.length() < 256,
+                    "Expected a email domain part in range 1 to 255 characters, got %s", domainPart.length());
         return check(email, isValidEmail(), email);
     }
 
