@@ -33,6 +33,10 @@ import static java.lang.String.format;
  */
 public final class Predicates {
 
+    public static <T> Predicate<T> isNotNull() {
+        return input -> input != null;
+    }
+
     private static Predicate<IsEmpty> isEmpty() {
         return IsEmpty::isEmpty;
     }
@@ -173,13 +177,13 @@ public final class Predicates {
      */
     @Beta
     public static <T> Predicate<T> nor(Predicate<? super T> first, Predicate<? super T> second) {
-        return com.google.common.base.Predicates.<T>not(com.google.common.base.Predicates.<T>or(first, second));
+        return com.google.common.base.Predicates.not(com.google.common.base.Predicates.or(first, second));
     }
 
     @Beta
     @SafeVarargs
     public static <T> Predicate<T> nor(Predicate<? super T>... components) {
-        return com.google.common.base.Predicates.<T>not(com.google.common.base.Predicates.<T>or(components));
+        return com.google.common.base.Predicates.not(com.google.common.base.Predicates.or(components));
     }
 
     /**
@@ -201,7 +205,7 @@ public final class Predicates {
      */
     @Beta
     public static <T> Predicate<T> nand(Predicate<? super T> first, Predicate<? super T> second) {
-        return com.google.common.base.Predicates.<T>not(com.google.common.base.Predicates.<T>and(first, second));
+        return com.google.common.base.Predicates.not(com.google.common.base.Predicates.and(first, second));
     }
 
     /**
@@ -214,7 +218,7 @@ public final class Predicates {
     @Beta
     @SafeVarargs
     public static <T> Predicate<T> nand(Predicate<? super T>... components) {
-        return com.google.common.base.Predicates.<T>not(com.google.common.base.Predicates.<T>and(components));
+        return com.google.common.base.Predicates.not(com.google.common.base.Predicates.and(components));
     }
 
     @Beta
@@ -248,12 +252,11 @@ public final class Predicates {
     }
 
     @Beta
-    public static <T> Predicate<T> isInstance(Class... types) {
-        return new IsInstancePredicate<T>(types);
+    public static Predicate<Object> isInstance(Class<?>... types) {
+        return new IsInstancePredicate(types);
     }
 
     private Predicates() {
         throw new UnsupportedOperationException();
     }
-
 }
