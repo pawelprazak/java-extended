@@ -1,4 +1,4 @@
-package com.bluecatcode.common.base
+package com.bluecatcode.common.contract
 
 import com.google.common.base.Optional
 import com.google.common.base.Predicate
@@ -8,11 +8,11 @@ import spock.lang.FailsWith
 import spock.lang.Specification
 import spock.lang.Unroll
 
-import static com.bluecatcode.common.base.Preconditions.*
+import static com.bluecatcode.common.contract.Checks.*
 import static com.google.common.collect.Lists.newArrayList
 import static com.google.common.collect.Maps.newHashMap
 
-class PreconditionsCheck extends Specification {
+class CheckSpec extends Specification {
 
     @Unroll("reference: '#reference'")
     def "check should check for the predicate and return reference"() {
@@ -33,7 +33,7 @@ class PreconditionsCheck extends Specification {
         reference << [1, 1L, "1", [], [:]]
     }
 
-    @FailsWith(NullPointerException)
+    @FailsWith(IllegalArgumentException)
     @Unroll("reference: '#reference', predicate: '#predicate'")
     def "checkNotEmpty should throw on null"() {
         expect:
@@ -64,7 +64,7 @@ class PreconditionsCheck extends Specification {
     }
 }
 
-class PreconditionsCheckNotEmptySpec extends Specification {
+class CheckNotEmptySpec extends Specification {
 
     @Unroll("reference: '#reference' (#reference.class)")
     def "checkNotEmpty should check for emptiness and return the reference"() {
@@ -86,7 +86,7 @@ class PreconditionsCheckNotEmptySpec extends Specification {
         ]
     }
 
-    @FailsWith(NullPointerException)
+    @FailsWith(IllegalArgumentException)
     @Unroll("reference: '#reference', template: '#template', args: '#args'")
     def "checkNotEmpty should throw on null"() {
         expect:
@@ -111,7 +111,7 @@ class PreconditionsCheckNotEmptySpec extends Specification {
     }
 }
 
-class PreconditionsCheckMatchesSpec extends Specification {
+class CheckMatchesSpec extends Specification {
 
     def "checkMatches should pattern match and return the reference"() {
         when:
@@ -140,7 +140,7 @@ class PreconditionsCheckMatchesSpec extends Specification {
     }
 }
 
-class PreconditionsCheckEmailSpec extends Specification {
+class CheckEmailSpec extends Specification {
 
     @Unroll("email: '#email'")
     def "checkEmail should check against RFC 822"() {
@@ -156,16 +156,6 @@ class PreconditionsCheckEmailSpec extends Specification {
         ]
     }
 
-    @FailsWith(NullPointerException)
-    @Unroll("email: '#email'")
-    def "checkEmail should throw if null"() {
-        expect:
-        checkEmail(email)
-
-        where:
-        email << [(String) null]
-    }
-
     @FailsWith(IllegalArgumentException)
     @Unroll("email: '#email'")
     def "checkEmail should throw if invalid"() {
@@ -174,6 +164,7 @@ class PreconditionsCheckEmailSpec extends Specification {
 
         where:
         email << [
+                (String) null,
                 "",
                 "@",
                 "invalid@server_name.com",
@@ -184,7 +175,7 @@ class PreconditionsCheckEmailSpec extends Specification {
 
 }
 
-class PreconditionsCheckHostnameSpec extends Specification {
+class CheckHostnameSpec extends Specification {
 
     @Unroll("hostname: '#hostname'")
     def "checkEmail should check against RFC 952, RFC 1123 and RFC 1034"() {
@@ -202,16 +193,6 @@ class PreconditionsCheckHostnameSpec extends Specification {
         ]
     }
 
-    @FailsWith(NullPointerException)
-    @Unroll("hostname: '#hostname'")
-    def "checkEmail null -> throws"() {
-        expect:
-        checkHostname(hostname)
-
-        where:
-        hostname << [(String) null]
-    }
-
     @FailsWith(IllegalArgumentException)
     @Unroll("hostname: '#hostname'")
     def "checkEmail '#hostname' -> throws"() {
@@ -220,6 +201,7 @@ class PreconditionsCheckHostnameSpec extends Specification {
 
         where:
         hostname << [
+                (String) null,
                 "",
                 "...",
                 "server_name.com",
@@ -229,19 +211,7 @@ class PreconditionsCheckHostnameSpec extends Specification {
     }
 }
 
-class PreconditionsCheckIsInstanceSpec extends Specification {
-
-    @FailsWith(NullPointerException)
-    @Unroll("checkIsInstance '#type.simpleName', '#reference' -> throws NPE")
-    def "checkIsInstance should throw if null"() {
-        expect:
-        checkIsInstance(type, reference)
-
-        where:
-        type          | reference
-        null as Class | null
-        Integer       | null
-    }
+class CheckIsInstanceSpec extends Specification {
 
     @FailsWith(IllegalArgumentException)
     @Unroll("checkIsInstance '#type.simpleName', '#reference' -> throws IAE")
@@ -250,10 +220,12 @@ class PreconditionsCheckIsInstanceSpec extends Specification {
         checkIsInstance(type, reference)
 
         where:
-        type    | reference
-        Long    | 1
-        Integer | 1L
-        String  | Object
+        type          | reference
+        null as Class | null
+        Integer       | null
+        Long          | 1
+        Integer       | 1L
+        String        | Object
     }
 
     def "checkIsInstance return the same reference"() {

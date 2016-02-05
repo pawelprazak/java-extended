@@ -11,8 +11,9 @@ import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.util.Properties;
 
-import static com.bluecatcode.common.base.Postconditions.assertNotNull;
-import static com.bluecatcode.common.base.Preconditions.checkNotEmpty;
+import static com.bluecatcode.common.base.Predicates.isNotNull;
+import static com.bluecatcode.common.contract.Checks.checkNotEmpty;
+import static com.bluecatcode.common.contract.Postconditions.ensure;
 import static com.google.common.base.Charsets.UTF_8;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -38,7 +39,8 @@ public final class Resources {
         checkArgument(!resourceName.isEmpty());
 
         URL url = loader.getResource(resourceName);
-        return toString(assertNotNull(url), UTF_8);
+        ensure(url, isNotNull(), "Expected non-null url for resourceName '%s'", resourceName);
+        return toString(url, UTF_8);
     }
 
     /**
@@ -137,7 +139,8 @@ public final class Resources {
             stream = getResourceAsStream(contextClass, resourceName);
             Properties properties = new Properties();
             properties.load(stream);
-            return assertNotNull(properties, "Can't find %s on classpath for %s", resourceName, contextClass);
+            ensure(properties, isNotNull(), "Can't find %s on classpath for %s", resourceName, contextClass);
+            return properties;
         } catch (IOException e) {
             throw new IllegalStateException(e);
         } finally {

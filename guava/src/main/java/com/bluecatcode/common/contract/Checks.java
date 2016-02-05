@@ -1,22 +1,27 @@
-package com.bluecatcode.common.base;
+package com.bluecatcode.common.contract;
 
 import com.google.common.annotations.Beta;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Predicate;
+import com.google.common.base.Supplier;
 
 import javax.annotation.Nullable;
 import java.util.regex.Pattern;
 
+import static com.bluecatcode.common.base.Exceptions.*;
 import static com.bluecatcode.common.base.Predicates.*;
 import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Predicates.not;
 import static com.google.common.base.Splitter.on;
 import static java.lang.String.format;
 import static java.util.regex.Pattern.compile;
 
 /**
- * Additional Preconditions as an extension to {@link com.google.common.base.Preconditions}
+ * Use these methods to throw recoverable exceptions if validation fails.
+ * Recoverable exceptions are exceptions that a correct program can and should catch and recover from.
+ * (Recoverable exceptions may be checked or unchecked.)
+ * <p>
+ * Checks is an extension to {@link com.google.common.base.Preconditions}
  * <p>
  * In performance critical contexts it is probably better to use hand-written checks, but <b>measure first!</b>.
  * </p>
@@ -29,15 +34,155 @@ import static java.util.regex.Pattern.compile;
  *
  * @see com.google.common.base.Preconditions
  */
-public final class Preconditions {
+public final class Checks {
 
     public static final Object[] EMPTY_ERROR_MESSAGE_ARGS = new Object[]{};
+
+    /**
+     * Performs check of the condition.
+     *
+     * @param condition condition to check
+     * @param <E>       the exception type
+     * @throws IllegalArgumentException if the {@code throwable} is null
+     * @throws IllegalArgumentException if the {@code throwableType} cannot be instantiated
+     * @throws E                        if the {@code reference} doesn't match provided predicate
+     */
+    @Beta
+    public static <E extends Throwable> void check(boolean condition, E throwable) throws E {
+        checkArgument(throwable != null, "Expected non-null reference");
+        if (!condition) {
+            throw throwable;
+        }
+    }
+
+    /**
+     * Performs check with the predicate.
+     *
+     * @param reference reference to check
+     * @param predicate the predicate to use
+     * @param throwable the throwable to throw
+     * @param <T>       the reference type
+     * @param <E>       the exception type
+     * @return the original reference
+     * @throws IllegalArgumentException if the {@code reference}, {@code predicate} or {@code throwableType} is null
+     * @throws IllegalArgumentException if the {@code throwableType} cannot be instantiated
+     * @throws E                        if the {@code reference} doesn't match provided predicate
+     */
+    @Beta
+    public static <T, E extends Throwable> T check(T reference, Predicate<T> predicate, E throwable) throws E {
+        checkArgument(reference != null, "Expected non-null reference");
+        checkArgument(predicate != null, "Expected non-null predicate");
+        check(predicate.apply(reference), throwable);
+        return reference;
+    }
+
+    /**
+     * Performs check with the predicate.
+     *
+     * @param reference reference to check
+     * @param predicate the predicate to use
+     * @param throwable the throwable to throw
+     * @param <T>       the reference type
+     * @param <E>       the exception type
+     * @return the original reference
+     * @throws IllegalArgumentException if the {@code reference}, {@code predicate} or {@code throwableType} is null
+     * @throws IllegalArgumentException if the {@code throwableType} cannot be instantiated
+     * @throws E                        if the {@code reference} doesn't match provided predicate
+     */
+    @Beta
+    public static <T, E extends Throwable> T check(T reference, Predicate<T> predicate, Supplier<E> throwable) throws E {
+        checkArgument(reference != null, "Expected non-null reference");
+        checkArgument(predicate != null, "Expected non-null predicate");
+        checkArgument(throwable != null, "Expected non-null throwable supplier");
+        check(reference, predicate, throwable.get());
+        return reference;
+    }
 
     /**
      * Performs check with the predicate.
      *
      * @param reference            reference to check
-     * @param predicate            the regular expression pattern
+     * @param predicate            the predicate to use
+     * @param throwableType        the throwable type to throw
+     * @param errorMessageTemplate a template for the exception message should the
+     *                             check fail. The message is formed by replacing each {@code %s}
+     *                             placeholder in the template with an argument. These are matched by
+     *                             position - the first {@code %s} gets {@code errorMessageArgs[0]}, etc.
+     *                             Unmatched arguments will be appended to the formatted message in square
+     *                             braces. Unmatched placeholders will be left as-is.
+     * @param errorMessageArgs     the arguments to be substituted into the message
+     *                             template. Arguments are converted to strings using
+     *                             {@link String#valueOf(Object)}.
+     * @param <T>                  the reference type
+     * @param <E>                  the exception type
+     * @return the original reference
+     * @throws IllegalArgumentException if the {@code reference}, {@code predicate} or {@code throwableType} is null
+     * @throws IllegalArgumentException if the {@code throwableType} cannot be instantiated
+     * @throws E                        if the {@code reference} doesn't match provided predicate
+     */
+    @Beta
+    public static <T, E extends Throwable> T check(T reference, Predicate<T> predicate,
+                                                   Class<E> throwableType,
+                                                   @Nullable String errorMessageTemplate,
+                                                   @Nullable Object... errorMessageArgs) throws E {
+        checkArgument(reference != null, "Expected non-null reference");
+        checkArgument(predicate != null, "Expected non-null predicate");
+        checkArgument(throwableType != null, "Expected non-null throwableType");
+        check(reference, predicate, (Supplier<E>) () -> throwable(
+                throwableType, parameters(String.class),
+                arguments(messageFromNullable(errorMessageTemplate, errorMessageArgs)))
+        );
+        return reference;
+    }
+
+    /**
+     * Performs check with the predicate.
+     *
+     * @param reference     reference to check
+     * @param predicate     the predicate to use
+     * @param throwableType the throwable type to throw
+     * @param errorMessage  the exception message to use if the check fails; will
+     *                      be converted to a string using {@link String#valueOf(Object)}
+     * @param <T>           the reference type
+     * @param <E>           the exception type
+     * @return the original reference
+     * @throws IllegalArgumentException if the {@code reference}, {@code predicate} or {@code throwableType} is null
+     * @throws IllegalArgumentException if the {@code throwableType} cannot be instantiated
+     * @throws E                        if the {@code reference} doesn't match provided predicate
+     */
+    @Beta
+    public static <T, E extends Throwable> T check(T reference, Predicate<T> predicate,
+                                                   Class<E> throwableType,
+                                                   @Nullable String errorMessage) throws E {
+        check(reference, predicate, throwableType, String.valueOf(errorMessage), EMPTY_ERROR_MESSAGE_ARGS);
+        return reference;
+    }
+
+    /**
+     * Performs check with the predicate.
+     *
+     * @param reference     reference to check
+     * @param predicate     the predicate to use
+     * @param throwableType the throwable type to throw
+     * @param <T>           the reference type
+     * @param <E>           the exception type
+     * @return the original reference
+     * @throws IllegalArgumentException if the {@code reference}, {@code predicate} or {@code throwableType} is null
+     * @throws IllegalArgumentException if the {@code throwableType} cannot be instantiated
+     * @throws E                        if the {@code reference} doesn't match provided predicate
+     */
+    @Beta
+    public static <T, E extends Throwable> T check(T reference, Predicate<T> predicate,
+                                                   Class<E> throwableType) throws E {
+        check(reference, predicate, throwableType, "Expected to fulfill the predicate, got %s", reference);
+        return reference;
+    }
+
+    /**
+     * Performs check with the predicate.
+     *
+     * @param reference            reference to check
+     * @param predicate            the predicate to use
      * @param errorMessageTemplate a template for the exception message should the
      *                             check fail. The message is formed by replacing each {@code %s}
      *                             placeholder in the template with an argument. These are matched by
@@ -49,23 +194,23 @@ public final class Preconditions {
      *                             {@link String#valueOf(Object)}.
      * @param <T>                  the reference type
      * @return the original reference
+     * @throws IllegalArgumentException if the {@code reference} or {@code predicate} is null
      * @throws IllegalArgumentException if the {@code reference} doesn't match provided predicate
-     * @throws NullPointerException     if the {@code reference} or {@code predicate} is null
-     * @see java.util.regex.Pattern
      */
     public static <T> T check(T reference, Predicate<T> predicate,
                               @Nullable String errorMessageTemplate,
                               @Nullable Object... errorMessageArgs) {
-        checkNotNull(predicate, errorMessageTemplate, errorMessageArgs);
-        checkNotNull(reference, errorMessageTemplate, errorMessageArgs);
-        checkArgument(predicate.apply(reference), errorMessageTemplate, errorMessageArgs);
+        checkArgument(reference != null, "Expected non-null reference");
+        checkArgument(predicate != null, "Expected non-null predicate");
+        checkArgument(predicate.apply(reference), messageFromNullable(errorMessageTemplate, errorMessageArgs));
         return reference;
     }
 
     /**
      * Performs check with the predicate.
      *
-     * @param reference    reference to check
+     * @param reference    the reference to check
+     * @param predicate    the predicate to use
      * @param errorMessage the exception message to use if the check fails; will
      *                     be converted to a string using {@link String#valueOf(Object)}
      * @param <T>          the reference type
@@ -75,7 +220,6 @@ public final class Preconditions {
      * @see #checkNotEmpty(Object, String, Object...)
      */
     public static <T> T check(T reference, Predicate<T> predicate, @Nullable Object errorMessage) {
-        checkNotNull(reference, "Expected not null object, got %s", reference);
         check(reference, predicate, String.valueOf(errorMessage), EMPTY_ERROR_MESSAGE_ARGS);
         return reference;
     }
@@ -83,7 +227,8 @@ public final class Preconditions {
     /**
      * Performs check with the predicate.
      *
-     * @param reference String reference to check
+     * @param reference the reference to check
+     * @param predicate the predicate to use
      * @param <T>       the reference type
      * @return the original reference
      * @throws IllegalArgumentException if the {@code reference} is empty
@@ -91,7 +236,6 @@ public final class Preconditions {
      * @see #checkNotEmpty(Object, String, Object...)
      */
     public static <T> T check(T reference, Predicate<T> predicate) {
-        checkNotNull(reference, "Expected not null object, got %s", reference);
         check(reference, predicate, "Expected to fulfill the predicate, got %s", reference);
         return reference;
     }
@@ -124,7 +268,7 @@ public final class Preconditions {
     public static <T> T checkNotEmpty(T reference,
                                       @Nullable String errorMessageTemplate,
                                       @Nullable Object... errorMessageArgs) {
-        checkNotNull(reference, errorMessageTemplate, errorMessageArgs);
+        checkArgument(reference != null, "Expected non-null reference");
         check(reference, not(isEmptyObject()), errorMessageTemplate, errorMessageArgs);
         return reference;
     }
@@ -142,7 +286,6 @@ public final class Preconditions {
      * @see #checkNotEmpty(Object, String, Object...)
      */
     public static <T> T checkNotEmpty(T reference, @Nullable Object errorMessage) {
-        checkNotNull(reference, "Expected not null object, got '%s'", reference);
         checkNotEmpty(reference, String.valueOf(errorMessage), EMPTY_ERROR_MESSAGE_ARGS);
         return reference;
     }
@@ -158,9 +301,7 @@ public final class Preconditions {
      * @see #checkNotEmpty(Object, String, Object...)
      */
     public static <T> T checkNotEmpty(T reference) {
-        checkNotNull(reference, "Expected not null object, got '%s'", reference);
-        checkNotEmpty(reference, "Expected not empty object, got '%s'", reference);
-        return reference;
+        return checkNotEmpty(reference, "Expected not empty object, got '%s'", reference);
     }
 
     /**
@@ -185,8 +326,8 @@ public final class Preconditions {
     public static void checkMatches(String reference, Pattern pattern,
                                     @Nullable String errorMessageTemplate,
                                     @Nullable Object... errorMessageArgs) {
-        checkNotNull(pattern, "Expected a non-null pattern");
-        checkNotNull(reference, "Expected a non-null reference");
+        checkArgument(reference != null, "Expected non-null reference");
+        checkArgument(pattern != null, "Expected non-null pattern");
         checkArgument(pattern.matcher(reference).matches(), errorMessageTemplate, errorMessageArgs);
     }
 
@@ -198,7 +339,7 @@ public final class Preconditions {
      * @param errorMessage the exception message to use if the check fails; will
      *                     be converted to a string using {@link String#valueOf(Object)}
      * @throws IllegalArgumentException if the {@code reference} doesn't match provided regular expression
-     * @see Preconditions#checkMatches(String, java.util.regex.Pattern, String, Object...)
+     * @see Checks#checkMatches(String, java.util.regex.Pattern, String, Object...)
      */
     @Beta
     public static void checkMatches(String reference, Pattern pattern,
@@ -212,7 +353,7 @@ public final class Preconditions {
      * @param reference reference to check
      * @param pattern   the regular expression pattern
      * @throws IllegalArgumentException if the {@code reference} doesn't match provided regular expression
-     * @see Preconditions#checkMatches(String, java.util.regex.Pattern, String, Object...)
+     * @see Checks#checkMatches(String, java.util.regex.Pattern, String, Object...)
      */
     @Beta
     public static void checkMatches(String reference, Pattern pattern) {
@@ -238,8 +379,8 @@ public final class Preconditions {
     public static <T> T checkIsInstance(Class<T> class_, Object reference,
                                         @Nullable String errorMessageTemplate,
                                         @Nullable Object... errorMessageArgs) {
-        checkNotNull(class_, "Expected a non-null class_");
-        checkNotNull(reference, "Expected a non-null reference");
+        checkArgument(class_ != null, "Expected non-null class_");
+        checkArgument(reference != null, "Expected non-null reference");
         checkArgument(class_.isInstance(reference), errorMessageTemplate, errorMessageArgs);
         //noinspection unchecked
         return (T) reference;
@@ -253,7 +394,7 @@ public final class Preconditions {
      * @param errorMessage the exception message to use if the check fails; will
      *                     be converted to a string using {@link String#valueOf(Object)}
      * @param <T>          the reference type
-     * @see Preconditions#checkIsInstance(Class, Object, String, Object...)
+     * @see Checks#checkIsInstance(Class, Object, String, Object...)
      */
     @Beta
     public static <T> T checkIsInstance(Class<T> class_, Object reference,
@@ -267,10 +408,11 @@ public final class Preconditions {
      * @param class_    the class to use
      * @param reference reference to check
      * @param <T>       the reference type
-     * @see Preconditions#checkIsInstance(Class, Object, String, Object...)
+     * @see Checks#checkIsInstance(Class, Object, String, Object...)
      */
     @Beta
     public static <T> T checkIsInstance(Class<T> class_, Object reference) {
+        checkArgument(class_ != null, "Expected non-null class_");
         return checkIsInstance(class_, reference, "Expected reference to be instance of %s, got %s",
                 class_.getName(), reference == null ? "null" : reference.getClass().getName());
     }
@@ -298,7 +440,7 @@ public final class Preconditions {
      * @return the checked uri
      * @throws IllegalArgumentException if the {@code uri} is invalid
      * @throws NullPointerException     if the {@code uri} is null
-     * @see Preconditions#checkUri(String, String, Object...)
+     * @see Checks#checkUri(String, String, Object...)
      */
     public static String checkUri(String uri, @Nullable Object errorMessage) {
         return check(uri, isValidURI(), String.valueOf(errorMessage), EMPTY_ERROR_MESSAGE_ARGS);
@@ -311,7 +453,7 @@ public final class Preconditions {
      * @return the checked uri
      * @throws IllegalArgumentException if the {@code uri} is invalid
      * @throws NullPointerException     if the {@code uri} is null
-     * @see Preconditions#checkUri(String, String, Object...)
+     * @see Checks#checkUri(String, String, Object...)
      */
     public static String checkUri(String uri) {
         return check(uri, isValidURI(), "Expected a valid URI, got %s", uri);
@@ -319,7 +461,7 @@ public final class Preconditions {
 
     /**
      * Performs email address check against RFC 822 specification
-     *
+     * <p>
      * TODO:  RFC3696, RFC 5322 and RFC 5321
      *
      * @param email an Email to check
@@ -336,9 +478,9 @@ public final class Preconditions {
         String localPart = split[0];
         String domainPart = split[1];
         checkArgument(localPart.length() > 0 && localPart.length() < 64,
-                    "Expected a email local part in range 1 to 63 characters, got %s", localPart.length());
+                "Expected a email local part in range 1 to 63 characters, got %s", localPart.length());
         checkArgument(domainPart.length() > 0 && domainPart.length() < 256,
-                    "Expected a email domain part in range 1 to 255 characters, got %s", domainPart.length());
+                "Expected a email domain part in range 1 to 255 characters, got %s", domainPart.length());
         return check(email, isValidEmail(), email);
     }
 
@@ -374,7 +516,7 @@ public final class Preconditions {
     }
 
     /**
-     * @see Preconditions#checkHostname(String, String, Object...)
+     * @see Checks#checkHostname(String, String, Object...)
      */
     @Beta
     public static String checkHostname(String hostname) {
@@ -382,7 +524,7 @@ public final class Preconditions {
     }
 
     /**
-     * @see Preconditions#checkHostname(String, String, Object...)
+     * @see Checks#checkHostname(String, String, Object...)
      */
     @Beta
     public static String checkHostname(String hostname, @Nullable String errorMessageTemplate) {
@@ -403,7 +545,7 @@ public final class Preconditions {
         return (errorMessageTemplate == null || errorMessageTemplate.isEmpty()) ? "%s" : errorMessageTemplate;
     }
 
-    private Preconditions() {
+    private Checks() {
         throw new UnsupportedOperationException("Private constructor");
     }
 }
