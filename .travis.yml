@@ -45,7 +45,7 @@ script:
   - if [ "${COVERITY_SCAN_BRANCH}" != 1 ]; then ./build.sh; fi
 
 after_success:
-  - test "${COVERITY_SCAN_BRANCH}" != 1 && codecov
+  - codecov
   - test "${COVERITY_SCAN_BRANCH}" == 1 && mvn coverity-ondemand:check
 
 matrix:
@@ -59,7 +59,7 @@ addons:
 
     notification_email: "pawel@bluecatcode.com"
 
-    build_command: "mvn test -Pbuild-test -B"
+    build_command: "mvn test -Pbuild-test,enable-coverage-tests -B"
 
     # must match TRAVIS_BRANCH check below
     # Take care in resource usage, and consider the build frequency allowances per

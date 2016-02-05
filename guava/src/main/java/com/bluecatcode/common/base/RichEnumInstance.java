@@ -2,6 +2,7 @@ package com.bluecatcode.common.base;
 
 import javax.annotation.Nullable;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 /**
@@ -15,6 +16,7 @@ public class RichEnumInstance<T extends Enum & RichEnum> {
     private final T theEnum;
 
     public RichEnumInstance(T theEnum) {
+        checkArgument(theEnum != null, "Expected non-null theEnum");
         this.theEnum = theEnum;
     }
 

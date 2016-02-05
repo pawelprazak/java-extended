@@ -10,7 +10,7 @@ set -e -u
 echo "Building branch: '${TRAVIS_BRANCH}', tag: '${TRAVIS_TAG}'"
 
 if [[ "${TRAVIS_BRANCH}" =~ ^release.* ]]; then
-    MVN_CMD="mvn -B install jacoco:report -Pbuild-release,enable-unit-tests,enable-integration-tests deploy --settings travis-settings.xml -am"
+    MVN_CMD="mvn -B install jacoco:report -Pbuild-release,enable-unit-tests,enable-integration-tests,enable-coverage-tests deploy --settings travis-settings.xml -am"
 
     ${MVN_CMD} -pl junit -Djunit.version=4.12
     ${MVN_CMD} -pl junit -Djunit.version=4.11
@@ -31,7 +31,7 @@ if [[ "${TRAVIS_BRANCH}" =~ ^release.* ]]; then
     ${MVN_CMD} -pl guava -Dguava.version=15.0
 
 else
-    mvn test jacoco:report -Pbuild-test -B
+    mvn test jacoco:report -Pbuild-test,enable-coverage-tests -B
 fi
 
 trap : 0

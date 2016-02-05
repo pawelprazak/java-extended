@@ -95,4 +95,29 @@ public class RichEnumTest {
         // then
         assertThat(constants, is(notNullValue()));
     }
+
+    @Test
+    public void shouldThrowOnNullArgument() throws Exception {
+        // given
+        TestEnum testEnum = null;
+
+        // expect
+        exception.expect(IllegalArgumentException.class);
+
+        // when
+        //noinspection ConstantConditions
+        richEnum(testEnum);
+    }
+
+    @Test
+    public void shouldCreateRichEnum() throws Exception {
+        // given
+        TestEnum testEnum = TestEnum.TEST_ENUM;
+
+        // when
+        RichEnumInstance<TestEnum> richEnum = richEnum(testEnum);
+
+        // then
+        assertThat(richEnum, instanceOf(RichEnumInstance.class));
+    }
 }
