@@ -6,7 +6,7 @@ import spock.lang.Unroll
 
 import static com.bluecatcode.common.base.Exceptions.*
 
-class ExceptionsTest extends Specification {
+class ExceptionsSpec extends Specification {
 
     @Unroll("#type.simpleName '#message' '#cause'")
     def "should create throwable"() {
@@ -37,7 +37,7 @@ class ExceptionsTest extends Specification {
     @Unroll("#type.simpleName '#parameters' '#args' -> throws IAE")
     def "should throw on illegal arguments"() {
         expect:
-        exception(type, parameters, args)
+        exception(type, parameters as CheckedFunction, args as CheckedFunction)
 
         where:
         type              | parameters                          | args

@@ -4,7 +4,7 @@ import spock.lang.FailsWith
 import spock.lang.Specification
 
 
-class ExceptionSupplierTest extends Specification {
+class ExceptionSupplierSpec extends Specification {
 
     @FailsWith(IllegalArgumentException)
     def "should throw an exception"() {

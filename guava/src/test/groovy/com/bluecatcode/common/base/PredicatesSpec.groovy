@@ -32,9 +32,20 @@ class PredicatesSpec extends Specification {
 
         where:
         result | method
+        false  | Predicates.isNotNull().&apply
         false  | Predicates.isValidURI().&apply
         false  | Predicates.isValidEmail().&apply
         false  | Predicates.isInstance(Long as Class[]).&apply
+    }
+
+    @Unroll("#method (#argument) -> true")
+    def "should return true on valid argument"() {
+        expect:
+        result == method(argument)
+
+        where:
+        result | argument | method
+        true   | "value"  | Predicates.isNotNull().&apply
     }
 
     @Unroll("expected: #expected when '#argument' (#argType) and '#types'")
