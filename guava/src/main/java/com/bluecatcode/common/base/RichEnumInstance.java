@@ -11,7 +11,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * @see com.bluecatcode.common.base.RichEnumConstants
  * @param <T> the enum type
  */
-public class RichEnumInstance<T extends Enum & RichEnum> {
+public class RichEnumInstance<T extends Enum<T> & RichEnum<T>> {
 
     private final T theEnum;
 
@@ -20,7 +20,7 @@ public class RichEnumInstance<T extends Enum & RichEnum> {
         this.theEnum = theEnum;
     }
 
-    public static <T extends Enum & RichEnum> RichEnumInstance<T> richEnum(T theEnum) {
+    public static <T extends Enum<T> & RichEnum<T>> RichEnumInstance<T> richEnum(T theEnum) {
         return new RichEnumInstance<>(theEnum);
     }
 

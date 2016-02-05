@@ -18,7 +18,7 @@ import static java.lang.String.format;
  * @see com.bluecatcode.common.base.RichEnumInstance
  * @param <T> the enum type
  */
-public class RichEnumConstants<T extends Enum & RichEnum> {
+public class RichEnumConstants<T extends Enum<T> & RichEnum<T>> {
 
     private final ImmutableList<T> values;
 
@@ -36,7 +36,7 @@ public class RichEnumConstants<T extends Enum & RichEnum> {
      * @param <T> the enum type
      * @return the rich enum companion class instance
      */
-    public static <T extends Enum & RichEnum> RichEnumConstants<T> richConstants(Class<T> theClass) {
+    public static <T extends Enum<T> & RichEnum<T>> RichEnumConstants<T> richConstants(Class<T> theClass) {
         return new RichEnumConstants<>(theClass);
     }
 
