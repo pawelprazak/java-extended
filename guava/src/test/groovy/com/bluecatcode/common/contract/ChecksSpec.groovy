@@ -1,5 +1,6 @@
 package com.bluecatcode.common.contract
 
+import com.bluecatcode.common.io.Resources
 import com.google.common.base.Optional
 import com.google.common.base.Predicate
 import com.google.common.base.Supplier
@@ -15,10 +16,14 @@ import static com.google.common.collect.Maps.newHashMap
 
 class CheckSpec extends Specification {
 
+    static final def exception = new IllegalArgumentException()
+    static final Predicate truePredicate = { true } as Predicate
+    static final Predicate falsePredicate = { false } as Predicate
+
     @Unroll("reference: '#reference'")
     def "check should check for the predicate and return reference"() {
         expect:
-        reference.is(check(reference, { true } as Predicate))
+        reference.is(check(reference, truePredicate))
 
         where:
         reference << [1, 1L, "1", [], [:]]
@@ -28,50 +33,55 @@ class CheckSpec extends Specification {
     def "check should check for the predicate and return reference or throw custom exception"() {
         expect:
         check(true, new IllegalArgumentException())
-        reference.is(check(reference, { true } as Predicate))
-        reference.is(check(reference, { true } as Predicate, IllegalArgumentException))
-        reference.is(check(reference, { true } as Predicate, IllegalArgumentException, "test"))
-        reference.is(check(reference, { true } as Predicate, IllegalArgumentException, "%s", "test"))
-        reference.is(check(reference, { true } as Predicate, new IllegalArgumentException()))
-        reference.is(check(reference, { true } as Predicate, { new IllegalArgumentException() } as Supplier))
+        reference.is(check(reference, truePredicate))
+        reference.is(check(reference, truePredicate, IllegalArgumentException))
+        reference.is(check(reference, truePredicate, IllegalArgumentException, "test"))
+        reference.is(check(reference, truePredicate, IllegalArgumentException, "%s", "test"))
+        reference.is(check(reference, truePredicate, exception))
+        reference.is(check(reference, truePredicate, { exception } as Supplier))
 
         where:
         reference << [1]
     }
 
+
     @FailsWith(IllegalArgumentException)
-    @Unroll
-    def "check should check for the predicate and throw"() {
+    @Unroll("#method #args")
+    def "check should throw on illegal arguments"() {
         expect:
-        call()
+        method != null
+        method.checkParameters(types as Class[])
+        method.invoke(Resources, args as Object[])
 
         where:
-        call << [
-                { -> check(true, (Throwable) null) },
-                { -> check(false, new IllegalArgumentException()) },
+        methodName | args                                                        | types
+        "check"    | [true, null]                                                | [boolean, Throwable]
+        "check"    | [false, exception]                                          | [boolean, Throwable]
 
-                { -> check(null, (Predicate) null) },
-                { -> check(1, (Predicate) null) },
-                { -> check(1, { false } as Predicate) },
+        "check"    | [null, null]                                                | [Object, Predicate]
+        "check"    | [1, null]                                                   | [Object, Predicate]
+        "check"    | [1, falsePredicate]                                         | [Object, Predicate]
+        "check"    | [1, falsePredicate, "test"]                                 | [Object, Predicate, Object]
+        "check"    | [1, falsePredicate, "%s", "test"]                           | [Object, Predicate, String, Object[]]
 
-                { -> check(null, { true } as Predicate, IllegalArgumentException) },
-                { -> check(1, (Predicate) null, IllegalArgumentException) },
-                { -> check(1, { true } as Predicate, (Class) null) },
-                { -> check(1, { false } as Predicate, IllegalArgumentException) },
-                { -> check(1, { false } as Predicate, IllegalArgumentException, "test") },
-                { -> check(1, { false } as Predicate, IllegalArgumentException, "%s", "test") },
+        "check"    | [null, null, null]                                          | [Object, Predicate, Class]
+        "check"    | [1, null, null]                                             | [Object, Predicate, Class]
+        "check"    | [1, truePredicate, null]                                    | [Object, Predicate, Class]
+        "check"    | [1, falsePredicate, IllegalArgumentException]               | [Object, Predicate, Class]
+        "check"    | [1, falsePredicate, IllegalArgumentException, "test"]       | [Object, Predicate, Class, String]
+        "check"    | [1, falsePredicate, IllegalArgumentException, "%s", "test"] | [Object, Predicate, Class, String, Object[]]
 
-                { -> check(null, { true } as Predicate, new IllegalArgumentException()) },
-                { -> check(1, (Predicate) null, new IllegalArgumentException()) },
-                { -> check(1, { true } as Predicate, (Throwable) null) },
-                { -> check(1, { false } as Predicate, new IllegalArgumentException()) },
+        "check"    | [null, null, null]                                          | [Object, Predicate, Throwable]
+        "check"    | [1, null, null]                                             | [Object, Predicate, Throwable]
+        "check"    | [1, truePredicate, null]                                    | [Object, Predicate, Throwable]
+        "check"    | [1, falsePredicate, exception]                              | [Object, Predicate, Throwable]
 
-                { -> check(null, { true } as Predicate, { new IllegalArgumentException() } as Supplier) },
-                { -> check(1, (Predicate) null, { new IllegalArgumentException() } as Supplier) },
-                { -> check(1, { true } as Predicate, (Supplier) null) },
-                { -> check(1, { true } as Predicate, { null } as Supplier) },
-                { -> check(1, { false } as Predicate, { new IllegalArgumentException() } as Supplier) },
-        ]
+        "check"    | [null, null, null]                                          | [Object, Predicate, Supplier]
+        "check"    | [1, null, null]                                             | [Object, Predicate, Supplier]
+        "check"    | [1, truePredicate, null]                                    | [Object, Predicate, Supplier]
+        "check"    | [1, falsePredicate, { exception } as Supplier]              | [Object, Predicate, Supplier]
+
+        method = Checks.metaClass.pickMethod(methodName, types as Class[])
     }
 
     @Unroll("'#template', '#args' -> '#result")
@@ -103,16 +113,15 @@ class CheckNotEmptySpec extends Specification {
         reference.is(checkNotEmpty(reference, "%s", "test"))
 
         where:
-        reference << [
-                " ",
-                "some text",
-                Optional.of(1),
-                [""],
-                ["": ""],
-                newArrayList(1, 2, 3),
-                ImmutableMap.of("1", "1"),
-                FluentIterable.from([""])
-        ]
+        reference                 | _
+        " "                       | _
+        "some text"               | _
+        Optional.of(1)            | _
+        [""]                      | _
+        ["": ""]                  | _
+        newArrayList(1, 2, 3)     | _
+        ImmutableMap.of("1", "1") | _
+        FluentIterable.from([""]) | _
     }
 
     @FailsWith(IllegalArgumentException)
@@ -180,12 +189,11 @@ class CheckEmailSpec extends Specification {
         checkEmail(email)
 
         where:
-        email << [
-                "test@test.pl",
-                "!test-name#@server-name.com",
-                "a" * 63 + "@test.com",
-                "test@" + "a" * (254 - 5 - 4) + ".com",
-        ]
+        email                                  | _
+        "test@test.pl"                         | _
+        "!test-name#@server-name.com"          | _
+        "a" * 63 + "@test.com"                 | _
+        "test@" + "a" * (254 - 5 - 4) + ".com" | _
     }
 
     @FailsWith(IllegalArgumentException)
@@ -195,16 +203,15 @@ class CheckEmailSpec extends Specification {
         checkEmail(email)
 
         where:
-        email << [
-                (String) null,
-                "",
-                "@",
-                "test@",
-                "@test",
-                "invalid@server_name.com",
-                "a" * 64 + "@test.com",
-                "test@" + "a" * 250 + ".com",
-        ]
+        email                        | _
+        null                         | _
+        ""                           | _
+        "@"                          | _
+        "test@"                      | _
+        "@test"                      | _
+        "invalid@server_name.com"    | _
+        "a" * 64 + "@test.com"       | _
+        "test@" + "a" * 250 + ".com" | _
     }
 
 }
@@ -219,13 +226,12 @@ class CheckHostnameSpec extends Specification {
         checkHostname(hostname, "%s", "test")
 
         where:
-        hostname << [
-                "test.pl",
-                "server-name.com",
-                "server-name.com",
-                ("a" * 63 + ".") * 3 + "a" * 59 + ".com",
-                "a" * 63 + "." + "a" * 63 + ".com"
-        ]
+        hostname                                 | _
+        "test.pl"                                | _
+        "server-name.com"                        | _
+        "server-name.com"                        | _
+        ("a" * 63 + ".") * 3 + "a" * 59 + ".com" | _
+        "a" * 63 + "." + "a" * 63 + ".com"       | _
     }
 
     @FailsWith(IllegalArgumentException)
@@ -235,15 +241,14 @@ class CheckHostnameSpec extends Specification {
         checkHostname(hostname)
 
         where:
-        hostname << [
-                (String) null,
-                "",
-                "...",
-                ".com",
-                "server_name.com",
-                ("a" * 63 + ".") * 3 + "a" * 60 + ".com",
-                "a" * 64 + ".test.com",
-        ]
+        hostname                                 | _
+        null                                     | _
+        ""                                       | _
+        "..."                                    | _
+        ".com"                                   | _
+        "server_name.com"                        | _
+        ("a" * 63 + ".") * 3 + "a" * 60 + ".com" | _
+        "a" * 64 + ".test.com"                   | _
     }
 }
 
@@ -281,7 +286,7 @@ class CheckIsInstanceSpec extends Specification {
 class CheckUriSpec extends Specification {
 
     @FailsWith(IllegalArgumentException)
-    @Unroll("checkUri'#reference' -> throws IAE")
+    @Unroll("checkUri '#reference' -> throws IAE")
     def "should throw if illegal argument"() {
         expect:
         checkUri(reference)
@@ -289,11 +294,10 @@ class CheckUriSpec extends Specification {
         checkUri(reference, "%s", "test")
 
         where:
-        reference << [
-                (String) null,
-                "",
-                "a" * 2000
-        ]
+        reference      | _
+        null as String | _
+        ""             | _
+        "a" * 2000     | _
     }
 
     def "checkUri return the same reference"() {
@@ -303,8 +307,7 @@ class CheckUriSpec extends Specification {
         reference.is(checkUri(reference, "%s", "test"))
 
         where:
-        reference << [
-                "file:/tmp/example"
-        ]
+        reference           | _
+        "file:/tmp/example" | _
     }
 }

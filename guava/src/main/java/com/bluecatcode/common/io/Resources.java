@@ -27,16 +27,15 @@ import static com.google.common.io.Resources.readLines;
 public final class Resources {
 
     /**
-     * @see com.google.common.io.Resources#getResource(Class, String)
-     * @see com.google.common.io.Resources#toString(java.net.URL, java.nio.charset.Charset)
-     *
-     * @param loader the class loader to use
+     * @param loader       the class loader to use
      * @param resourceName the resource name
      * @return the loaded content
+     * @see com.google.common.io.Resources#getResource(Class, String)
+     * @see com.google.common.io.Resources#toString(java.net.URL, java.nio.charset.Charset)
      */
     public static String getResourceAsString(ClassLoader loader, String resourceName) {
-        checkNotNull(resourceName);
-        checkArgument(!resourceName.isEmpty());
+        checkArgument(loader != null, "Expected non-null class loader");
+        checkNotEmpty(resourceName);
 
         URL url = loader.getResource(resourceName);
         ensure(url, isNotNull(), "Expected non-null url for resourceName '%s'", resourceName);
@@ -44,16 +43,16 @@ public final class Resources {
     }
 
     /**
-     * @see com.google.common.io.Resources#getResource(Class, String)
-     * @see com.google.common.io.Resources#toString(java.net.URL, java.nio.charset.Charset)
-     * @throws IllegalArgumentException if the resource is not found
-     * @throws IllegalStateException if an I/O error occurs
      * @param contextClass the class the resource is relative to
      * @param resourceName the resource name
      * @return the loaded content
+     * @throws IllegalArgumentException if the resource is not found
+     * @throws IllegalStateException    if an I/O error occurs
+     * @see com.google.common.io.Resources#getResource(Class, String)
+     * @see com.google.common.io.Resources#toString(java.net.URL, java.nio.charset.Charset)
      */
     public static String getResourceAsString(Class<?> contextClass, String resourceName) {
-        checkNotNull(contextClass);
+        checkArgument(contextClass != null, "Expected non-null contextClass");
         checkNotEmpty(resourceName);
 
         URL url = getResource(contextClass, resourceName);
@@ -61,19 +60,19 @@ public final class Resources {
     }
 
     /**
+     * @param contextClass  the class the resource is relative to
+     * @param resourceName  the resource name
+     * @param lineProcessor the line processor to use
+     * @param <T>           the type of object to load into
+     * @return the loaded object of type <tt>T</tt>
      * @see com.google.common.io.LineProcessor
      * @see com.google.common.io.Resources#getResource(String)
      * @see com.google.common.io.Resources#readLines(java.net.URL, java.nio.charset.Charset, LineProcessor)
-     *
-     * @param contextClass the class the resource is relative to
-     * @param resourceName the resource name
-     * @param lineProcessor the line processor to use
-     * @param <T> the type of object to load into
-     * @return the loaded object of type <tt>T</tt>
      */
     public static <T> T getResourceWith(Class<?> contextClass, String resourceName, LineProcessor<T> lineProcessor) {
+        checkArgument(contextClass != null, "Expected non-null contextClass");
         checkNotEmpty(resourceName);
-        checkNotNull(lineProcessor);
+        checkArgument(lineProcessor != null, "Expected non-null lineProcessor");
 
         URL url = getResource(contextClass, resourceName);
         try {
@@ -84,11 +83,11 @@ public final class Resources {
     }
 
     /**
-     * @see com.google.common.io.Resources#toString(java.net.URL, java.nio.charset.Charset)
-     * @param url the URL to read from
+     * @param url     the URL to read from
      * @param charset the charset to use
      * @return the content
      * @throws IllegalStateException if an I/O error occurs
+     * @see com.google.common.io.Resources#toString(java.net.URL, java.nio.charset.Charset)
      */
     public static String toString(URL url, Charset charset) {
         try {
@@ -99,11 +98,11 @@ public final class Resources {
     }
 
     /**
-     * @see com.google.common.io.Resources#getResource(String)
-     * @see java.net.URLDecoder#decode(String, String)
-     * @param loader the class loader to use
+     * @param loader       the class loader to use
      * @param resourceName the resource name
      * @return the file path
+     * @see com.google.common.io.Resources#getResource(String)
+     * @see java.net.URLDecoder#decode(String, String)
      */
     public static String getResourceAsFilePath(ClassLoader loader, String resourceName) {
         try {
@@ -114,11 +113,11 @@ public final class Resources {
     }
 
     /**
-     * @see com.google.common.io.Resources#getResource(String)
-     * @see java.net.URLDecoder#decode(String, String)
      * @param contextClass the class the resource is relative to
      * @param resourceName the resource name
      * @return the file path
+     * @see com.google.common.io.Resources#getResource(String)
+     * @see java.net.URLDecoder#decode(String, String)
      */
     public static String getResourceAsFilePath(Class<?> contextClass, String resourceName) {
         try {
@@ -160,8 +159,8 @@ public final class Resources {
      * @return the input stream
      */
     public static InputStream getResourceAsStream(Class<?> contextClass, String resourceName) {
-        checkNotNull(resourceName);
-        checkArgument(!resourceName.isEmpty());
+        checkArgument(contextClass != null, "Expected non-null contextClass");
+        checkNotEmpty(resourceName);
 
         URL url = getResource(contextClass, resourceName);
         try {
@@ -172,17 +171,17 @@ public final class Resources {
     }
 
     /**
-     * @see com.google.common.io.Resources#getResource(Class, String)
      * @param contextClass the class the resource is relative to
      * @param resourceName the resource name
      * @return the URL
+     * @see com.google.common.io.Resources#getResource(Class, String)
      */
     public static URL getResource(Class<?> contextClass, String resourceName) {
         return com.google.common.io.Resources.getResource(contextClass, resourceName);
     }
 
     /**
-     * @param loader the class loader to use
+     * @param loader       the class loader to use
      * @param resourceName the resource name
      * @return the input stream
      */
@@ -194,6 +193,7 @@ public final class Resources {
 
     /**
      * Returns current thread context class loader or {@link Resources} class loader
+     *
      * @return the context class loader
      */
     public static ClassLoader getContextClassLoader() {
@@ -202,6 +202,7 @@ public final class Resources {
 
     /**
      * Returns current thread context class loader or context class's class loader
+     *
      * @param contextClass context class to use
      * @return the context class loader
      */
