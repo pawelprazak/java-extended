@@ -1,6 +1,7 @@
 package com.bluecatcode.common.base;
 
 import com.google.common.base.Function;
+import com.google.common.base.Objects;
 
 import javax.annotation.Nullable;
 
@@ -72,12 +73,11 @@ final class Left<L, R> extends Either<L, R> {
     }
 
     @Override
-    public boolean equals(@Nullable Object object) {
-        if (object instanceof Left) {
-            Left<?, ?> other = (Left<?, ?>) object;
-            return left.equals(other.left);
-        }
-        return false;
+    public boolean equals(@Nullable Object other) {
+        if (this == other) return true;
+        if (other == null || getClass() != other.getClass()) return false;
+        Left<?, ?> left1 = (Left<?, ?>) other;
+        return Objects.equal(left, left1.left);
     }
 
     @Override
