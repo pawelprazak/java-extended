@@ -235,7 +235,9 @@ public final class Predicates {
     public static Predicate<String> isValidEmail() {
         return email -> {
             //noinspection ConstantConditions
-            if (email == null) return false;
+            if (email == null) {
+                return false;
+            }
             try {
                 new InternetAddress(email).validate();
             } catch (AddressException ex) {
