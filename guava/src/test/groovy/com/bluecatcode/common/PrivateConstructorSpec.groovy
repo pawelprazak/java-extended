@@ -13,6 +13,7 @@ import com.bluecatcode.common.contract.Impossibles
 import com.bluecatcode.common.contract.Postconditions
 import com.bluecatcode.common.contract.Preconditions
 import com.bluecatcode.common.hash.Hash
+import com.bluecatcode.common.io.Closeables
 import com.bluecatcode.common.io.Files
 import com.bluecatcode.common.io.Resources
 import spock.lang.FailsWith
@@ -28,23 +29,22 @@ class PrivateConstructorSpec extends Specification {
         type.newInstance()
 
         where:
-        type << [
-                Collections3,
-                Environment,
-                Exceptions,
-                Files,
-                Futures,
-                Hash,
-                Preconditions,
-                Postconditions,
-                Impossibles,
-                Checks,
-                Predicates,
-                Resources,
-                Sleep,
-                Strings,
-                Try
-        ]
+        type           | _
+        Closeables     | _
+        Collections3   | _
+        Environment    | _
+        Exceptions     | _
+        Files          | _
+        Futures        | _
+        Hash           | _
+        Preconditions  | _
+        Postconditions | _
+        Impossibles    | _
+        Checks         | _
+        Predicates     | _
+        Resources      | _
+        Sleep          | _
+        Strings        | _
+        Try            | _
     }
-
 }

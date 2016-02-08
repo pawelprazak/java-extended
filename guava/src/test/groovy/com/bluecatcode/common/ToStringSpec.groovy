@@ -1,6 +1,8 @@
 package com.bluecatcode.common
 
 import com.bluecatcode.common.base.Either
+import com.bluecatcode.common.io.Closeables
+import com.bluecatcode.common.io.Closer
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -16,10 +18,10 @@ class ToStringSpec extends Specification {
         !result.startsWith("java.lang.Object@")
 
         where:
-        object << [
-                Either.valueOf(1),
-                Either.errorOf(1),
-        ]
+        object                                             | _
+        Either.valueOf(1)                                  | _
+        Either.errorOf(1)                                  | _
+        Closeables.closeableFrom("test", { -> } as Closer) | _
     }
 
 }

@@ -28,7 +28,18 @@ public class Impossibles {
      * Unreachable code have been reached.
      * This is considered to be a programming error.
      *
-     * @param message   the fail message template
+     * @param cause the throwable cause
+     * @throws ImpossibleViolation unconditionally
+     */
+    public static void impossible(Throwable cause) {
+        throw new ImpossibleViolation("The impossible just happened", cause);
+    }
+
+    /**
+     * Unreachable code have been reached.
+     * This is considered to be a programming error.
+     *
+     * @param message the fail message template
      * @throws ImpossibleViolation unconditionally
      */
     public static void impossible(String message) {
@@ -39,8 +50,8 @@ public class Impossibles {
      * Unreachable code have been reached.
      * This is considered to be a programming error.
      *
-     * @param message   the fail message template
-     * @param args      the message template arguments
+     * @param message the fail message template
+     * @param args    the message template arguments
      * @throws ImpossibleViolation unconditionally
      */
     public static void impossible(String message, Object... args) {

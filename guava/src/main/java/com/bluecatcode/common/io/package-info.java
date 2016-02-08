@@ -8,8 +8,10 @@
  * <h2>Contents</h2>
  *
  * <ul>
- * <li>{@link com.bluecatcode.common.io.Closeables}
+ * <li>{@link com.bluecatcode.common.io.Files}
  * <li>{@link com.bluecatcode.common.io.Resources}
+ * <li>{@link com.bluecatcode.common.io.Closeables}
+ * <li>{@link com.bluecatcode.common.io.BoundedByteArrayOutputStream}
  * </ul>
  *
  * @see com.google.common.io
