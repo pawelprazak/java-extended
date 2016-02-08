@@ -24,6 +24,10 @@ public class Files {
 
     private static final Logger log = Logger.getLogger(Files.class.getName());
 
+    private Files() {
+        throw new UnsupportedOperationException();
+    }
+
     /**
      * Loads properties from file path
      * @param path the path to properties file
@@ -126,9 +130,4 @@ public class Files {
     public static void append(CharSequence from, File to, Charset charset) throws IOException {
         com.google.common.io.Files.append(from, to, charset);
     }
-
-    private Files() {
-        throw new UnsupportedOperationException();
-    }
-
 }
