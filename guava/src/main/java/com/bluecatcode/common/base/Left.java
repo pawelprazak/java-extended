@@ -7,6 +7,7 @@ import javax.annotation.Nullable;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
+import static java.lang.String.format;
 
 /**
  * Implementation of an {@link Either} containing a left reference.
@@ -87,6 +88,6 @@ final class Left<L, R> extends Either<L, R> {
 
     @Override
     public String toString() {
-        return "Either.of(" + left + ")";
+        return format("Left.of(%s)", left);
     }
 }
