@@ -35,6 +35,11 @@
             <artifactId>junit</artifactId>
         </dependency>
 
+        <!-- Virtual File System -->
+        <dependency>
+            <groupId>com.google.jimfs</groupId>
+            <artifactId>jimfs</artifactId>
+        </dependency>
     </dependencies>
     
     <build>
@@ -48,7 +53,16 @@
                             <exclude>junit:junit</exclude>
                             <exclude>org.hamcrest:*</exclude>
                         </excludes>
+                        <includes>
+                            <include>com.google.jimfs:jimfs</include>
+                        </includes>
                     </artifactSet>
+                    <relocations>
+                        <relocation>
+                            <pattern>com.google.common.jimfs</pattern>
+                            <shadedPattern>${project.groupId}.shaded.com.google.common.jimfs</shadedPattern>
+                        </relocation>
+                    </relocations>
                 </configuration>
             </plugin>
         </plugins>
