@@ -1,14 +1,10 @@
 package com.bluecatcode.common.io;
 
-import org.apache.commons.lang3.SystemUtils;
-import org.junit.Assume;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
-import org.junit.rules.TestRule;
-import org.junit.runners.model.Statement;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,7 +13,6 @@ import java.io.OutputStream;
 import java.util.Properties;
 
 import static com.bluecatcode.hamcrest.Matchers.hasSize;
-import static java.lang.String.format;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.startsWith;
 import static org.hamcrest.core.Is.is;
@@ -29,20 +24,6 @@ public class FilesTest {
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
-
-    @Rule
-    public TestRule ignoreIfNotUnix = (base, description) -> {
-        // This test requires Unix like operating system.
-        return new Statement() {
-            @Override
-            public void evaluate() throws Throwable {
-                Assume.assumeThat(format("Expected UNIX, got SystemUtils.IS_OS_UNIX: %s", SystemUtils.IS_OS_UNIX),
-                        SystemUtils.IS_OS_UNIX, is(true));
-
-                base.evaluate();
-            }
-        };
-    };
 
     @Test
     public void shouldFail() throws IOException {
