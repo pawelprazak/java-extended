@@ -133,7 +133,6 @@
             </exclusions>
         </dependency>
 
-
         <!-- Used in BoundedByteArrayOutputStreamTest -->
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -151,6 +150,7 @@
         <dependency>
             <groupId>nl.jqno.equalsverifier</groupId>
             <artifactId>equalsverifier</artifactId>
+            <scope>test</scope>
         </dependency>
 
     </dependencies>
