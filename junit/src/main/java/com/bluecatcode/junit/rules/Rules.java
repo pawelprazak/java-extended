@@ -19,14 +19,12 @@ public class Rules {
      * Require Unix like operating system.
      */
     public static TestRule ignoreIfNotUnix() {
-        return (base, description) -> {
-            return new Statement() {
-                @Override
-                public void evaluate() throws Throwable {
-                    assumeIsUnix();
-                    base.evaluate();
-                }
-            };
+        return (base, description) -> new Statement() {
+            @Override
+            public void evaluate() throws Throwable {
+                assumeIsUnix();
+                base.evaluate();
+            }
         };
     }
 }

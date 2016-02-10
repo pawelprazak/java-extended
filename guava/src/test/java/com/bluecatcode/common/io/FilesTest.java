@@ -16,6 +16,8 @@ import static com.bluecatcode.hamcrest.Matchers.hasSize;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.startsWith;
 import static org.hamcrest.core.Is.is;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.spy;
 
 public class FilesTest {
 
@@ -97,5 +99,49 @@ public class FilesTest {
 
         // then
         assertThat(builder, hasSize(expectedValue.length() * 2));
+    }
+
+    @Test
+    public void shouldWrapConsumerExceptionsInConsumeLines() throws Exception {
+        // given
+        String expectedValue = "Hello world\n";
+        File file = tmp.newFile("test-hello2.txt");
+        Files.write(expectedValue, file);
+        Files.append(expectedValue, file);
+
+        // expect
+        exception.expect(IllegalStateException.class);
+
+        // when
+        Files.consumeLines(file, (s) -> {
+            throw new RuntimeException();
+        });
+    }
+
+    @Test
+    public void shouldWrapIOExceptionsInConsumeLines() throws Exception {
+        // given
+        File file = new File("invalid");
+
+        // expect
+        exception.expect(IllegalArgumentException.class);
+
+        // when
+        Files.consumeLines(file, (s) -> {
+            throw new RuntimeException();
+        });
+    }
+
+    @Test
+    public void shouldWrapIOExceptionsInGetFileAsProperties() throws Exception {
+        // given
+        File file = spy(tmp.newFile("decoy.txt"));
+        given(file.getPath()).willReturn("");
+
+        // expect
+        exception.expect(IllegalArgumentException.class);
+
+        // when
+        Files.getFileAsProperties(file);
     }
 }
