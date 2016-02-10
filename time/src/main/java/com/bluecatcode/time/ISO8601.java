@@ -11,6 +11,10 @@ import java.util.Date;
  */
 public class ISO8601 {
 
+    private ISO8601() {
+        throw new UnsupportedOperationException();
+    }
+
     public static Date isoToDate(String date) {
         return isoToDateTime(date).toDate();
     }
