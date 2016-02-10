@@ -26,6 +26,10 @@ import static com.google.common.io.Resources.readLines;
  */
 public final class Resources {
 
+    private Resources() {
+        throw new UnsupportedOperationException();
+    }
+
     /**
      * @param loader       the class loader to use
      * @param resourceName the resource name
@@ -133,23 +137,13 @@ public final class Resources {
      * @return the loaded properties
      */
     public static Properties getResourceAsProperties(Class<?> contextClass, String resourceName) {
-        InputStream stream = null;
-        try {
-            stream = getResourceAsStream(contextClass, resourceName);
+        try (InputStream stream = getResourceAsStream(contextClass, resourceName)) {
             Properties properties = new Properties();
             properties.load(stream);
             ensure(properties, isNotNull(), "Can't find %s on classpath for %s", resourceName, contextClass);
             return properties;
         } catch (IOException e) {
             throw new IllegalStateException(e);
-        } finally {
-            if (stream != null) {
-                try {
-                    stream.close();
-                } catch (IOException e) {
-                    // safe to ignore
-                }
-            }
         }
     }
 
@@ -211,9 +205,5 @@ public final class Resources {
                 Thread.currentThread().getContextClassLoader(),
                 contextClass.getClassLoader()
         );
-    }
-
-    private Resources() {
-        throw new UnsupportedOperationException();
     }
 }
