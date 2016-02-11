@@ -46,7 +46,7 @@ class EnvironmentTest extends Specification {
 
         where:
         name | predicate
-        "java.home" | { value -> value.contains("jdk") }
+        "java.home" | { value -> value.contains("jdk") || value.contains("jre") }
     }
 
     def "should get next available port"() {
