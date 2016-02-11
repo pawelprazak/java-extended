@@ -21,6 +21,10 @@ public class Environment {
 
     private static final Logger log = Logger.getLogger(Environment.class.getName());
 
+    private Environment() {
+        throw new UnsupportedOperationException();
+    }
+
     /**
      * @see java.net.InetAddress#getHostName()
      * @return the local host name
@@ -146,11 +150,7 @@ public class Environment {
             builder.append("Port ").append(port).append(" is available").append("\n");
             return true;
         } finally {
-            log.info(builder.toString());
+            log.fine(builder.toString());
         }
-    }
-
-    private Environment() {
-        throw new UnsupportedOperationException();
     }
 }
