@@ -38,6 +38,8 @@ public final class Checks {
 
     public static final Object[] EMPTY_ERROR_MESSAGE_ARGS = new Object[]{};
 
+    private static final String REGEXP_HOSTNAME = "^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])\\.?$";
+
     /**
      * Performs check of the condition.
      *
@@ -484,8 +486,6 @@ public final class Checks {
                 "Expected a email domain part in range 1 to 255 characters, got %s", domainPart.length());
         return check(email, isValidEmail(), email);
     }
-
-    private static final String REGEXP_HOSTNAME = "^(([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\\-]*[a-zA-Z0-9])\\.)*([A-Za-z0-9]|[A-Za-z0-9][A-Za-z0-9\\-]*[A-Za-z0-9])\\.?$";
 
     /**
      * Performs a hostname check against: RFC 952, RFC 1123 and RFC 1034
