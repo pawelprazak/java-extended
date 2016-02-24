@@ -50,6 +50,7 @@ build
 *.war
 *.ear
 *.zip
+*.tar.gz
 
 # Eclipse
 .classpath
@@ -59,7 +60,7 @@ build
 .factorypath
 .studio
 
-# IDEA IntelliJ
+# IDEA IntelliJ/CLion
 *.ipr
 *.iws
 *.iml
