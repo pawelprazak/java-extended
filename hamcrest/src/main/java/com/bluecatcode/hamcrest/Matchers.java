@@ -19,6 +19,15 @@ import static org.hamcrest.core.AllOf.allOf;
 public class Matchers {
 
     /**
+     * Equivalent of {@code not(isEmptyString())} matcher combination
+     * @see org.hamcrest.Matchers#isEmptyString()
+     * @return the matcher
+     */
+    public static Matcher<String> isNotEmptyString() {
+        return not(isEmptyString());
+    }
+
+    /**
      * Equivalent of {@code not(isEmptyOrNullString())} matcher combination
      * @see org.hamcrest.Matchers#isEmptyOrNullString()
      * @return the matcher
