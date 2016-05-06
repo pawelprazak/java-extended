@@ -1,9 +1,6 @@
 package com.bluecatcode.hamcrest;
 
-import com.bluecatcode.hamcrest.matchers.IsCharSequenceWithSize;
-import com.bluecatcode.hamcrest.matchers.IsThrowable;
-import com.bluecatcode.hamcrest.matchers.LongCloseTo;
-import com.bluecatcode.hamcrest.matchers.PatternMatcher;
+import com.bluecatcode.hamcrest.matchers.*;
 import org.hamcrest.Matcher;
 
 import java.util.*;
@@ -227,8 +224,19 @@ public class Matchers {
         return IsCharSequenceWithSize.hasSize(size);
     }
 
+    /**
+     * Match in range <tt>start</tt>, <tt>end</tt> inclusive
+     * @see CharSequenceSliceMatcher#sliceThat(int, int, Matcher)
+     * @param start the slice start, inclusive, can be negative
+     * @param end the slice end, inclusive, can be negative
+     * @param matcher the nested matcher to use with the slice
+     * @return the matcher
+     */
+    public static Matcher<CharSequence> sliceThat(int start, int end, Matcher<CharSequence> matcher) {
+        return CharSequenceSliceMatcher.sliceThat(start, end, matcher);
+    }
+
     private Matchers() {
         throw new UnsupportedOperationException();
     }
-
 }
