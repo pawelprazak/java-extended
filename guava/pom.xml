@@ -201,6 +201,17 @@
                             <shadedPattern>${project.groupId}.shaded.javax.mail</shadedPattern>
                         </relocation>
                     </relocations>
+                    <filters>
+                        <filter>
+                            <artifact>*.mail:javax.mail*</artifact>
+                            <excludes>
+                                <exclude>javamail*</exclude>
+                                <exclude>mailcap*</exclude>
+                                <exclude>mimetypes*</exclude>
+                                <exclude>gfprobe-provider.xml</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
                 </configuration>
             </plugin>
         </plugins>
