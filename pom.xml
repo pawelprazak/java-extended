@@ -947,23 +947,23 @@
 
     <repositories>
         <repository>
+            <id>jcenter</id>
+            <name>Bintray JCenter</name>
+            <url>http://jcenter.bintray.com</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
-            <id>central</id>
-            <name>bintray</name>
-            <url>http://jcenter.bintray.com</url>
         </repository>
     </repositories>
 
     <pluginRepositories>
         <pluginRepository>
+            <id>jcenter</id>
+            <name>Bintray JCenter plugins</name>
+            <url>http://jcenter.bintray.com</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
-            <id>central</id>
-            <name>bintray-plugins</name>
-            <url>http://jcenter.bintray.com</url>
         </pluginRepository>
     </pluginRepositories>
 </project>
