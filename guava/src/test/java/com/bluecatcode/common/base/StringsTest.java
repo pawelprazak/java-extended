@@ -56,5 +56,4 @@ public class StringsTest {
         //noinspection ConstantConditions
         Strings.asStringList(input);
     }
-
 }
