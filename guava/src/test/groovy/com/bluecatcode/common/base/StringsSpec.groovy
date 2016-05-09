@@ -36,7 +36,7 @@ class StringsCapitalizeSpec extends Specification {
         "łąka"    | "Łąka"
     }
 
-    @Unroll("string: '#string', result: '#result'")
+    @Unroll
     def "should leave any non-letter and already capitalized starting letter"() {
         expect:
         string.equals(capitalize(string))
@@ -45,6 +45,7 @@ class StringsCapitalizeSpec extends Specification {
         string << ["", " ", "\n", "\t", "\r", "0", "中国", "TLA"]
     }
 
+    @Unroll
     def "should capitalize any non-empty alphanumeric string"() {
         given:
         def result = capitalize(string as String)
