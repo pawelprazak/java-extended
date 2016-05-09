@@ -1,8 +1,11 @@
 package com.bluecatcode.hamcrest.matchers
 
 import spock.lang.Specification
+import spock.lang.Unroll
 
 class CharSequenceSliceMatcherSpec extends Specification {
+
+    @Unroll("slice [#start:#end] of '#sequence' -> '#result'")
     def "test sliceCharSequence"() {
         expect:
         result == CharSequenceSliceMatcher.sliceCharSequence(start, end, sequence)
