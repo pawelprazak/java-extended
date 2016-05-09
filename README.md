@@ -106,6 +106,26 @@ To run a more comprehensive build:
 
     source use_jdk_switcher.sh; mvn install jacoco:report -Penable-unit-tests,enable-integration-tests,enable-mutation-tests,enable-coverage-tests
 
+Development
+-----------
+
+### Maven
+
+Run single project (module) with dependencies, e.g. `guava` module with target `test`:
+
+    mvn --projects guava --also-make test
+
+Run single test:
+
+    mvn -DfailIfNoTests=false -Dtest=StringsCapitalizeSpec test
+
+Debug surefire:
+
+    mvn -Dmaven.surefire.debug test
+
+All together
+
+    mvn --projects guava --also-make -DfailIfNoTests=false -Dmaven.surefire.debug -Dtest=StringsCapitalizeSpec test
 
 [license]:LICENSE
 [license img]:https://img.shields.io/badge/license-Apache--2.0-blue.svg
