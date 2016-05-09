@@ -167,7 +167,7 @@ public class Matchers {
      * @return the matcher
      */
     public static <T extends Throwable> Matcher<T> isThrowable(Class<?> type, Matcher<? super T> matcher) {
-        return IsThrowable.isThrowable(type, matcher);
+        return IsThrowable.<T>isThrowable(type, matcher);
     }
 
     /**
