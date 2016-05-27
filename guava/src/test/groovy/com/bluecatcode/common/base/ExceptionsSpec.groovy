@@ -1,6 +1,7 @@
 package com.bluecatcode.common.base
 
 import com.bluecatcode.common.contract.errors.RequireViolation
+import com.bluecatcode.common.exceptions.WrappedException
 import com.bluecatcode.common.functions.CheckedFunction
 import spock.lang.FailsWith
 import spock.lang.Specification
@@ -9,6 +10,12 @@ import spock.lang.Unroll
 import static com.bluecatcode.common.exceptions.Exceptions.*
 
 class ExceptionsSpec extends Specification {
+
+    @FailsWith(RequireViolation)
+    def "should throw on null argument"() {
+        expect:
+        exception(null)
+    }
 
     @Unroll("#type.simpleName '#message' '#cause'")
     def "should create throwable"() {
@@ -39,10 +46,10 @@ class ExceptionsSpec extends Specification {
     @Unroll("#type.simpleName '#parameters' '#args' -> throws")
     def "should throw on illegal arguments"() {
         expect:
-        exception(type, parameters as CheckedFunction, args as CheckedFunction)
+        exception(type, params as CheckedFunction, args as CheckedFunction)
 
         where:
-        type              | parameters                                                      | args
+        type              | params                                                          | args
         TestException     | null                                                            | null
         TestException     | parameters(Long.class, Float.class)                             | null
         TestException     | null                                                            | arguments(1L, 1.0f)
@@ -51,6 +58,20 @@ class ExceptionsSpec extends Specification {
         TestException     | { null } as CheckedFunction | arguments("test")
         TestException     | parameters(String.class)                                        | { throw new ReflectiveOperationException() } as CheckedFunction
         TestException     | parameters(String.class)                                        | { null } as CheckedFunction
+    }
+
+    def "should wrap exceptions"() {
+        expect:
+        def wrapped = wrap(new IOException())
+        wrapped != null
+        wrapped instanceof WrappedException
+    }
+
+    def "should wrap as type exceptions"() {
+        expect:
+        def wrapped = wrap(new IOException(), IllegalStateException)
+        wrapped != null
+        wrapped instanceof IllegalStateException
     }
 
     class TestException extends Exception {
