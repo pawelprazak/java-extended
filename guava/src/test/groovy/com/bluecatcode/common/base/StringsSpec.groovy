@@ -1,8 +1,9 @@
 package com.bluecatcode.common.base
 
-import spock.genesis.Gen
-import spock.genesis.generators.values.StringGenerator
+//import spock.genesis.Gen
+//import spock.genesis.generators.values.StringGenerator
 import spock.lang.FailsWith
+import spock.lang.Ignore
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -45,6 +46,7 @@ class StringsCapitalizeSpec extends Specification {
         string << ["", " ", "\n", "\t", "\r", "0", "中国", "TLA"]
     }
 
+    @Ignore("spock genesis disabled")
     @Unroll
     def "should capitalize any non-empty alphanumeric string"() {
         given:
@@ -54,7 +56,7 @@ class StringsCapitalizeSpec extends Specification {
         result != null
         that(result, isNotEmptyString())
         that(result, hasFirstLetterCharUpper())
-        that(result, hasTheSameTailAs(string))
+        that(result, hasTheSameTailAs(string as String))
 
         where:
         string << anyNonEmptyAlphaStr().take(1000)
@@ -67,8 +69,9 @@ class StringsCapitalizeSpec extends Specification {
     def hasTheSameTailAs(String string) {
         tailThat(is(string.substring(1)))
     }
-
+/*
     static StringGenerator anyNonEmptyAlphaStr() {
         Gen.string(~/^[\p{L}]+/)
     }
+*/
 }

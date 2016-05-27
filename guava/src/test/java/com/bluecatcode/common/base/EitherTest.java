@@ -1,6 +1,8 @@
 package com.bluecatcode.common.base;
 
 import com.bluecatcode.common.base.functions.Block;
+import com.bluecatcode.common.contract.errors.EnsureViolation;
+import com.bluecatcode.common.contract.errors.RequireViolation;
 import com.google.common.base.Function;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
@@ -30,7 +32,7 @@ public class EitherTest {
         Callable callable = null;
 
         // expect
-        exception.expect(IllegalArgumentException.class);
+        exception.expect(RequireViolation.class);
 
         // when
         //noinspection ConstantConditions
@@ -43,7 +45,7 @@ public class EitherTest {
         Callable callable = () -> null;
 
         // expect
-        exception.expect(IllegalArgumentException.class);
+        exception.expect(EnsureViolation.class);
 
         // when
         Eithers.either(callable);
@@ -81,7 +83,7 @@ public class EitherTest {
         Block block = null;
 
         // expect
-        exception.expect(IllegalArgumentException.class);
+        exception.expect(RequireViolation.class);
 
         // when
         //noinspection ConstantConditions
@@ -94,7 +96,7 @@ public class EitherTest {
         Block block = () -> null;
 
         // expect
-        exception.expect(IllegalArgumentException.class);
+        exception.expect(EnsureViolation.class);
 
         // when
         Eithers.either(block);
@@ -132,7 +134,7 @@ public class EitherTest {
         Function function = null;
 
         // expect
-        exception.expect(IllegalArgumentException.class);
+        exception.expect(RequireViolation.class);
 
         // when
         //noinspection ConstantConditions
@@ -145,7 +147,7 @@ public class EitherTest {
         Function<String, Integer> function = input -> null;
 
         // expect
-        exception.expect(IllegalArgumentException.class);
+        exception.expect(EnsureViolation.class);
 
         // when
         //noinspection ConstantConditions

@@ -1,5 +1,7 @@
 package com.bluecatcode.common.base
 
+import com.bluecatcode.common.contract.errors.ContractViolation
+import com.bluecatcode.common.contract.errors.RequireViolation
 import com.google.common.base.Function
 import spock.lang.FailsWith
 import spock.lang.Specification
@@ -12,7 +14,7 @@ import static com.bluecatcode.common.base.Either.*
  */
 class EitherSpec extends Specification {
 
-    @FailsWith(IllegalArgumentException)
+    @FailsWith(RequireViolation)
     @Unroll("#type #methodName -> throw on null argument")
     def "should throw on null argument"() {
         expect:
@@ -32,7 +34,7 @@ class EitherSpec extends Specification {
         type = reference instanceof Class ? reference.simpleName : reference.class.simpleName
     }
 
-    @FailsWith(IllegalArgumentException)
+    @FailsWith(RequireViolation)
     @Unroll("#type #methodName -> throw on null arguments")
     def "should throw on null argumenst"() {
         expect:
@@ -84,7 +86,7 @@ class EitherSpec extends Specification {
         123   | 123
     }
 
-    @FailsWith(IllegalStateException)
+    @FailsWith(ContractViolation)
     @Unroll("#reference.class.simpleName #methodName -> should throw")
     def "should throw on invalid state"() {
         expect:
