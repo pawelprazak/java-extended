@@ -1,6 +1,7 @@
 package com.bluecatcode.common.concurrent;
 
 import com.bluecatcode.common.base.functions.Effect;
+import com.bluecatcode.common.exceptions.WrappedException;
 import com.google.common.base.Function;
 import com.google.common.util.concurrent.SimpleTimeLimiter;
 import com.google.common.util.concurrent.TimeLimiter;
@@ -9,17 +10,18 @@ import javax.annotation.CheckReturnValue;
 import java.util.concurrent.Callable;
 import java.util.concurrent.TimeUnit;
 
-import static com.bluecatcode.common.base.Either.either;
-import static com.bluecatcode.common.base.Exceptions.uncheckedException;
+import static com.bluecatcode.common.base.Eithers.either;
+import static com.bluecatcode.common.exceptions.Exceptions.uncheckedException;
+import static com.bluecatcode.common.exceptions.Exceptions.unwrapToUncheckedException;
 
 @CheckReturnValue
 public class Try {
 
     public static <T> T tryWith(Callable<T> callable) {
-        return either(callable).orThrow(uncheckedException());
+        return either(callable).orThrow(unwrapToUncheckedException());
     }
 
-    public static <T> T tryWith(Callable<T> callable, Function<Exception, RuntimeException> exceptionFunction) {
+    public static <T> T tryWith(Callable<T> callable, Function<WrappedException, RuntimeException> exceptionFunction) {
         return either(callable).orThrow(exceptionFunction);
     }
 

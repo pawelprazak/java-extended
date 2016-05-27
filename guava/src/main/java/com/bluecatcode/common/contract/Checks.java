@@ -8,8 +8,8 @@ import com.google.common.base.Supplier;
 import javax.annotation.Nullable;
 import java.util.regex.Pattern;
 
-import static com.bluecatcode.common.base.Exceptions.*;
 import static com.bluecatcode.common.base.Predicates.*;
+import static com.bluecatcode.common.exceptions.Exceptions.*;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Predicates.not;
 import static com.google.common.base.Splitter.on;

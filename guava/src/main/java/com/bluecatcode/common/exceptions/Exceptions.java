@@ -1,7 +1,6 @@
-package com.bluecatcode.common.base;
+package com.bluecatcode.common.exceptions;
 
 import com.bluecatcode.common.base.functions.CheckedFunction;
-import com.bluecatcode.common.exceptions.UncheckedException;
 import com.google.common.base.Function;
 
 import java.lang.reflect.Constructor;
@@ -19,6 +18,10 @@ public class Exceptions {
         return e -> e instanceof RuntimeException ? (RuntimeException) e : new UncheckedException(e);
     }
 
+    public static Function<WrappedException, RuntimeException> unwrapToUncheckedException() {
+        return e -> uncheckedException().apply(e.unwrap());
+    }
+
     public static <E extends Exception> E exception(Class<E> throwableType) {
         return throwable(throwableType);
     }
@@ -28,14 +31,14 @@ public class Exceptions {
     }
 
     public static <E extends Exception> E exception(Class<E> throwableType,
-                                                    CheckedFunction<Class<E>, Constructor<E>> constructorSupplier,
-                                                    CheckedFunction<Constructor<E>, E> instanceSupplier) {
+                                                    CheckedFunction<Class<E>, Constructor<E>, ReflectiveOperationException> constructorSupplier,
+                                                    CheckedFunction<Constructor<E>, E, ReflectiveOperationException> instanceSupplier) {
         return throwable(throwableType, constructorSupplier, instanceSupplier);
     }
 
     public static <E extends Throwable> E throwable(Class<E> throwableType,
-                                                    CheckedFunction<Class<E>, Constructor<E>> constructorSupplier,
-                                                    CheckedFunction<Constructor<E>, E> instanceSupplier) {
+                                                    CheckedFunction<Class<E>, Constructor<E>, ReflectiveOperationException> constructorSupplier,
+                                                    CheckedFunction<Constructor<E>, E, ReflectiveOperationException> instanceSupplier) {
         checkArgument(!Modifier.isAbstract(throwableType.getModifiers()),
                 "Expected non-abstract throwable type, got: '%s'", throwableType.getCanonicalName());
         final Constructor<E> constructor;
@@ -51,20 +54,19 @@ public class Exceptions {
         }
     }
 
-    public static <E> CheckedFunction<Class<E>, Constructor<E>> parameters(Class<?> parameterType) {
+    public static <E> CheckedFunction<Class<E>, Constructor<E>, ReflectiveOperationException> parameters(Class<?> parameterType) {
         return type -> type.getConstructor(parameterType);
     }
 
-    public static <E> CheckedFunction<Class<E>, Constructor<E>> parameters(Class<?>... parameterTypes) {
+    public static <E> CheckedFunction<Class<E>, Constructor<E>, ReflectiveOperationException> parameters(Class<?>... parameterTypes) {
         return type -> type.getConstructor(parameterTypes);
     }
 
-    public static <E> CheckedFunction<Constructor<E>, E> arguments(Object arg) {
+    public static <E> CheckedFunction<Constructor<E>, E, ReflectiveOperationException> arguments(Object arg) {
         return constructor -> constructor.newInstance(arg);
     }
 
-    public static <E> CheckedFunction<Constructor<E>, E> arguments(Object... args) {
+    public static <E> CheckedFunction<Constructor<E>, E, ReflectiveOperationException> arguments(Object... args) {
         return constructor -> constructor.newInstance(args);
     }
-
 }

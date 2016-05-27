@@ -1,7 +1,6 @@
 package com.bluecatcode.common
 
 import com.bluecatcode.common.base.Environment
-import com.bluecatcode.common.base.Exceptions
 import com.bluecatcode.common.base.Predicates
 import com.bluecatcode.common.base.Strings
 import com.bluecatcode.common.collections.Collections3
@@ -12,6 +11,7 @@ import com.bluecatcode.common.contract.Checks
 import com.bluecatcode.common.contract.Impossibles
 import com.bluecatcode.common.contract.Postconditions
 import com.bluecatcode.common.contract.Preconditions
+import com.bluecatcode.common.exceptions.Exceptions
 import com.bluecatcode.common.hash.Hash
 import com.bluecatcode.common.io.Closeables
 import com.bluecatcode.common.io.Files
