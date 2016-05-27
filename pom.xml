@@ -103,13 +103,6 @@
     <dependencyManagement>
         <dependencies>
 
-            <!-- Internal dependencies -->
-            <dependency>
-                <groupId>com.bluecatcode.core</groupId>
-                <artifactId>core</artifactId>
-                <version>${project.version}</version>
-            </dependency>
-
             <!-- Google Auto Value -->
             <dependency>
                 <groupId>com.google.auto.value</groupId>

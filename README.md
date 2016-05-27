@@ -22,7 +22,7 @@ Available dependencies versions:
 - Mockito 1.10.19
 - JUnit 4.10, 4.11, 4.12
 
-Core
+Core (deprecated in version > 1.1.0)
 ----
 Core Java JDK extensions and backports
 
