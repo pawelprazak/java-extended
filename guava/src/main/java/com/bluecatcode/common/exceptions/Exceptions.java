@@ -1,12 +1,13 @@
 package com.bluecatcode.common.exceptions;
 
+import com.bluecatcode.common.contract.errors.RequireViolation;
 import com.bluecatcode.common.functions.CheckedFunction;
 import com.google.common.base.Function;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 
-import static com.google.common.base.Preconditions.checkArgument;
+import static com.bluecatcode.common.contract.Preconditions.require;
 
 public class Exceptions {
 
@@ -39,18 +40,24 @@ public class Exceptions {
     public static <E extends Throwable> E throwable(Class<E> throwableType,
                                                     CheckedFunction<Class<E>, Constructor<E>, ReflectiveOperationException> constructorSupplier,
                                                     CheckedFunction<Constructor<E>, E, ReflectiveOperationException> instanceSupplier) {
-        checkArgument(!Modifier.isAbstract(throwableType.getModifiers()),
+        require(throwableType != null, "Expected non-null throwableType");
+        require(constructorSupplier != null, "Expected non-null constructorSupplier");
+        require(instanceSupplier != null, "Expected non-null instanceSupplier");
+        require(!Modifier.isAbstract(throwableType.getModifiers()),
                 "Expected non-abstract throwable type, got: '%s'", throwableType.getCanonicalName());
         final Constructor<E> constructor;
         try {
             constructor = constructorSupplier.apply(throwableType);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Expected a throwable with (String) constructor", e);
+            require(constructor != null, "Expected constructor supplier to return non-null reference");
+        } catch (ReflectiveOperationException e) {
+            throw new RequireViolation("Expected a throwable with (String) constructor", e);
         }
         try {
-            return instanceSupplier.apply(constructor);
-        } catch (Exception e) {
-            throw new IllegalArgumentException("Expected an instantiable throwable.", e);
+            E instance = instanceSupplier.apply(constructor);
+            require(instance != null, "Expected instance supplier to return non-null reference");
+            return instance;
+        } catch (ReflectiveOperationException e) {
+            throw new RequireViolation("Expected an instantiable throwable.", e);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.bluecatcode.common.base
 
+import com.bluecatcode.common.contract.errors.RequireViolation
 import com.bluecatcode.common.functions.CheckedFunction
 import spock.lang.FailsWith
 import spock.lang.Specification
@@ -34,18 +35,22 @@ class ExceptionsSpec extends Specification {
         IllegalArgumentException | "test message" | new IllegalArgumentException()
     }
 
-    @FailsWith(IllegalArgumentException)
-    @Unroll("#type.simpleName '#parameters' '#args' -> throws IAE")
+    @FailsWith(RequireViolation)
+    @Unroll("#type.simpleName '#parameters' '#args' -> throws")
     def "should throw on illegal arguments"() {
         expect:
         exception(type, parameters as CheckedFunction, args as CheckedFunction)
 
         where:
-        type              | parameters                          | args
-        TestException     | null                                | null
-        TestException     | parameters(Long.class, Float.class) | null
-        TestException     | null                                | arguments(1L, 1.0f)
-        AbstractException | null                                | null
+        type              | parameters                                                      | args
+        TestException     | null                                                            | null
+        TestException     | parameters(Long.class, Float.class)                             | null
+        TestException     | null                                                            | arguments(1L, 1.0f)
+        AbstractException | parameters(String.class)                                        | arguments("test")
+        TestException     | { throw new ReflectiveOperationException() } as CheckedFunction | arguments("test")
+        TestException     | { null } as CheckedFunction | arguments("test")
+        TestException     | parameters(String.class)                                        | { throw new ReflectiveOperationException() } as CheckedFunction
+        TestException     | parameters(String.class)                                        | { null } as CheckedFunction
     }
 
     class TestException extends Exception {
