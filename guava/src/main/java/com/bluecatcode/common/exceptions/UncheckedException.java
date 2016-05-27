@@ -1,4 +1,4 @@
-package com.bluecatcode.core.exceptions;
+package com.bluecatcode.common.exceptions;
 
 /**
  * Base UncheckedException exception with a clear name
