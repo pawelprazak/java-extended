@@ -147,7 +147,7 @@
             <dependency>
                 <groupId>nl.jqno.equalsverifier</groupId>
                 <artifactId>equalsverifier</artifactId>
-                <version>1.7.7</version>
+                <version>2.1</version>
             </dependency>
 
             <!-- Used in some tests -->
@@ -241,7 +241,7 @@
                 <plugin>
                     <groupId>net.orfjackal.retrolambda</groupId>
                     <artifactId>retrolambda-maven-plugin</artifactId>
-                    <version>2.1.0</version>
+                    <version>2.3.0</version>
                     <executions>
                         <execution>
                             <goals>
