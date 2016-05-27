@@ -5,7 +5,6 @@ import javax.annotation.Nonnull;
 
 import static com.bluecatcode.common.contract.Postconditions.ensure;
 import static com.bluecatcode.common.contract.Preconditions.require;
-import static com.bluecatcode.common.exceptions.Exceptions.*;
 
 public final class WrappedException extends UncheckedException {
 
@@ -22,11 +21,6 @@ public final class WrappedException extends UncheckedException {
     }
 
     @CheckReturnValue
-    public static <E extends Exception> E wrap(@Nonnull Exception cause, Class<E> type) {
-        return exception(type, parameters(Throwable.class), arguments(cause));
-    }
-
-    @CheckReturnValue
     public Exception unwrap() {
         ensure(this.getCause() != null);
         ensure(this.getCause() instanceof Exception);
@@ -34,9 +28,11 @@ public final class WrappedException extends UncheckedException {
     }
 
     @CheckReturnValue
-    public <E extends Exception> E unwrap(@Nonnull Class<E> exceptionType) {
+    public <E extends Exception> E unwrapAs(@Nonnull Class<E> exceptionType) {
         ensure(this.getCause() != null);
-        ensure(exceptionType.isAssignableFrom(this.getCause().getClass()));
+        ensure(this.getCause() instanceof Exception);
+        require(exceptionType != null, "Expected non-null exceptionType");
+        require(exceptionType.isAssignableFrom(this.getCause().getClass()));
         return exceptionType.cast(this.getCause());
     }
 }

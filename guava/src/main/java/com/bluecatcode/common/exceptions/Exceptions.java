@@ -4,6 +4,7 @@ import com.bluecatcode.common.contract.errors.RequireViolation;
 import com.bluecatcode.common.functions.CheckedFunction;
 import com.google.common.base.Function;
 
+import javax.annotation.Nonnull;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 
@@ -13,6 +14,14 @@ public class Exceptions {
 
     private Exceptions() {
         throw new UnsupportedOperationException();
+    }
+
+    public static WrappedException wrap(@Nonnull Exception cause) {
+        return WrappedException.wrap(cause);
+    }
+
+    public static <E extends Exception> E wrap(@Nonnull Exception cause, Class<E> type) {
+        return exception(type, parameters(Throwable.class), arguments(cause));
     }
 
     public static Function<Exception, RuntimeException> uncheckedException() {

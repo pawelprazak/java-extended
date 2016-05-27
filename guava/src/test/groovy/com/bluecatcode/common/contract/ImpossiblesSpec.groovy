@@ -18,6 +18,7 @@ class ImpossiblesSpec extends Specification {
                 { impossible() },
                 { impossible("test") },
                 { impossible("%s", "test") },
+                { impossible(new RuntimeException()) },
         ]
     }
 }
