@@ -1,19 +1,19 @@
-package com.bluecatcode.common.base;
+package com.bluecatcode.common.base.functions;
 
 /**
- * @see com.bluecatcode.common.base.Block
- * @see com.bluecatcode.common.base.Consumer
+ * @see Block
+ * @see Consumer
  * @see com.google.common.base.Function
  * @see com.google.common.base.Predicate
  * @see com.google.common.base.Supplier
  * @see java.util.concurrent.Callable
  */
-public interface Effect {
+public interface Effect extends CheckedEffect<RuntimeException> {
 
     /**
      * Performs this operation for side effect.
      *
      * @throws RuntimeException if unable to compute
      */
-    void cause();
+    void cause() throws RuntimeException;
 }

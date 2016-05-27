@@ -21,9 +21,9 @@
  * <h3>Functional</h3>
  *
  * <ul>
- * <li>{@link com.bluecatcode.common.base.Consumer}
- * <li>{@link com.bluecatcode.common.base.Effect}
- * <li>{@link com.bluecatcode.common.base.IsEmpty}
+ * <li>{@link com.bluecatcode.common.base.functions.Consumer}
+ * <li>{@link com.bluecatcode.common.base.functions.Effect}
+ * <li>{@link com.bluecatcode.common.base.functions.IsEmpty}
  * <li>{@link com.bluecatcode.common.base.Predicates}
  * </ul>
  */

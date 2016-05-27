@@ -1,5 +1,6 @@
 package com.bluecatcode.common.base;
 
+import com.bluecatcode.common.base.functions.IsEmpty;
 import com.bluecatcode.common.base.predicates.IsInstancePredicate;
 import com.google.common.annotations.Beta;
 import com.google.common.base.Optional;

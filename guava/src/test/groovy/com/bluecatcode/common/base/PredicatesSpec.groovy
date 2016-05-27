@@ -1,5 +1,6 @@
 package com.bluecatcode.common.base
 
+import com.bluecatcode.common.base.functions.IsEmpty
 import com.google.common.base.Optional
 import com.google.common.base.Predicate
 import com.google.common.collect.FluentIterable
@@ -160,25 +161,25 @@ class PredicatesIsEmptySpec extends Specification {
         where:
         reference                              | expected
         null                                   | true
-        ""                                     | true
-        new StringBuilder("")                  | true
-        Optional.absent()                      | true
-        []                                     | true
-        [:]                                    | true
-        newArrayList()                         | true
-        newHashMap()                           | true
-        hashtable()                            | true
-        FluentIterable.from([])                | true
-        [isEmpty: { return true }] as IsEmpty  | true
-        [:] as Map                             | true
-        [] as Object[]                         | true
-        [] as boolean[]                        | true
-        [] as byte[]                           | true
-        [] as short[]                          | true
-        [] as char[]                           | true
-        [] as int[]                            | true
-        [] as long[]                           | true
-        [] as float[]                          | true
+        ""                                    | true
+        new StringBuilder("")                 | true
+        Optional.absent()                     | true
+        []                                    | true
+        [:]                                   | true
+        newArrayList()                        | true
+        newHashMap()                          | true
+        hashtable()                           | true
+        FluentIterable.from([])               | true
+        [isEmpty: { return true }] as IsEmpty | true
+        [:] as Map                            | true
+        [] as Object[]                        | true
+        [] as boolean[]                       | true
+        [] as byte[]                          | true
+        [] as short[]                         | true
+        [] as char[]                          | true
+        [] as int[]                           | true
+        [] as long[]                          | true
+        [] as float[]                         | true
         [] as double[]                         | true
 
         " "                                    | false

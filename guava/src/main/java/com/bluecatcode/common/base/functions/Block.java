@@ -1,7 +1,8 @@
-package com.bluecatcode.common.base;
+package com.bluecatcode.common.base.functions;
+
+import javax.annotation.Nullable;
 
 /**
- * @param <T> the result type
  * @see java.util.concurrent.Callable
  * @see Consumer
  * @see Effect
@@ -9,12 +10,13 @@ package com.bluecatcode.common.base;
  * @see com.google.common.base.Predicate
  * @see com.google.common.base.Supplier
  */
-public interface CheckedBlock<T> {
+public interface Block<T> extends CheckedBlock<T, RuntimeException> {
 
     /**
      * Performs this operation returning value.
      *
-     * @throws Exception if unable to compute
+     * @throws RuntimeException if unable to compute
      */
-    T execute() throws Exception;
+    @Nullable
+    T execute() throws RuntimeException;
 }

@@ -1,6 +1,6 @@
 package com.bluecatcode.common.concurrent
 
-import com.bluecatcode.common.base.Effect
+import com.bluecatcode.common.base.functions.Effect
 import com.google.common.util.concurrent.UncheckedTimeoutException
 import spock.lang.FailsWith
 import spock.lang.Specification

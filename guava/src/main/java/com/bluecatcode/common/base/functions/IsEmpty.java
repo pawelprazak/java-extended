@@ -1,4 +1,4 @@
-package com.bluecatcode.common.base;
+package com.bluecatcode.common.base.functions;
 
 /**
  * Single Method Interface for objects with capability of being empty
