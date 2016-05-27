@@ -7,9 +7,15 @@ import spock.lang.Specification
 class WrappedExceptionSpec extends Specification {
 
     @FailsWith(RequireViolation)
-    def "should throw on null argument"() {
+    def "should throw on null wrap argument"() {
         expect:
         WrappedException.wrap(null)
+    }
+
+    @FailsWith(RequireViolation)
+    def "should throw on null unwrapAs argument"() {
+        expect:
+        WrappedException.wrap(new Exception()).unwrapAs(null)
     }
 
     def "should unwrap"() {

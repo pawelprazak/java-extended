@@ -54,10 +54,10 @@ class ExceptionsSpec extends Specification {
         TestException     | parameters(Long.class, Float.class)                             | null
         TestException     | null                                                            | arguments(1L, 1.0f)
         AbstractException | parameters(String.class)                                        | arguments("test")
+        TestException     | { null } as CheckedFunction                                     | arguments("test")
         TestException     | { throw new ReflectiveOperationException() } as CheckedFunction | arguments("test")
-        TestException     | { null } as CheckedFunction | arguments("test")
-        TestException     | parameters(String.class)                                        | { throw new ReflectiveOperationException() } as CheckedFunction
         TestException     | parameters(String.class)                                        | { null } as CheckedFunction
+        TestException     | parameters(String.class)                                        | { throw new ReflectiveOperationException() } as CheckedFunction
     }
 
     def "should wrap exceptions"() {

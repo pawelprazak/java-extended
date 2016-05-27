@@ -18,7 +18,7 @@ import static com.bluecatcode.common.exceptions.Exceptions.unwrapToUncheckedExce
 public class Try {
 
     public static <T> T tryWith(Callable<T> callable) {
-        return either(callable).orThrow(unwrapToUncheckedException());
+        return tryWith(callable, unwrapToUncheckedException());
     }
 
     public static <T> T tryWith(Callable<T> callable, Function<WrappedException, RuntimeException> exceptionFunction) {
