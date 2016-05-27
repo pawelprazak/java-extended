@@ -167,7 +167,7 @@
             <dependency>
                 <groupId>org.scalacheck</groupId>
                 <artifactId>scalacheck_2.11</artifactId>
-                <version>1.13.1</version>
+                <version>1.12.5</version><!-- there were issues with 1.13.0 -->
                 <scope>test</scope>
             </dependency>
             <dependency>
