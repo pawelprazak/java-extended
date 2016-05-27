@@ -11,12 +11,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import java.io.IOException;
 import java.util.concurrent.Callable;
-
-import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertThat;
 
 /**
  * Tests that need static typing, e.g.:
@@ -44,20 +39,6 @@ public class EithersTest {
     }
 
     @Test
-    public void shouldCreateEitherCallableErrorResult() throws Exception {
-        // given
-        Callable callable = () -> {
-            throw new RuntimeException();
-        };
-
-        // when
-        Either either = Eithers.either(callable);
-
-        // then
-        assertThat(either.isError(), is(true));
-    }
-
-    @Test
     public void shouldThrowOnEitherBlockNullArgument() throws Exception {
         // given
         Block block = null;
@@ -71,21 +52,6 @@ public class EithersTest {
     }
 
     @Test
-    public void shouldCreateEitherBlockErrorResult() throws Exception {
-        // given
-        Block block = () -> {
-            throw new RuntimeException();
-        };
-
-        // when
-        Either either = Eithers.either(block);
-
-        // then
-        assertThat(either.isError(), is(true));
-    }
-
-
-    @Test
     public void shouldThrowOnEitherCheckedBlockNullArgument() throws Exception {
         // given
         CheckedBlock block = null;
@@ -96,20 +62,6 @@ public class EithersTest {
         // when
         //noinspection ConstantConditions
         Eithers.either(block);
-    }
-
-    @Test
-    public void shouldCreateEitherCheckedBlockErrorResult() throws Exception {
-        // given
-        CheckedBlock block = () -> {
-            throw new IOException();
-        };
-
-        // when
-        Either either = Eithers.either(block);
-
-        // then
-        assertThat(either.isError(), is(true));
     }
 
     @Test
@@ -126,23 +78,6 @@ public class EithersTest {
     }
 
     @Test
-    public void shouldCreateEitherFunctionErrorResult() throws Exception {
-        // given
-        Function<String, Either<String, Exception>> function = input -> {
-            throw new RuntimeException();
-        };
-
-        // when
-        Either either = Eithers.either(function).apply("Anything");
-
-        // then
-        assertThat(either, is(notNullValue()));
-        //noinspection ConstantConditions
-        assertThat(either.isError(), is(true));
-        assertThat(either.isValue(), is(false));
-    }
-
-    @Test
     public void shouldThrowOnEitherCheckedFunctionNullArgument() throws Exception {
         // given
         CheckedFunction function = null;
@@ -153,23 +88,6 @@ public class EithersTest {
         // when
         //noinspection ConstantConditions
         Eithers.either(function);
-    }
-
-    @Test
-    public void shouldCreateEitherCheckedFunctionErrorResult() throws Exception {
-        // given
-        CheckedFunction<String, Either<String, Exception>, IOException> function = input -> {
-            throw new IOException();
-        };
-
-        // when
-        Either either = Eithers.either(function).apply("Anything");
-
-        // then
-        assertThat(either, is(notNullValue()));
-        //noinspection ConstantConditions
-        assertThat(either.isError(), is(true));
-        assertThat(either.isValue(), is(false));
     }
 
     @Test
