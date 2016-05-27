@@ -1,6 +1,6 @@
 package com.bluecatcode.common.base
 
-import com.bluecatcode.junit.rules.AssumeMore;
+import com.bluecatcode.junit.rules.AssumeMore
 import com.google.common.base.Optional
 import spock.lang.Specification
 

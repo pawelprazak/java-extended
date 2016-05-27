@@ -1,7 +1,5 @@
 package com.bluecatcode.common.exceptions;
 
-import com.bluecatcode.core.exceptions.UncheckedException;
-
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 

@@ -22,16 +22,6 @@ Available dependencies versions:
 - Mockito 1.10.19
 - JUnit 4.10, 4.11, 4.12
 
-Core (deprecated in version > 1.1.0)
-----
-Core Java JDK extensions and backports
-
-    <dependency>
-      <groupId>com.bluecatcode.core</groupId>
-      <artifactId>core</artifactId>
-      <version>1.0.4</version>
-    </dependency>
-
 Guava
 -----
 Google's Guava library extension
@@ -81,6 +71,10 @@ Joda Time library extensions
       <artifactId>joda-time-2.9.1-extended</artifactId>
       <version>1.0.4</version>
     </dependency>
+
+Core (deprecated in version > 1.1.0)
+------------------------------------
+Core Java JDK extensions and backports
 
 Functional Java Check (deprecated in version > 1.0.2)
 -----------------------------------------------------
