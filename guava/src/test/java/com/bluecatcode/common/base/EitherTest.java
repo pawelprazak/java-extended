@@ -1,8 +1,8 @@
 package com.bluecatcode.common.base;
 
-import com.bluecatcode.common.base.functions.Block;
 import com.bluecatcode.common.contract.errors.EnsureViolation;
 import com.bluecatcode.common.contract.errors.RequireViolation;
+import com.bluecatcode.common.functions.Block;
 import com.google.common.base.Function;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;

@@ -1,9 +1,9 @@
 package com.bluecatcode.common.base;
 
-import com.bluecatcode.common.base.functions.Block;
-import com.bluecatcode.common.base.functions.CheckedBlock;
-import com.bluecatcode.common.base.functions.CheckedFunction;
 import com.bluecatcode.common.exceptions.WrappedException;
+import com.bluecatcode.common.functions.Block;
+import com.bluecatcode.common.functions.CheckedBlock;
+import com.bluecatcode.common.functions.CheckedFunction;
 import com.google.common.annotations.Beta;
 import com.google.common.base.Function;
 

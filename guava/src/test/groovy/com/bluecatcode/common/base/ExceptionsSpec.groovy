@@ -1,6 +1,6 @@
 package com.bluecatcode.common.base
 
-import com.bluecatcode.common.base.functions.CheckedFunction
+import com.bluecatcode.common.functions.CheckedFunction
 import spock.lang.FailsWith
 import spock.lang.Specification
 import spock.lang.Unroll

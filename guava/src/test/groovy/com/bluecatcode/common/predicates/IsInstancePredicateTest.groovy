@@ -1,4 +1,4 @@
-package com.bluecatcode.common.base.predicates
+package com.bluecatcode.common.predicates
 
 import spock.lang.FailsWith
 import spock.lang.Specification

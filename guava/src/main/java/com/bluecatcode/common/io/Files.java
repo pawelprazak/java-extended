@@ -1,6 +1,6 @@
 package com.bluecatcode.common.io;
 
-import com.bluecatcode.common.base.functions.Consumer;
+import com.bluecatcode.common.functions.Consumer;
 import com.google.common.annotations.Beta;
 import com.google.common.base.Charsets;
 import com.google.common.io.CharSource;

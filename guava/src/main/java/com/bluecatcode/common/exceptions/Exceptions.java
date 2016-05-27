@@ -1,6 +1,6 @@
 package com.bluecatcode.common.exceptions;
 
-import com.bluecatcode.common.base.functions.CheckedFunction;
+import com.bluecatcode.common.functions.CheckedFunction;
 import com.google.common.base.Function;
 
 import java.lang.reflect.Constructor;

@@ -1,7 +1,7 @@
 package com.bluecatcode.common.concurrent;
 
-import com.bluecatcode.common.base.functions.Effect;
 import com.bluecatcode.common.exceptions.WrappedException;
+import com.bluecatcode.common.functions.Effect;
 import com.google.common.base.Function;
 import com.google.common.util.concurrent.SimpleTimeLimiter;
 import com.google.common.util.concurrent.TimeLimiter;

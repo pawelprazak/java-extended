@@ -1,4 +1,4 @@
-package com.bluecatcode.common.base.functions;
+package com.bluecatcode.common.functions;
 
 /**
  * @see Block
