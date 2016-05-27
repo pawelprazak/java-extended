@@ -1,12 +1,12 @@
 package com.bluecatcode.common.base;
 
+import com.bluecatcode.common.contract.errors.ContractViolation;
 import com.google.common.base.Function;
 import com.google.common.base.Objects;
 
 import javax.annotation.Nullable;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
+import static com.bluecatcode.common.contract.Preconditions.require;
 import static java.lang.String.format;
 
 /**
@@ -19,7 +19,8 @@ final class Left<L, R> extends Either<L, R> {
     private final L left;
 
     Left(L left) {
-        this.left = checkNotNull(left, "Expected non-null left");
+        require(left != null, "Expected non-null left");
+        this.left = left;
     }
 
     @Override
@@ -39,31 +40,33 @@ final class Left<L, R> extends Either<L, R> {
 
     @Override
     public R right() {
-        throw new IllegalStateException("Right value is absent");
+        throw new ContractViolation("Right value is absent");
     }
 
     @Override
     public Either<L, R> or(Either<? extends L, ? extends R> secondChoice) {
-        checkArgument(secondChoice != null, "Expected non-null secondChoice");
+        require(secondChoice != null, "Expected non-null secondChoice");
         //noinspection unchecked
         return (Either<L, R>) secondChoice;
     }
 
     @Override
-    public <E extends RuntimeException> R orThrow(Function<L, E> leftFunction) {
-        checkArgument(leftFunction != null, "Expected non-null leftFunction");
-        throw leftFunction.apply(left());
+    public <E extends Exception> R orThrow(Function<L, E> leftFunction) throws E {
+        require(leftFunction != null, "Expected non-null leftFunction");
+        E exception = leftFunction.apply(left());
+        require(exception != null);
+        throw exception;
     }
 
     @Override
     public <V> V either(Function<L, V> leftFunction, Function<R, V> rightFunction) {
-        checkArgument(leftFunction != null, "Expected non-null leftFunction");
+        require(leftFunction != null, "Expected non-null leftFunction");
         return leftFunction.apply(left());
     }
 
     @Override
     public <A, B> Either<A, B> transform(Function<L, A> leftFunction, Function<R, B> rightFunction) {
-        checkArgument(leftFunction != null, "Expected non-null leftFunction");
+        require(leftFunction != null, "Expected non-null leftFunction");
         //noinspection ConstantConditions
         return leftOf(leftFunction.apply(left()));
     }

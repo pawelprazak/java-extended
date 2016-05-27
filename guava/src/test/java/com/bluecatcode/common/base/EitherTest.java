@@ -1,5 +1,6 @@
 package com.bluecatcode.common.base;
 
+import com.bluecatcode.common.base.functions.Block;
 import com.google.common.base.Function;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
@@ -33,7 +34,7 @@ public class EitherTest {
 
         // when
         //noinspection ConstantConditions
-        Either.either(callable);
+        Eithers.either(callable);
     }
 
     @Test
@@ -45,7 +46,7 @@ public class EitherTest {
         exception.expect(IllegalArgumentException.class);
 
         // when
-        Either.either(callable);
+        Eithers.either(callable);
     }
 
     @Test
@@ -54,7 +55,7 @@ public class EitherTest {
         Callable callable = () -> 1;
 
         // when
-        Either either = Either.either(callable);
+        Either either = Eithers.either(callable);
 
         // then
         assertThat(either.isValue(), is(true));
@@ -68,7 +69,7 @@ public class EitherTest {
         };
 
         // when
-        Either either = Either.either(callable);
+        Either either = Eithers.either(callable);
 
         // then
         assertThat(either.isError(), is(true));
@@ -84,7 +85,7 @@ public class EitherTest {
 
         // when
         //noinspection ConstantConditions
-        Either.either(block);
+        Eithers.either(block);
     }
 
     @Test
@@ -96,7 +97,7 @@ public class EitherTest {
         exception.expect(IllegalArgumentException.class);
 
         // when
-        Either.either(block);
+        Eithers.either(block);
     }
 
     @Test
@@ -105,7 +106,7 @@ public class EitherTest {
         Block block = () -> 1;
 
         // when
-        Either either = Either.either(block);
+        Either either = Eithers.either(block);
 
         // then
         assertThat(either.isValue(), is(true));
@@ -119,7 +120,7 @@ public class EitherTest {
         };
 
         // when
-        Either either = Either.either(block);
+        Either either = Eithers.either(block);
 
         // then
         assertThat(either.isError(), is(true));
@@ -135,7 +136,7 @@ public class EitherTest {
 
         // when
         //noinspection ConstantConditions
-        Either.either(function);
+        Eithers.either(function);
     }
 
     @Test
@@ -148,7 +149,7 @@ public class EitherTest {
 
         // when
         //noinspection ConstantConditions
-        Either.either(function).apply("Anything");
+        Eithers.either(function).apply("Anything");
     }
 
     @Test
@@ -157,7 +158,7 @@ public class EitherTest {
         Function<String, Integer> function = input -> 0;
 
         // when
-        Either either = Either.either(function).apply("Anything");
+        Either either = Eithers.either(function).apply("Anything");
 
         // then
         assertThat(either, is(notNullValue()));
@@ -174,7 +175,7 @@ public class EitherTest {
         };
 
         // when
-        Either either = Either.either(function).apply("Anything");
+        Either either = Eithers.either(function).apply("Anything");
 
         // then
         assertThat(either, is(notNullValue()));

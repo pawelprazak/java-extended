@@ -1,27 +1,25 @@
 package com.bluecatcode.common.base;
 
-import com.google.common.annotations.Beta;
 import com.google.common.base.Function;
 
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nullable;
 import java.io.Serializable;
-import java.util.concurrent.Callable;
 
-import static com.google.common.base.Preconditions.checkArgument;
+import static com.bluecatcode.common.contract.Preconditions.require;
 
 /**
  * Represents a value of one of two possible types (a disjoint union). Instances of {@code Either} are either an instance of {@code Left} or {@code Right}.
- *
+ * <p>
  * Either is an algebraic data type similar to the {@link com.google.common.base.Optional}.
- *
+ * <p>
  * A common use of {@code Either} is as an alternative to {@code Optional} for dealing with possible missing values.
  * In this usage, {@code Absent} is replaced with a {@code Left} which can contain useful information.
  * {@code Right} takes the place of {@code Present}.
  * Convention dictates that {@code Left} is used for <b>failure</b> and {@code Right} is used for <b>success</b>.
- *
+ * <p>
  * A non-null {@code Either<L,R>} reference can be used as an alternative to the classic error handling (exceptions).
- *
+ * <p>
  * <pre>
  *  public static Either<Exception, Integer> divide(int x, int y) {
  *    try {
@@ -36,7 +34,6 @@ import static com.google.common.base.Preconditions.checkArgument;
  * @param <R> the type of right instance that can be contained.
  * @since 1.0.5
  */
-@Beta
 @CheckReturnValue
 public abstract class Either<L, R> implements Serializable {
 
@@ -44,53 +41,6 @@ public abstract class Either<L, R> implements Serializable {
 
     Either() {
         /* Empty */
-    }
-
-    public static <T, R> Function<T, Either<Exception, R>> either(Function<T, R> function) {
-        checkArgument(function != null, "Expected non-null function");
-        return input -> {
-            try {
-                R reference = function.apply(input);
-                if (reference == null){
-                    throw new EitherException("Expected function to return non-null reference");
-                }
-                return Either.valueOf(reference);
-            } catch (EitherException e) {
-                throw new IllegalArgumentException(e.getMessage());
-            } catch (Exception e) {
-                return Either.errorOf(e);
-            }
-        };
-    }
-
-    public static <R> Either<Exception, R> either(Callable<R> callable) {
-        checkArgument(callable != null, "Expected non-null callable");
-        try {
-            R reference = callable.call();
-            if (reference == null){
-                throw new EitherException("Expected callable to return non-null reference");
-            }
-            return Either.valueOf(reference);
-        } catch (EitherException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        } catch (Exception e) {
-            return Either.errorOf(e);
-        }
-    }
-
-    public static <R> Either<Exception, R> either(Block<R> block) {
-        checkArgument(block != null, "Expected non-null block");
-        try {
-            R reference = block.execute();
-            if (reference == null){
-                throw new EitherException("Expected block to return non-null reference");
-            }
-            return Either.valueOf(reference);
-        } catch (EitherException e) {
-            throw new IllegalArgumentException(e.getMessage());
-        } catch (Exception e) {
-            return Either.errorOf(e);
-        }
     }
 
     /**
@@ -113,7 +63,7 @@ public abstract class Either<L, R> implements Serializable {
      * @throws NullPointerException if {@code reference} is null
      */
     public static <L, R> Either<L, R> leftOf(L reference) {
-        checkArgument(reference != null, "Expected non-null reference");
+        require(reference != null, "Expected non-null reference");
         return new Left<>(reference);
     }
 
@@ -123,7 +73,7 @@ public abstract class Either<L, R> implements Serializable {
      * @throws NullPointerException if {@code reference} is null
      */
     public static <L, R> Either<L, R> rightOf(R reference) {
-        checkArgument(reference != null, "Expected non-null reference");
+        require(reference != null, "Expected non-null reference");
         return new Right<>(reference);
     }
 
@@ -169,8 +119,8 @@ public abstract class Either<L, R> implements Serializable {
      * Returns the contained instance, which must be present.
      *
      * @throws IllegalStateException if the instance is absent ({@link #isLeft()} returns
-     *     {@code false}); depending on this <i>specific</i> exception type (over the more general
-     *     {@link RuntimeException}) is discouraged
+     *                               {@code false}); depending on this <i>specific</i> exception type (over the more general
+     *                               {@link RuntimeException}) is discouraged
      */
     public abstract L left();
 
@@ -178,8 +128,8 @@ public abstract class Either<L, R> implements Serializable {
      * Returns the contained instance, which must be present.
      *
      * @throws IllegalStateException if the instance is absent ({@link #isRight()} returns
-     *     {@code false}); depending on this <i>specific</i> exception type (over the more general
-     *     {@link RuntimeException}) is discouraged
+     *                               {@code false}); depending on this <i>specific</i> exception type (over the more general
+     *                               {@link RuntimeException}) is discouraged
      */
     public abstract R right();
 
@@ -193,7 +143,7 @@ public abstract class Either<L, R> implements Serializable {
      *
      * @throws NullPointerException if right value is absent and the function returns {@code null}
      */
-    public abstract <E extends RuntimeException> R orThrow(Function<L, E> leftFunction);
+    public abstract <E extends Exception> R orThrow(Function<L, E> leftFunction) throws E;
 
     /**
      * Applies {@code leftFunction} if this is a Left or {@code rightFunction if this is a Right.
@@ -238,13 +188,4 @@ public abstract class Either<L, R> implements Serializable {
      */
     @Override
     public abstract String toString();
-
-    private static class EitherException extends RuntimeException {
-
-        private static final long serialVersionUID = 0L;
-
-        public EitherException(String message) {
-            super(message);
-        }
-    }
 }

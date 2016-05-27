@@ -1,11 +1,12 @@
 package com.bluecatcode.common.base;
 
+import com.bluecatcode.common.contract.errors.ContractViolation;
 import com.google.common.base.Function;
 import com.google.common.base.Objects;
 
 import javax.annotation.Nullable;
 
-import static com.google.common.base.Preconditions.checkArgument;
+import static com.bluecatcode.common.contract.Preconditions.require;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static java.lang.String.format;
 
@@ -34,7 +35,7 @@ final class Right<L, R> extends Either<L, R> {
 
     @Override
     public L left() {
-        throw new IllegalStateException("Left value is absent");
+        throw new ContractViolation("Left value is absent");
     }
 
     @Override
@@ -44,25 +45,25 @@ final class Right<L, R> extends Either<L, R> {
 
     @Override
     public Either<L, R> or(Either<? extends L, ? extends R> secondChoice) {
-        checkArgument(secondChoice != null, "Expected non-null secondChoice");
+        require(secondChoice != null, "Expected non-null secondChoice");
         return this;
     }
 
     @Override
-    public <E extends RuntimeException> R orThrow(Function<L, E> leftFunction) {
-        checkArgument(leftFunction != null, "Expected non-null leftFunction");
+    public <E extends Exception> R orThrow(Function<L, E> leftFunction) throws E {
+        require(leftFunction != null, "Expected non-null leftFunction");
         return right;
     }
 
     @Override
     public <V> V either(Function<L, V> leftFunction, Function<R, V> rightFunction) {
-        checkArgument(rightFunction != null, "Expected non-null rightFunction");
+        require(rightFunction != null, "Expected non-null rightFunction");
         return rightFunction.apply(right());
     }
 
     @Override
     public <A, B> Either<A, B> transform(Function<L, A> leftFunction, Function<R, B> rightFunction) {
-        checkArgument(rightFunction != null, "Expected non-null rightFunction");
+        require(rightFunction != null, "Expected non-null rightFunction");
         //noinspection ConstantConditions
         return rightOf(rightFunction.apply(right()));
     }
