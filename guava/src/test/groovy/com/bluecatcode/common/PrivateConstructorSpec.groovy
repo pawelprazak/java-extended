@@ -13,6 +13,7 @@ import com.bluecatcode.common.contract.Impossibles
 import com.bluecatcode.common.contract.Postconditions
 import com.bluecatcode.common.contract.Preconditions
 import com.bluecatcode.common.exceptions.Exceptions
+import com.bluecatcode.common.exceptions.VoidException
 import com.bluecatcode.common.hash.Hash
 import com.bluecatcode.common.io.Closeables
 import com.bluecatcode.common.io.Files
@@ -48,5 +49,6 @@ class PrivateConstructorSpec extends Specification {
         Sleep          | _
         Strings        | _
         Try            | _
+        VoidException  | _
     }
 }
