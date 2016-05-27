@@ -12,7 +12,7 @@ java-extended
 
 [![][license img]][license]
 
-Java Extended is an experimental set of libraries.
+Java Extended is an experimental set of libraries targeting JVM 1.6+
 
 Available dependencies versions:
 
@@ -28,7 +28,7 @@ Google's Guava library extension
 
     <dependency>
       <groupId>com.bluecatcode.guava</groupId>
-      <artifactId>guava-18.0-extended</artifactId>
+      <artifactId>guava-19.0-extended</artifactId>
       <version>1.0.4</version>
     </dependency>
 
