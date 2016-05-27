@@ -32,6 +32,7 @@ class PrivateConstructorSpec extends Specification {
         type           | _
         Closeables     | _
         Collections3   | _
+        Eithers        | _
         Environment    | _
         Exceptions     | _
         Files          | _
