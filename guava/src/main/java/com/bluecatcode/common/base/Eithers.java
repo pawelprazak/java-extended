@@ -4,8 +4,8 @@ import com.bluecatcode.common.exceptions.WrappedException;
 import com.bluecatcode.common.functions.Block;
 import com.bluecatcode.common.functions.CheckedBlock;
 import com.bluecatcode.common.functions.CheckedFunction;
+import com.bluecatcode.common.functions.Function;
 import com.google.common.annotations.Beta;
-import com.google.common.base.Function;
 
 import java.util.concurrent.Callable;
 
@@ -16,6 +16,19 @@ import static com.bluecatcode.common.exceptions.WrappedException.wrap;
 public class Eithers {
 
     public static <T, R, E extends Exception> Function<T, Either<WrappedException, R>> either(CheckedFunction<T, R, E> function) {
+        require(function != null, "Expected non-null function");
+        return input -> {
+            try {
+                R reference = function.apply(input);
+                require(reference != null, "Expected function to return non-null reference");
+                return Either.valueOf(reference);
+            } catch (Exception e) {
+                return Either.errorOf(wrap(e));
+            }
+        };
+    }
+
+    public static <T, R> Function<T, Either<WrappedException, R>> either(Function<T, R> function) {
         require(function != null, "Expected non-null function");
         return input -> {
             try {
@@ -39,17 +52,15 @@ public class Eithers {
         }
     }
 
-    public static <T, R> Function<T, Either<WrappedException, R>> either(Function<T, R> function) {
-        require(function != null, "Expected non-null function");
-        return input -> {
-            try {
-                R reference = function.apply(input);
-                require(reference != null, "Expected function to return non-null reference");
-                return Either.valueOf(reference);
-            } catch (Exception e) {
-                return Either.errorOf(wrap(e));
-            }
-        };
+    public static <R> Either<WrappedException, R> either(Block<R> block) {
+        require(block != null, "Expected non-null block");
+        try {
+            R reference = block.execute();
+            require(reference != null, "Expected block to return non-null reference");
+            return Either.valueOf(reference);
+        } catch (Exception e) {
+            return Either.errorOf(wrap(e));
+        }
     }
 
     public static <R> Either<WrappedException, R> either(Callable<R> callable) {
@@ -57,17 +68,6 @@ public class Eithers {
         try {
             R reference = callable.call();
             require(reference != null, "Expected callable to return non-null reference");
-            return Either.valueOf(reference);
-        } catch (Exception e) {
-            return Either.errorOf(wrap(e));
-        }
-    }
-
-    public static <R> Either<WrappedException, R> either(Block<R> block) {
-        require(block != null, "Expected non-null block");
-        try {
-            R reference = block.execute();
-            require(reference != null, "Expected block to return non-null reference");
             return Either.valueOf(reference);
         } catch (Exception e) {
             return Either.errorOf(wrap(e));

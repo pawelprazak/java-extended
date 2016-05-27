@@ -2,10 +2,16 @@ package com.bluecatcode.common.base
 
 import com.bluecatcode.common.contract.errors.ContractViolation
 import com.bluecatcode.common.contract.errors.RequireViolation
-import com.google.common.base.Function
+import com.bluecatcode.common.functions.Block
+import com.bluecatcode.common.functions.CheckedBlock
+import com.bluecatcode.common.functions.CheckedFunction
+import com.bluecatcode.common.functions.Function
+import com.google.common.base.Function as GuavaFunction
 import spock.lang.FailsWith
 import spock.lang.Specification
 import spock.lang.Unroll
+
+import java.util.concurrent.Callable
 
 import static com.bluecatcode.common.base.Either.*
 
@@ -128,7 +134,7 @@ class EitherSpec extends Specification {
 
     def "should choose either left or right function result"() {
         given:
-        def result = reference.either({ o -> "left" } as Function, { o -> "right" } as Function)
+        def result = reference.either({ o -> "left" } as GuavaFunction, { o -> "right" } as GuavaFunction)
 
         expect:
         result.equals(expected)
@@ -141,7 +147,7 @@ class EitherSpec extends Specification {
 
     def "should transform left or right function result"() {
         given:
-        def result = reference.transform({ o -> "left" } as Function, { o -> "right" } as Function)
+        def result = reference.transform({ o -> "left" } as GuavaFunction, { o -> "right" } as GuavaFunction)
         def value = result.class.equals(Left) ? result.left() : result.right()
 
         expect:
@@ -152,4 +158,64 @@ class EitherSpec extends Specification {
         "left"   | leftOf(0)
         "right"  | rightOf(0)
     }
+}
+
+class EithersSpec extends Specification {
+
+    @Unroll("(#type.simpleName) {null} -> throws")
+    @FailsWith(RequireViolation)
+    def "should throw on null result"() {
+        expect:
+        def result = Eithers.either({ null }.asType(type))
+        if (result instanceof CheckedFunction) {
+            result.apply("Anything")
+        }
+
+        where:
+        type            | _
+        CheckedFunction | _
+        CheckedBlock    | _
+        Function        | _
+        Block           | _
+        Callable        | _
+    }
+
+    @Unroll("(#type.simpleName) { throws } -> error")
+    def "should result in error"() {
+        expect:
+        def result = Eithers.either({ throw new RuntimeException() }.asType(type))
+        if (result instanceof CheckedFunction) {
+            result = result.apply("Anything")
+        }
+        result != null
+        result.isError()
+
+        where:
+        type            | _
+        CheckedFunction | _
+        CheckedBlock    | _
+        Function        | _
+        Block           | _
+        Callable        | _
+    }
+
+    @Unroll("(#type.simpleName) {1} -> value")
+    def "should result in value"() {
+        expect:
+        def result = Eithers.either({ 1 }.asType(type))
+        if (result instanceof CheckedFunction) {
+            result = result.apply("Anything")
+        }
+        result != null
+        result.isValue()
+
+        where:
+        type            | _
+        CheckedFunction | _
+        CheckedBlock    | _
+        Function        | _
+        Block           | _
+        Callable        | _
+    }
+
 }

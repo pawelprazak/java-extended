@@ -1,11 +1,10 @@
 package com.bluecatcode.common.base;
 
-import com.bluecatcode.common.contract.errors.EnsureViolation;
 import com.bluecatcode.common.contract.errors.RequireViolation;
 import com.bluecatcode.common.functions.Block;
 import com.bluecatcode.common.functions.CheckedBlock;
 import com.bluecatcode.common.functions.CheckedFunction;
-import com.google.common.base.Function;
+import com.bluecatcode.common.functions.Function;
 import nl.jqno.equalsverifier.EqualsVerifier;
 import nl.jqno.equalsverifier.Warning;
 import org.junit.Rule;
@@ -20,11 +19,13 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * Tests that need static typing, see https://issues.apache.org/jira/browse/GROOVY-2882
+ * Tests that need static typing, e.g.:
+ * see https://issues.apache.org/jira/browse/GROOVY-2882
+ * or https://github.com/spockframework/spock/issues/589
  *
- * @see EitherSpec
+ * @see EithersSpec
  */
-public class EitherTest {
+public class EithersTest {
 
     @Rule
     public ExpectedException exception = ExpectedException.none();
@@ -40,30 +41,6 @@ public class EitherTest {
         // when
         //noinspection ConstantConditions
         Eithers.either(callable);
-    }
-
-    @Test
-    public void shouldThrowOnEitherCallableNullResult() throws Exception {
-        // given
-        Callable callable = () -> null;
-
-        // expect
-        exception.expect(EnsureViolation.class);
-
-        // when
-        Eithers.either(callable);
-    }
-
-    @Test
-    public void shouldCreateEitherCallableValueResult() throws Exception {
-        // given
-        Callable callable = () -> 1;
-
-        // when
-        Either either = Eithers.either(callable);
-
-        // then
-        assertThat(either.isValue(), is(true));
     }
 
     @Test
@@ -91,30 +68,6 @@ public class EitherTest {
         // when
         //noinspection ConstantConditions
         Eithers.either(block);
-    }
-
-    @Test
-    public void shouldThrowOnEitherBlockNullResult() throws Exception {
-        // given
-        Block block = () -> null;
-
-        // expect
-        exception.expect(EnsureViolation.class);
-
-        // when
-        Eithers.either(block);
-    }
-
-    @Test
-    public void shouldCreateEitherBlockValueResult() throws Exception {
-        // given
-        Block block = () -> 1;
-
-        // when
-        Either either = Eithers.either(block);
-
-        // then
-        assertThat(either.isValue(), is(true));
     }
 
     @Test
@@ -146,30 +99,6 @@ public class EitherTest {
     }
 
     @Test
-    public void shouldThrowOnEitherCheckedBlockNullResult() throws Exception {
-        // given
-        CheckedBlock block = () -> null;
-
-        // expect
-        exception.expect(EnsureViolation.class);
-
-        // when
-        Eithers.either(block);
-    }
-
-    @Test
-    public void shouldCreateEitherCheckedBlockValueResult() throws Exception {
-        // given
-        CheckedBlock block = () -> 1;
-
-        // when
-        Either either = Eithers.either(block);
-
-        // then
-        assertThat(either.isValue(), is(true));
-    }
-
-    @Test
     public void shouldCreateEitherCheckedBlockErrorResult() throws Exception {
         // given
         CheckedBlock block = () -> {
@@ -194,34 +123,6 @@ public class EitherTest {
         // when
         //noinspection ConstantConditions
         Eithers.either(function);
-    }
-
-    @Test
-    public void shouldThrowOnEitherFunctionNullResult() throws Exception {
-        // given
-        Function<String, Integer> function = input -> null;
-
-        // expect
-        exception.expect(EnsureViolation.class);
-
-        // when
-        //noinspection ConstantConditions
-        Eithers.either(function).apply("Anything");
-    }
-
-    @Test
-    public void shouldCreateEitherFunctionValueResult() throws Exception {
-        // given
-        Function<String, Integer> function = input -> 0;
-
-        // when
-        Either either = Eithers.either(function).apply("Anything");
-
-        // then
-        assertThat(either, is(notNullValue()));
-        //noinspection ConstantConditions
-        assertThat(either.isValue(), is(true));
-        assertThat(either.isError(), is(false));
     }
 
     @Test
@@ -252,34 +153,6 @@ public class EitherTest {
         // when
         //noinspection ConstantConditions
         Eithers.either(function);
-    }
-
-    @Test
-    public void shouldThrowOnEitherCheckedFunctionNullResult() throws Exception {
-        // given
-        CheckedFunction<String, Integer, IOException> function = input -> null;
-
-        // expect
-        exception.expect(EnsureViolation.class);
-
-        // when
-        //noinspection ConstantConditions
-        Eithers.either(function).apply("Anything");
-    }
-
-    @Test
-    public void shouldCreateEitherCheckedFunctionValueResult() throws Exception {
-        // given
-        CheckedFunction<String, Integer, IOException> function = input -> 0;
-
-        // when
-        Either either = Eithers.either(function).apply("Anything");
-
-        // then
-        assertThat(either, is(notNullValue()));
-        //noinspection ConstantConditions
-        assertThat(either.isValue(), is(true));
-        assertThat(either.isError(), is(false));
     }
 
     @Test
