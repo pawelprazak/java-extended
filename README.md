@@ -13,13 +13,13 @@ java-extended
 
 Java Extended is an experimental set of libraries targeting JVM 1.6+
 
-Available dependencies versions:
+Available versions:
 
-- Guava 15.0, 16.0.1, 17.0, 18.0, 19.0
-- Joda Time 2.1, 2.3, 2.9.1
-- Hamcrest 1.3
-- Mockito 1.10.19
-- JUnit 4.10, 4.11, 4.12
+- [Guava](#jdkguava) 15.0, 16.0.1, 17.0, 18.0, 19.0
+- [Joda Time](#java-time) 2.1, 2.3, 2.9.1
+- [Hamcrest](#hamcrest) 1.3
+- [Mockito](#mockito) 1.10.19
+- [JUnit](#junit) 4.10, 4.11, 4.12
 
 JDK/Guava
 ----------
