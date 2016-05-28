@@ -9,7 +9,8 @@ import java.io.Serializable;
 import static com.bluecatcode.common.contract.Preconditions.require;
 
 /**
- * Represents a value of one of two possible types (a disjoint union). Instances of {@code Either} are either an instance of {@code Left} or {@code Right}.
+ * Represents a value of one of two possible types (a disjoint union).
+ * Instances of {@code Either} are either an instance of {@code Left} or {@code Right}.
  * <p>
  * Either is an algebraic data type similar to the {@link com.google.common.base.Optional}.
  * <p>

@@ -14,17 +14,16 @@
  *
  * <h3>Basic types</h3>
  * <ul>
+ * <li>{@link com.bluecatcode.common.base.Strings}
+ * <li>{@link com.bluecatcode.common.base.Environment}
  * <li>{@link com.bluecatcode.common.base.RichEnum}
+ * <li>{@link com.bluecatcode.common.base.RichEnumConstants}
+ * <li>{@link com.bluecatcode.common.base.RichEnumInstance}
  * <li>{@link com.bluecatcode.common.base.ExceptionSupplier}
- * </ul>
- *
- * <h3>Functional</h3>
- *
- * <ul>
- * <li>{@link com.bluecatcode.common.functions.Consumer}
- * <li>{@link com.bluecatcode.common.functions.Effect}
- * <li>{@link com.bluecatcode.common.functions.IsEmpty}
- * <li>{@link com.bluecatcode.common.base.Predicates}
+ * <li>{@link com.bluecatcode.common.base.Either}
+ * <li>{@link com.bluecatcode.common.base.Eithers}
+ * <li>{@link com.bluecatcode.common.base.Left}
+ * <li>{@link com.bluecatcode.common.base.Right}
  * </ul>
  */
 @ParametersAreNonnullByDefault

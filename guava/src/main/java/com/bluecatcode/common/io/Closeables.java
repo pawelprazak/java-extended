@@ -81,6 +81,18 @@ public class Closeables {
         return new CloseableReference<>(reference, closer);
     }
 
+    /**
+     * Closes the given {@link Closeable}, logging any {@code IOException} that's thrown rather than
+     * propagating it.
+     *
+     * <p>While it's not safe in the general case to ignore exceptions that are thrown when closing
+     * an I/O resource, it should generally be safe in the case of a resource that's being used only
+     * for reading, such as a {@code Reader}. Unlike with writable resources, there's no chance that
+     * a failure that occurs when closing the reader indicates a meaningful problem such as a failure
+     * to flush all bytes to the underlying resource.
+     *
+     * @param closeable the reader to be closed, or {@code null} in which case this method does nothing
+     */
     public static void closeQuietly(@WillClose @Nullable Closeable closeable) {
         try {
             close(closeable, true);
