@@ -1,6 +1,7 @@
 package com.bluecatcode.common.base
 
 import com.bluecatcode.common.functions.IsEmpty
+import com.bluecatcode.common.predicates.Predicates
 import com.google.common.base.Optional
 import com.google.common.base.Predicate
 import com.google.common.collect.FluentIterable

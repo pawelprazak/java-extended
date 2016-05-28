@@ -5,8 +5,8 @@ import javax.annotation.WillCloseWhenClosed;
 import java.io.Closeable;
 import java.io.IOException;
 
-import static com.bluecatcode.common.base.Predicates.isNotNull;
 import static com.bluecatcode.common.contract.Checks.check;
+import static com.bluecatcode.common.predicates.Predicates.isNotNull;
 import static java.lang.String.format;
 
 /**

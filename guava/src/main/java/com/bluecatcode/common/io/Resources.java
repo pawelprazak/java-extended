@@ -11,9 +11,9 @@ import java.net.URLDecoder;
 import java.nio.charset.Charset;
 import java.util.Properties;
 
-import static com.bluecatcode.common.base.Predicates.isNotNull;
 import static com.bluecatcode.common.contract.Checks.checkNotEmpty;
 import static com.bluecatcode.common.contract.Postconditions.ensure;
+import static com.bluecatcode.common.predicates.Predicates.isNotNull;
 import static com.google.common.base.Charsets.UTF_8;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;

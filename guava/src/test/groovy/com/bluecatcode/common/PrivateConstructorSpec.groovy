@@ -2,7 +2,6 @@ package com.bluecatcode.common
 
 import com.bluecatcode.common.base.Eithers
 import com.bluecatcode.common.base.Environment
-import com.bluecatcode.common.base.Predicates
 import com.bluecatcode.common.base.Strings
 import com.bluecatcode.common.collections.Collections3
 import com.bluecatcode.common.concurrent.Futures
@@ -18,6 +17,7 @@ import com.bluecatcode.common.hash.Hash
 import com.bluecatcode.common.io.Closeables
 import com.bluecatcode.common.io.Files
 import com.bluecatcode.common.io.Resources
+import com.bluecatcode.common.predicates.Predicates
 import spock.lang.FailsWith
 import spock.lang.Specification
 import spock.lang.Unroll
