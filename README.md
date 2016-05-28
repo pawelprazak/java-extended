@@ -21,66 +21,15 @@ Available dependencies versions:
 - Mockito 1.10.19
 - JUnit 4.10, 4.11, 4.12
 
-Guava
------
-Google's Guava library extension
+JDK/Guava
+----------
+JDK and Google's Guava extension library
 
     <dependency>
       <groupId>com.bluecatcode.guava</groupId>
       <artifactId>guava-19.0-extended</artifactId>
       <version>1.0.4</version>
     </dependency>
-
-JUnit
------
-JUnit library extensions
-
-    <dependency>
-      <groupId>com.bluecatcode.junit</groupId>
-      <artifactId>junit-4.12-extended</artifactId>
-      <version>1.0.4</version>
-    </dependency>
-
-Hamcrest
---------
-Hamcrest library extensions
-
-    <dependency>
-      <groupId>com.bluecatcode.hamcrest</groupId>
-      <artifactId>hamcrest-1.3-extended</artifactId>
-      <version>1.0.4</version>
-    </dependency>
-
-Mockito
----------
-Mockito library extensions
-
-    <dependency>
-      <groupId>com.bluecatcode.hamcrest</groupId>
-      <artifactId>mockito-1.10.19-extended</artifactId>
-      <version>1.0.4</version>
-    </dependency>
-
-Joda Time
----------
-Joda Time library extensions
-
-    <dependency>
-      <groupId>com.bluecatcode.hamcrest</groupId>
-      <artifactId>joda-time-2.9.1-extended</artifactId>
-      <version>1.0.4</version>
-    </dependency>
-
-Core (deprecated in version > 1.1.0)
-------------------------------------
-Core Java JDK extensions and backports
-
-Functional Java Check (deprecated in version > 1.0.2)
------------------------------------------------------
-Functional Java test module (a.k.a. Reduction) library extensions
-
-Usage
------
 
 ### Either
 `Either` represents a value of one of two possible types, much like `Optional` but with both types definable.
@@ -156,6 +105,54 @@ clearly named with the intention for use with custom exception types for clear c
 - `VoidException` is an exception that cannot be thrown ever, an analogue of the `Void` type
 - `WrappedException` is an unchecked exception used to wrap checked exceptions
                      in case an checked exception is not permitted or not desired
+
+JUnit
+-----
+JUnit library extensions
+
+    <dependency>
+      <groupId>com.bluecatcode.junit</groupId>
+      <artifactId>junit-4.12-extended</artifactId>
+      <version>1.0.4</version>
+    </dependency>
+
+Hamcrest
+--------
+Hamcrest library extensions
+
+    <dependency>
+      <groupId>com.bluecatcode.hamcrest</groupId>
+      <artifactId>hamcrest-1.3-extended</artifactId>
+      <version>1.0.4</version>
+    </dependency>
+
+Mockito
+---------
+Mockito library extensions
+
+    <dependency>
+      <groupId>com.bluecatcode.hamcrest</groupId>
+      <artifactId>mockito-1.10.19-extended</artifactId>
+      <version>1.0.4</version>
+    </dependency>
+
+Joda Time
+---------
+Joda Time library extensions
+
+    <dependency>
+      <groupId>com.bluecatcode.hamcrest</groupId>
+      <artifactId>joda-time-2.9.1-extended</artifactId>
+      <version>1.0.4</version>
+    </dependency>
+
+Core (deprecated in version > 1.1.0)
+------------------------------------
+Core Java JDK extensions and backports
+
+Functional Java Check (deprecated in version > 1.0.2)
+-----------------------------------------------------
+Functional Java test module (a.k.a. Reduction) library extensions
 
 Build on Ubuntu Linux
 ---------------------
