@@ -23,20 +23,20 @@ public class ResourcesTest {
     @Test
     public void shouldGetResourceAsStringFromContext() throws Exception {
         // given
-        String classResource = "../base/Predicates.class";
+        String classResource = "../base/Either.class";
 
         // when
         String classString = getResourceAsString(Resources.class, classResource);
 
         // then
         assertThat(classString, isNotEmptyString());
-        assertThat(classString, containsString("com/bluecatcode/common/base/Predicates"));
+        assertThat(classString, containsString("com/bluecatcode/common/base/Either"));
     }
 
     @Test
     public void shouldGetResourceWithLineProcessorFromContext() throws Exception {
         // given
-        String classResource = "../base/Predicates.class";
+        String classResource = "../base/Either.class";
 
         // when
         String classString = getResourceWith(Resources.class, classResource, new LineProcessor<String>() {
@@ -56,13 +56,13 @@ public class ResourcesTest {
 
         // then
         assertThat(classString, isNotEmptyString());
-        assertThat(classString, containsString("com/bluecatcode/common/base/Predicates"));
+        assertThat(classString, containsString("com/bluecatcode/common/base/Either"));
     }
 
     @Test
     public void shouldWrapExceptionInGetResourceWithLineProcessorFromContext() throws Exception {
         // given
-        String classResource = "../base/Predicates.class";
+        String classResource = "../base/Either.class";
 
         // expect
         exception.expect(IllegalStateException.class);
@@ -85,33 +85,33 @@ public class ResourcesTest {
     @Test
     public void shouldGetResourceAsFilePathFromContext() throws Exception {
         // given
-        String classResource = "../base/Predicates.class";
+        String classResource = "../base/Either.class";
 
         // when
         String path = getResourceAsFilePath(Resources.class, classResource);
 
         // then
         assertThat(path, isNotEmptyString());
-        assertThat(path, endsWith("com/bluecatcode/common/base/Predicates.class"));
+        assertThat(path, endsWith("com/bluecatcode/common/base/Either.class"));
     }
 
     @Test
     public void shouldGetResourceAsFilePathFromCurrentClassLoader() throws Exception {
         // given
-        String classResource = "com/bluecatcode/common/base/Predicates.class";
+        String classResource = "com/bluecatcode/common/base/Either.class";
 
         // when
         String path = getResourceAsFilePath(getContextClassLoader(), classResource);
 
         // then
         assertThat(path, isNotEmptyString());
-        assertThat(path, endsWith("com/bluecatcode/common/base/Predicates.class"));
+        assertThat(path, endsWith("com/bluecatcode/common/base/Either.class"));
     }
 
     @Test
     public void shouldGetResourceAsStreamFromContext() throws Exception {
         // given
-        String classResource = "../base/Predicates.class";
+        String classResource = "../base/Either.class";
 
         // when
         InputStream stream = getResourceAsStream(Resources.class, classResource);
