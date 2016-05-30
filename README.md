@@ -131,7 +131,7 @@ Mockito
 Mockito library extensions
 
     <dependency>
-      <groupId>com.bluecatcode.hamcrest</groupId>
+      <groupId>com.bluecatcode.mockito</groupId>
       <artifactId>mockito-1.10.19-extended</artifactId>
       <version>1.1.0</version>
     </dependency>
@@ -141,7 +141,7 @@ Joda Time
 Joda Time library extensions
 
     <dependency>
-      <groupId>com.bluecatcode.hamcrest</groupId>
+      <groupId>com.bluecatcode.time</groupId>
       <artifactId>joda-time-2.9.1-extended</artifactId>
       <version>1.1.0</version>
     </dependency>
