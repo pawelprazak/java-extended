@@ -7,12 +7,12 @@
     <parent>
         <groupId>com.bluecatcode.common</groupId>
         <artifactId>project</artifactId>
-        <version>1.0.5-SNAPSHOT</version>
+        <version>1.1.0</version>
     </parent>
 
     <groupId>com.bluecatcode.junit</groupId>
     <artifactId>junit-${junit.version}-extended</artifactId>
-    <version>1.0.5-SNAPSHOT</version>
+    <version>1.1.0</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>JUnit library extensions.</description>
 

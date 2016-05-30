@@ -28,7 +28,7 @@ JDK and Google's Guava extension library
     <dependency>
       <groupId>com.bluecatcode.guava</groupId>
       <artifactId>guava-19.0-extended</artifactId>
-      <version>1.0.4</version>
+      <version>1.1.0</version>
     </dependency>
 
 ### Either
@@ -113,7 +113,7 @@ JUnit library extensions
     <dependency>
       <groupId>com.bluecatcode.junit</groupId>
       <artifactId>junit-4.12-extended</artifactId>
-      <version>1.0.4</version>
+      <version>1.1.0</version>
     </dependency>
 
 Hamcrest
@@ -123,7 +123,7 @@ Hamcrest library extensions
     <dependency>
       <groupId>com.bluecatcode.hamcrest</groupId>
       <artifactId>hamcrest-1.3-extended</artifactId>
-      <version>1.0.4</version>
+      <version>1.1.0</version>
     </dependency>
 
 Mockito
@@ -133,7 +133,7 @@ Mockito library extensions
     <dependency>
       <groupId>com.bluecatcode.hamcrest</groupId>
       <artifactId>mockito-1.10.19-extended</artifactId>
-      <version>1.0.4</version>
+      <version>1.1.0</version>
     </dependency>
 
 Joda Time
@@ -143,7 +143,7 @@ Joda Time library extensions
     <dependency>
       <groupId>com.bluecatcode.hamcrest</groupId>
       <artifactId>joda-time-2.9.1-extended</artifactId>
-      <version>1.0.4</version>
+      <version>1.1.0</version>
     </dependency>
 
 Core (deprecated in version > 1.1.0)
