@@ -7,12 +7,12 @@
     <parent>
         <groupId>com.bluecatcode.common</groupId>
         <artifactId>project</artifactId>
-        <version>1.1.0</version>
+        <version>1.1.1-SNAPSHOT</version>
     </parent>
 
     <groupId>com.bluecatcode.time</groupId>
     <artifactId>joda-time-${joda-time.version}-extended</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1-SNAPSHOT</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Joda Time library extensions.</description>
 

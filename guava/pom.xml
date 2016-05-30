@@ -7,11 +7,11 @@
     <parent>
         <groupId>com.bluecatcode.common</groupId>
         <artifactId>project</artifactId>
-        <version>1.1.0</version>
+        <version>1.1.1-SNAPSHOT</version>
     </parent>
     <groupId>com.bluecatcode.guava</groupId>
     <artifactId>guava-${guava.version}-extended</artifactId>
-    <version>1.1.0</version>
+    <version>1.1.1-SNAPSHOT</version>
     <name>${project.groupId}:${project.artifactId}</name>
     <description>Guava library extensions.</description>
 
