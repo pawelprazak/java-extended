@@ -11,6 +11,8 @@ java-extended
 
 [![][license img]][license]
 
+**This repository is no longer maintained - do not use (archived)**
+
 Java Extended is an experimental set of libraries targeting JVM 1.6+
 
 Available versions:
